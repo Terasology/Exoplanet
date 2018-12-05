@@ -2,6 +2,6 @@
  * Tall grass of Exoplanet variety 3 (higher number = taller)
  */
 {
-    "basedOn": "ExoplanetGenerator:exoplanetPlant",
+    "basedOn": "Exoplanet:exoplanetPlant",
     "waving": true
 }

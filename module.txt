@@ -1,8 +1,8 @@
 {
-    "id" : "ExoplanetGenerator",
+    "id" : "Exoplanet",
     "version" : "0.1.0-SNAPSHOT",
     "author" : "PutawanDE",
-    "displayName" : "ExoplanetGenerator",
+    "displayName" : "Exoplanet",
     "description" : "A module that adds an exotic world from a distant galaxy as an additional dimension.",
     "dependencies" : [
         {"id": "Core", "minVersion": "2.0.0"}

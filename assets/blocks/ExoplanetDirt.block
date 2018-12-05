@@ -2,6 +2,6 @@
  * Dirt for Exoplanet
  */
 {
-    "basedOn": "ExoplanetGenerator:exoplanetSoil",
+    "basedOn": "Exoplanet:exoplanetSoil",
     "displayName": "Exoplanet Dirt"
 }

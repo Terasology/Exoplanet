@@ -2,12 +2,12 @@
  * Red Grass of Exoplanet
  */
 {
-    "basedOn": "ExoplanetGenerator:exoplanetSoil",
+    "basedOn": "Exoplanet:exoplanetSoil",
     "displayName": "Exoplanet Grass",
     // Graphics
     "tiles": {
-        "top": "ExoplanetGenerator:ExoplanetGrass",
-        "sides": "ExoplanetGenerator:ExoplanetGrassSide",
-        "bottom": "ExoplanetGenerator:ExoplanetDirt"
+        "top": "Exoplanet:ExoplanetGrass",
+        "sides": "Exoplanet:ExoplanetGrassSide",
+        "bottom": "Exoplanet:ExoplanetDirt"
     }
 }

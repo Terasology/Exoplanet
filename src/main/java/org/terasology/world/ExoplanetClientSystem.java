@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package world;
+package org.terasology.world;
 
 import org.terasology.entitySystem.entity.EntityRef;
 import org.terasology.entitySystem.event.ReceiveEvent;
@@ -23,12 +23,10 @@ import org.terasology.entitySystem.systems.RegisterSystem;
 import org.terasology.entitySystem.systems.UpdateSubscriberSystem;
 import org.terasology.logic.characters.CharacterTeleportEvent;
 import org.terasology.math.geom.Vector3f;
-import org.terasology.registry.In;
 
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Vector;
 
 @RegisterSystem(RegisterMode.CLIENT)
 public class ExoplanetClientSystem extends BaseComponentSystem implements UpdateSubscriberSystem {

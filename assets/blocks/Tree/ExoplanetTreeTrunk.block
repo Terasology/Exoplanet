@@ -1,9 +1,9 @@
 {
-    "basedOn": "ExoplanetGenerator:exoplanetWood",
+    "basedOn": "Exoplanet:exoplanetWood",
     "displayName": "Exoplanet Tree Log",
     // Graphics
     "tiles": {
-        "sides": "ExoplanetGenerator:ExoplanetTreeBark",
-        "topBottom": "ExoplanetGenerator:ExoplanetTreeTrunk"
+        "sides": "Exoplanet:ExoplanetTreeBark",
+        "topBottom": "Exoplanet:ExoplanetTreeTrunk"
     }
 }
