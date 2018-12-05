@@ -1,0 +1,13 @@
+/**
+ * General template for Exoplanet tree leaf blocks
+ */
+{
+    "template": true,
+    "categories": ["exoplanetWood", "exoplanetLeaf"],
+    "attachmentAllowed": false,
+    "hardness": 1,
+    "debrisOnDestroy": false,
+    "waving": true,
+    "mass": 7,
+    "sounds": "Core:leaf"
+}

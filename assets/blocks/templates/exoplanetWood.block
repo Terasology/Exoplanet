@@ -1,0 +1,7 @@
+{
+    "template": true,
+    "categories": ["exoplanetWood"],
+    "hardness": 10,
+    "mass": 40,
+    "sounds": "Core:wood"
+}

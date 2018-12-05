@@ -1,0 +1,18 @@
+/**
+ * General template for plant blocks in Exoplanet
+ */
+{
+    "template": true,
+    "attachmentAllowed": false,
+    "hardness": 1,
+    "mass": 4,
+    "shape": "engine:billboard",
+    "supportRequired": true,
+    "penetrable": true,
+    "replacementAllowed": true,
+    "translucent": true,
+    "luminance": 8,
+    "doubleSided": true,
+    "debrisOnDestroy": false,
+    "sounds": "Core:leaf"
+}

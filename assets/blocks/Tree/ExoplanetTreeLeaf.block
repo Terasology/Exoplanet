@@ -1,0 +1,6 @@
+/**
+ * Leaf of Tree in Exoplanet
+ */
+{
+    "basedOn": "ExoplanetGenerator:exoplanetLeaf"
+}

@@ -1,0 +1,10 @@
+/**
+ * Soil template of Exoplanet
+ */
+{
+    "template": true,
+    "categories": ["exoplanetSoil"],
+    "hardness": 8,
+    "mass": 30,
+    "sounds": "Core:soil"
+}
