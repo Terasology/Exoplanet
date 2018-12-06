@@ -3,5 +3,6 @@
  */
 {
     "basedOn": "Exoplanet:exoplanetPlant",
+    "displayName": "Exoplanet White Grass",
     "waving": true
 }

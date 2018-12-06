@@ -1,0 +1,6 @@
+{
+    "ExoplanetPortalOnActivate": {},
+    "PlaySoundAction": {
+        "sounds": "ExoplanetTeleport"
+    }
+}

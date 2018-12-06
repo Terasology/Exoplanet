@@ -2,5 +2,6 @@
  * Leaf of Tree in Exoplanet
  */
 {
-    "basedOn": "Exoplanet:exoplanetLeaf"
+    "basedOn": "Exoplanet:exoplanetLeaf",
+    "displayName": "Exoplanet Tree Leaf"
 }

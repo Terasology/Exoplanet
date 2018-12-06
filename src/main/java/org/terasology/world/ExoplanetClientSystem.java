@@ -21,17 +21,39 @@ import org.terasology.entitySystem.systems.BaseComponentSystem;
 import org.terasology.entitySystem.systems.RegisterMode;
 import org.terasology.entitySystem.systems.RegisterSystem;
 import org.terasology.entitySystem.systems.UpdateSubscriberSystem;
+import org.terasology.generator.facets.ExoplanetSurfaceHeightFacet;
 import org.terasology.logic.characters.CharacterTeleportEvent;
+import org.terasology.logic.common.ActivateEvent;
+import org.terasology.logic.players.LocalPlayer;
+import org.terasology.math.Region3i;
+import org.terasology.math.geom.BaseVector2i;
 import org.terasology.math.geom.Vector3f;
+import org.terasology.math.geom.Vector3i;
+import org.terasology.registry.In;
+import org.terasology.world.block.BlockComponent;
+import org.terasology.world.generation.Region;
+import org.terasology.world.generation.World;
+import org.terasology.world.generator.WorldGenerator;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import static org.terasology.generator.ExoplanetWorldGenerator.EXOPLANET_HEIGHT;
+
 @RegisterSystem(RegisterMode.CLIENT)
 public class ExoplanetClientSystem extends BaseComponentSystem implements UpdateSubscriberSystem {
+    @In
+    private LocalPlayer localPlayer;
+
+    @In
+    private WorldGenerator worldGenerator;
 
     private Map<EntityRef, Vector3f> teleportQueue = new HashMap<>();
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ExoplanetClientSystem.class);
 
     @Override
     public void update(float delta) {
@@ -47,8 +69,38 @@ public class ExoplanetClientSystem extends BaseComponentSystem implements Update
         }
     }
 
-    @ReceiveEvent
-    public void onEnterExoplanet (EnterExoplanetEvent event, EntityRef entity) {
-        //TODO: Play Teleporting Sound
+    @ReceiveEvent(components = {ExoplanetPortalOnActivateComponent.class, BlockComponent.class})
+    public void onActivate(ActivateEvent event, EntityRef entity) {
+        BlockComponent blockComponent = entity.getComponent(BlockComponent.class);
+
+        EntityRef character = localPlayer.getCharacterEntity();
+        EntityRef client = localPlayer.getClientEntity();
+
+        Vector3f spawnPos = findExoplanetSpawnPos(blockComponent.position);
+        if (spawnPos != null) {
+            character.send(new EnterExoplanetEvent(client));
+            teleportQueue.put(character, spawnPos);
+        }
+        LOGGER.info("Portal Activate Event Sent");
+        event.consume();
+    }
+
+    private Vector3f findExoplanetSpawnPos (Vector3i currentPos){
+        World world = worldGenerator.getWorld();
+        Vector3i searchRadius = new Vector3i(32, 1, 32);
+        Region3i searchArea = Region3i.createFromCenterExtents(new Vector3i(currentPos.x, EXOPLANET_HEIGHT, currentPos.z), searchRadius);
+        Region worldRegion = world.getWorldData(searchArea);
+
+        ExoplanetSurfaceHeightFacet surfaceHeightFacet = worldRegion.getFacet(ExoplanetSurfaceHeightFacet.class);
+        if (surfaceHeightFacet != null) {
+            for (BaseVector2i pos : surfaceHeightFacet.getWorldRegion().contents()) {
+                float surfaceHeight = surfaceHeightFacet.getWorld(pos);
+                LOGGER.info("SurfaceHeight: " + surfaceHeight);
+                if (surfaceHeight > 9980){
+                    return new Vector3f(pos.x(), surfaceHeight + 1, pos.y());
+                }
+            }
+        }
+        return null;
     }
 }

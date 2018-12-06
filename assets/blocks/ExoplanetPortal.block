@@ -1,0 +1,8 @@
+{
+    "displayName": "Exoplanet Portal",
+    "luminance": 10,
+    "hardness": 50,
+    "entity" : {
+        "prefab" : "exoplanetPortal"
+    }
+}
