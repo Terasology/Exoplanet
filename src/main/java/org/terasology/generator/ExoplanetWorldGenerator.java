@@ -22,7 +22,9 @@ import org.terasology.core.world.generator.rasterizers.TreeRasterizer;
 import org.terasology.engine.SimpleUri;
 import org.terasology.generator.facets.ExoplanetSurfaceHeightFacet;
 import org.terasology.generator.providers.ExoplanetSurfaceProvider;
+import org.terasology.generator.providers.ExoplanetTreeProvider;
 import org.terasology.generator.rasterizers.ExoplanetOceanRasterizer;
+import org.terasology.generator.rasterizers.ExoplanetTreeRasterizer;
 import org.terasology.generator.rasterizers.ExoplanetWorldRasterizer;
 import org.terasology.math.TeraMath;
 import org.terasology.math.geom.ImmutableVector2i;
@@ -34,9 +36,11 @@ import org.terasology.world.generator.RegisterWorldGenerator;
 import org.terasology.world.generator.plugin.WorldGeneratorPluginLibrary;
 import org.terasology.world.zones.ConstantLayerThickness;
 import org.terasology.world.zones.LayeredZoneRegionFunction;
+import org.terasology.world.zones.SingleBlockRasterizer;
 import org.terasology.world.zones.Zone;
 
 import static org.terasology.world.zones.LayeredZoneRegionFunction.LayeredZoneOrdering.ABOVE_GROUND;
+import static org.terasology.world.zones.LayeredZoneRegionFunction.LayeredZoneOrdering.GROUND;
 
 @RegisterWorldGenerator(id = "exoplanetWorld", displayName = "Exoplanet")
 public class ExoplanetWorldGenerator extends BaseFacetedWorldGenerator {
@@ -75,6 +79,8 @@ public class ExoplanetWorldGenerator extends BaseFacetedWorldGenerator {
                 .addRasterizer(new FloraRasterizer())
                 .addRasterizer(new TreeRasterizer())
                 // Exoplanet World
+                .addProvider(new ExoplanetSurfaceProvider(EXOPLANET_HEIGHT))
+                .addRasterizer(new ExoplanetWorldRasterizer())
                 .addZone(new Zone("ExoplanetSurface", new LayeredZoneRegionFunction(new ConstantLayerThickness(10),
                         ABOVE_GROUND + EXOPLANET_HEIGHT))
 
@@ -84,9 +90,15 @@ public class ExoplanetWorldGenerator extends BaseFacetedWorldGenerator {
 
                             .addRasterizer(new ExoplanetOceanRasterizer())
                             ))
+                .addProvider(new ExoplanetTreeProvider())
+                .addRasterizer(new ExoplanetTreeRasterizer());
 
-                .addProvider(new ExoplanetSurfaceProvider(EXOPLANET_HEIGHT))
-                .addRasterizer(new ExoplanetWorldRasterizer())
-                .addPlugins();
+//                .addZone(new Zone("ExoplanetGround", new LayeredZoneRegionFunction(new ConstantLayerThickness(10),
+//                        GROUND + EXOPLANET_HEIGHT))
+//
+//                        .addZone(new Zone("ExoplanetBeach", (x, y, z, region) ->
+//                                region.getFacet(ExoplanetSurfaceHeightFacet.class).getWorld(x, z) <= EXOPLANET_SEA_LEVEL + 3)
+//                                .addRasterizer(new SingleBlockRasterizer("core:sand")))
+//                );
     }
 }

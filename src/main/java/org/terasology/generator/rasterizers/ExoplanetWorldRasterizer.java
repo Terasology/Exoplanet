@@ -43,17 +43,19 @@ public class ExoplanetWorldRasterizer implements WorldRasterizer {
     public void generateChunk(CoreChunk chunk, Region chunkRegion) {
         ExoplanetSurfaceHeightFacet surfaceHeightFacet = chunkRegion.getFacet(ExoplanetSurfaceHeightFacet.class);
 
-        if (chunkRegion.getRegion().maxY() > surfaceHeightFacet.getBaseSurfaceHeight() && chunkRegion.getRegion().minY() < surfaceHeightFacet.getBaseSurfaceHeight()) {
+        if (chunkRegion.getRegion().maxY() > EXOPLANET_BORDER) {
             for (Vector3i position : chunkRegion.getRegion()) {
                 float surfaceHeight = surfaceHeightFacet.getWorld(position.x, position.z);
                 int rockLayerDepth = surfaceHeightFacet.getRockLayerDepth();
 
-                if (position.y < surfaceHeight - rockLayerDepth && position.y > EXOPLANET_BORDER) {
-                    chunk.setBlock(ChunkMath.calcBlockPos(position), stone);
-                } else if (position.y < surfaceHeight - 1 && position.y >= surfaceHeight - rockLayerDepth) {
-                    chunk.setBlock(ChunkMath.calcBlockPos(position), dirt);
-                } else if (position.y < surfaceHeight) {
-                    chunk.setBlock(ChunkMath.calcBlockPos(position), grass);
+                if (position.y > EXOPLANET_BORDER) {
+                    if (position.y < surfaceHeight - rockLayerDepth) {
+                        chunk.setBlock(ChunkMath.calcBlockPos(position), stone);
+                    } else if (position.y < surfaceHeight - 1 && position.y >= surfaceHeight - rockLayerDepth) {
+                        chunk.setBlock(ChunkMath.calcBlockPos(position), dirt);
+                    } else if (position.y < surfaceHeight) {
+                        chunk.setBlock(ChunkMath.calcBlockPos(position), grass);
+                    }
                 }
             }
         }
