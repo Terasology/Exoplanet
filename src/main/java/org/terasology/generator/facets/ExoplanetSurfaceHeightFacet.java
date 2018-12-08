@@ -22,6 +22,8 @@ import org.terasology.world.generation.facets.base.BaseFieldFacet2D;
 public class ExoplanetSurfaceHeightFacet extends BaseFieldFacet2D {
     private int baseSurfaceHeight;
 
+    private final int ROCKY_LAYER_DEPTH = 10;
+
     public ExoplanetSurfaceHeightFacet(Region3i targetRegion, Border3D border) {
         super(targetRegion, border);
     }
@@ -32,5 +34,9 @@ public class ExoplanetSurfaceHeightFacet extends BaseFieldFacet2D {
 
     public int getBaseSurfaceHeight() {
         return baseSurfaceHeight;
+    }
+
+    public int getRockLayerDepth() {
+        return ROCKY_LAYER_DEPTH;
     }
 }

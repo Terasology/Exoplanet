@@ -21,6 +21,8 @@ import org.terasology.core.world.generator.rasterizers.SolidRasterizer;
 import org.terasology.core.world.generator.rasterizers.TreeRasterizer;
 import org.terasology.engine.SimpleUri;
 import org.terasology.generator.providers.ExoplanetSurfaceProvider;
+import org.terasology.generator.providers.exoplanetOre.ExoplanetOreProvider;
+import org.terasology.generator.rasterizers.ExoplanetOreRasterizer;
 import org.terasology.generator.rasterizers.ExoplanetWorldRasterizer;
 import org.terasology.math.geom.ImmutableVector2i;
 import org.terasology.registry.In;
@@ -33,6 +35,7 @@ import org.terasology.world.generator.plugin.WorldGeneratorPluginLibrary;
 @RegisterWorldGenerator(id = "exoplanetWorld", displayName = "Exoplanet")
 public class ExoplanetWorldGenerator extends BaseFacetedWorldGenerator {
     public static final int EXOPLANET_HEIGHT = 10000;
+    public static final int EXOPLANET_BORDER = 9900;
 
     @In
     private WorldGeneratorPluginLibrary worldGeneratorPluginLibrary;
@@ -61,10 +64,10 @@ public class ExoplanetWorldGenerator extends BaseFacetedWorldGenerator {
                 .addProvider(new DefaultTreeProvider())
                 .addProvider(new PlateauProvider(spawnPos, seaLevel + 4, 10, 30))
                 .addRasterizer(new SolidRasterizer())
-                .addPlugins()
                 .addRasterizer(new FloraRasterizer())
                 .addRasterizer(new TreeRasterizer())
                 .addProvider(new ExoplanetSurfaceProvider(EXOPLANET_HEIGHT))
-                .addRasterizer(new ExoplanetWorldRasterizer());
+                .addRasterizer(new ExoplanetWorldRasterizer())
+                .addPlugins();
     }
 }

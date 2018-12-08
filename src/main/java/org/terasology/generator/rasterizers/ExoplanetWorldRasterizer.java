@@ -25,6 +25,8 @@ import org.terasology.world.chunks.CoreChunk;
 import org.terasology.world.generation.Region;
 import org.terasology.world.generation.WorldRasterizer;
 
+import static org.terasology.generator.ExoplanetWorldGenerator.EXOPLANET_BORDER;
+
 public class ExoplanetWorldRasterizer implements WorldRasterizer {
     private Block grass;
     private Block dirt;
@@ -44,10 +46,11 @@ public class ExoplanetWorldRasterizer implements WorldRasterizer {
         if (chunkRegion.getRegion().maxY() > surfaceHeightFacet.getBaseSurfaceHeight() && chunkRegion.getRegion().minY() < surfaceHeightFacet.getBaseSurfaceHeight()) {
             for (Vector3i position : chunkRegion.getRegion()) {
                 float surfaceHeight = surfaceHeightFacet.getWorld(position.x, position.z);
+                int rockLayerDepth = surfaceHeightFacet.getRockLayerDepth();
 
-                if (position.y < surfaceHeight - 10 && position.y > surfaceHeight - 30) {
+                if (position.y < surfaceHeight - rockLayerDepth && position.y > EXOPLANET_BORDER) {
                     chunk.setBlock(ChunkMath.calcBlockPos(position), stone);
-                } else if (position.y < surfaceHeight - 1 && position.y >= surfaceHeight - 10) {
+                } else if (position.y < surfaceHeight - 1 && position.y >= surfaceHeight - rockLayerDepth) {
                     chunk.setBlock(ChunkMath.calcBlockPos(position), dirt);
                 } else if (position.y < surfaceHeight) {
                     chunk.setBlock(ChunkMath.calcBlockPos(position), grass);
