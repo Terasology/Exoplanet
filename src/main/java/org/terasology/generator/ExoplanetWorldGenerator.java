@@ -21,6 +21,7 @@ import org.terasology.core.world.generator.rasterizers.SolidRasterizer;
 import org.terasology.core.world.generator.rasterizers.TreeRasterizer;
 import org.terasology.engine.SimpleUri;
 import org.terasology.generator.facets.ExoplanetSurfaceHeightFacet;
+import org.terasology.generator.providers.ExoplanetMountainsProvider;
 import org.terasology.generator.providers.ExoplanetSurfaceProvider;
 import org.terasology.generator.providers.ExoplanetTreeProvider;
 import org.terasology.generator.rasterizers.ExoplanetOceanRasterizer;
@@ -46,7 +47,8 @@ import static org.terasology.world.zones.LayeredZoneRegionFunction.LayeredZoneOr
 public class ExoplanetWorldGenerator extends BaseFacetedWorldGenerator {
     public static final int EXOPLANET_HEIGHT = 10000;
     public static final int EXOPLANET_BORDER = 9900;
-    public static final int EXOPLANET_SEA_LEVEL = 10000;
+    public static final int EXOPLANET_SEA_LEVEL = 10020;
+    public static final int EXOPLANET_MOUNTAIN_HEIGHT = 400;
 
     @In
     private WorldGeneratorPluginLibrary worldGeneratorPluginLibrary;
@@ -80,6 +82,7 @@ public class ExoplanetWorldGenerator extends BaseFacetedWorldGenerator {
                 .addRasterizer(new TreeRasterizer())
                 // Exoplanet World
                 .addProvider(new ExoplanetSurfaceProvider(EXOPLANET_HEIGHT))
+                .addProvider(new ExoplanetMountainsProvider(EXOPLANET_MOUNTAIN_HEIGHT))
                 .addRasterizer(new ExoplanetWorldRasterizer())
                 .addZone(new Zone("ExoplanetSurface", new LayeredZoneRegionFunction(new ConstantLayerThickness(10),
                         ABOVE_GROUND + EXOPLANET_HEIGHT))

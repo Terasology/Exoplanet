@@ -26,17 +26,17 @@ import org.terasology.world.generation.Region;
 import org.terasology.world.generation.WorldRasterizer;
 
 import static org.terasology.generator.ExoplanetWorldGenerator.EXOPLANET_BORDER;
+import static org.terasology.generator.ExoplanetWorldGenerator.EXOPLANET_MOUNTAIN_HEIGHT;
 
 public class ExoplanetWorldRasterizer implements WorldRasterizer {
-    private Block grass;
-    private Block dirt;
-    private Block stone;
+    private Block grass, dirt, stone, snow;
 
     @Override
     public void initialize() {
         grass = CoreRegistry.get(BlockManager.class).getBlock("Exoplanet:ExoplanetGrass");
         dirt = CoreRegistry.get(BlockManager.class).getBlock("Exoplanet:ExoplanetDirt");
         stone = CoreRegistry.get(BlockManager.class).getBlock("Core:Stone");
+        snow = CoreRegistry.get(BlockManager.class).getBlock("Core:Snow");
     }
 
     @Override
@@ -55,6 +55,9 @@ public class ExoplanetWorldRasterizer implements WorldRasterizer {
                         chunk.setBlock(ChunkMath.calcBlockPos(position), dirt);
                     } else if (position.y < surfaceHeight) {
                         chunk.setBlock(ChunkMath.calcBlockPos(position), grass);
+                        if (position.y <= EXOPLANET_MOUNTAIN_HEIGHT && position.y > 200) {
+                            chunk.setBlock(ChunkMath.calcBlockPos(position), snow);
+                        }
                     }
                 }
             }

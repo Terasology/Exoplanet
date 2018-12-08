@@ -16,41 +16,41 @@
 package org.terasology.generator.providers;
 
 import org.terasology.generator.facets.ExoplanetSurfaceHeightFacet;
+import org.terasology.math.TeraMath;
 import org.terasology.math.geom.BaseVector2i;
 import org.terasology.math.geom.Rect2i;
 import org.terasology.math.geom.Vector2f;
-import org.terasology.utilities.procedural.Noise;
-import org.terasology.utilities.procedural.SimplexNoise;
-import org.terasology.utilities.procedural.SubSampledNoise;
-import org.terasology.world.generation.Border3D;
+import org.terasology.utilities.procedural.*;
+import org.terasology.world.generation.Facet;
 import org.terasology.world.generation.FacetProvider;
 import org.terasology.world.generation.GeneratingRegion;
-import org.terasology.world.generation.Produces;
+import org.terasology.world.generation.Updates;
 
-@Produces(ExoplanetSurfaceHeightFacet.class)
-public class ExoplanetSurfaceProvider implements FacetProvider {
-    private Noise surfaceNoise;
-    private int exoplanetWorldHeight;
+@Updates(@Facet(ExoplanetSurfaceHeightFacet.class))
+public class ExoplanetMountainsProvider implements FacetProvider {
+    private Noise mountainNoise;
+    private int mountainHeight = 500;
 
-    public ExoplanetSurfaceProvider(int worldHeight) {
-        this.exoplanetWorldHeight = worldHeight;
+    public ExoplanetMountainsProvider(int mountainHeight) {
+        this.mountainHeight = mountainHeight;
     }
 
     @Override
     public void setSeed(long seed) {
-        surfaceNoise = new SubSampledNoise(new SimplexNoise(seed), new Vector2f(0.01f, 0.01f), 1);
+        mountainNoise = new SubSampledNoise(new BrownianNoise(new PerlinNoise(seed + 2), 8),
+                new Vector2f(0.001f, 0.001f), 1);
     }
 
     @Override
     public void process(GeneratingRegion region) {
-        Border3D border = region.getBorderForFacet(ExoplanetSurfaceHeightFacet.class);
-        ExoplanetSurfaceHeightFacet facet = new ExoplanetSurfaceHeightFacet(region.getRegion(), border);
-        facet.setBaseSurfaceHeight(exoplanetWorldHeight);
+        ExoplanetSurfaceHeightFacet facet = region.getRegionFacet(ExoplanetSurfaceHeightFacet.class);
 
         Rect2i processRegion = facet.getWorldRegion();
         for (BaseVector2i position : processRegion.contents()) {
-            facet.setWorld(position, surfaceNoise.noise(position.x(), position.y()) * 30 + exoplanetWorldHeight);
+            float additiveMountainHeight = mountainNoise.noise(position.x(), position.y()) * mountainHeight;
+            additiveMountainHeight = TeraMath.clamp(additiveMountainHeight, 0, mountainHeight);
+
+            facet.setWorld(position, facet.getWorld(position) + additiveMountainHeight);
         }
-        region.setRegionFacet(ExoplanetSurfaceHeightFacet.class, facet);
     }
 }

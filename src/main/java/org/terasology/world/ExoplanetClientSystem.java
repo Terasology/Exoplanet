@@ -24,6 +24,7 @@ import org.terasology.entitySystem.systems.UpdateSubscriberSystem;
 import org.terasology.generator.facets.ExoplanetSurfaceHeightFacet;
 import org.terasology.logic.characters.CharacterTeleportEvent;
 import org.terasology.logic.common.ActivateEvent;
+import org.terasology.logic.location.LocationComponent;
 import org.terasology.logic.players.LocalPlayer;
 import org.terasology.math.Region3i;
 import org.terasology.math.geom.BaseVector2i;
@@ -42,6 +43,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import static org.terasology.generator.ExoplanetWorldGenerator.EXOPLANET_HEIGHT;
+import static org.terasology.generator.ExoplanetWorldGenerator.EXOPLANET_SEA_LEVEL;
 
 @RegisterSystem(RegisterMode.CLIENT)
 public class ExoplanetClientSystem extends BaseComponentSystem implements UpdateSubscriberSystem {
@@ -96,7 +98,7 @@ public class ExoplanetClientSystem extends BaseComponentSystem implements Update
             for (BaseVector2i pos : surfaceHeightFacet.getWorldRegion().contents()) {
                 float surfaceHeight = surfaceHeightFacet.getWorld(pos);
                 LOGGER.info("SurfaceHeight: " + surfaceHeight);
-                if (surfaceHeight > 9980){
+                if (surfaceHeight >= EXOPLANET_SEA_LEVEL){
                     return new Vector3f(pos.x(), surfaceHeight + 1, pos.y());
                 }
             }

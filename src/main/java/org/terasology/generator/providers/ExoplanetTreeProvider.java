@@ -50,7 +50,7 @@ public class ExoplanetTreeProvider implements FacetProvider {
                 if (surfaceHeight >= facet.getWorldRegion().minY() &&
                         surfaceHeight <= facet.getWorldRegion().maxY()) {
 
-                    if (treeNoise.noise(wx, wz) > 0.99) {
+                    if (treeNoise.noise(wx, wz) > 0.9) {
                         facet.setWorld(wx, surfaceHeight, wz, new ExoplanetTree());
                     }
                 }
