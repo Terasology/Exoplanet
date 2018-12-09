@@ -21,9 +21,11 @@ import org.terasology.core.world.generator.rasterizers.SolidRasterizer;
 import org.terasology.core.world.generator.rasterizers.TreeRasterizer;
 import org.terasology.engine.SimpleUri;
 import org.terasology.generator.facets.ExoplanetSurfaceHeightFacet;
+import org.terasology.generator.providers.ExoplanetFloraProvider;
 import org.terasology.generator.providers.ExoplanetMountainsProvider;
 import org.terasology.generator.providers.ExoplanetSurfaceProvider;
 import org.terasology.generator.providers.ExoplanetTreeProvider;
+import org.terasology.generator.rasterizers.ExoplanetFloraRasterizer;
 import org.terasology.generator.rasterizers.ExoplanetOceanRasterizer;
 import org.terasology.generator.rasterizers.ExoplanetTreeRasterizer;
 import org.terasology.generator.rasterizers.ExoplanetWorldRasterizer;
@@ -94,7 +96,9 @@ public class ExoplanetWorldGenerator extends BaseFacetedWorldGenerator {
                             .addRasterizer(new ExoplanetOceanRasterizer())
                             ))
                 .addProvider(new ExoplanetTreeProvider())
-                .addRasterizer(new ExoplanetTreeRasterizer());
+                .addProvider(new ExoplanetFloraProvider())
+                .addRasterizer(new ExoplanetTreeRasterizer())
+                .addRasterizer(new ExoplanetFloraRasterizer());
 
 //                .addZone(new Zone("ExoplanetGround", new LayeredZoneRegionFunction(new ConstantLayerThickness(10),
 //                        GROUND + EXOPLANET_HEIGHT))

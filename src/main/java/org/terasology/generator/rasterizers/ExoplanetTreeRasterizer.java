@@ -49,7 +49,7 @@ public class ExoplanetTreeRasterizer implements WorldRasterizer {
             Vector3i treePosition = new Vector3i(entry.getKey()).addY(1);
 
             // checks if tree is underwater, if it is then skip - don't build
-            if (treePosition.y < EXOPLANET_SEA_LEVEL) {
+            if (treePosition.y <= EXOPLANET_SEA_LEVEL) {
                 continue;
             }
 

@@ -15,50 +15,41 @@
  */
 package org.terasology.generator.providers;
 
-import org.terasology.generator.ExoplanetTree;
+import org.terasology.generator.facets.ExoplanetFloraFacet;
 import org.terasology.generator.facets.ExoplanetSurfaceHeightFacet;
-import org.terasology.generator.facets.ExoplanetTreeFacet;
 import org.terasology.math.TeraMath;
-import org.terasology.math.geom.Rect2i;
+import org.terasology.math.geom.BaseVector2i;
 import org.terasology.utilities.procedural.Noise;
 import org.terasology.utilities.procedural.WhiteNoise;
 import org.terasology.world.generation.*;
 
 import static org.terasology.generator.ExoplanetWorldGenerator.EXOPLANET_SEA_LEVEL;
 
-@Produces(ExoplanetTreeFacet.class)
+@Produces(ExoplanetFloraFacet.class)
 @Requires(@Facet(ExoplanetSurfaceHeightFacet.class))
-public class ExoplanetTreeProvider implements FacetProvider {
-    private Noise treeNoise;
+public class ExoplanetFloraProvider implements FacetProvider {
+    private Noise floraNoise;
 
     @Override
     public void setSeed(long seed) {
-        treeNoise = new WhiteNoise(seed + 20);
+        floraNoise = new WhiteNoise(seed + 3);
     }
 
     @Override
     public void process(GeneratingRegion region) {
-        Border3D border = region.getBorderForFacet(ExoplanetTreeFacet.class).extendBy(0, 7, 1);
-        ExoplanetTreeFacet facet = new ExoplanetTreeFacet(region.getRegion(), border);
-
+        Border3D border = region.getBorderForFacet(ExoplanetFloraFacet.class);
+        ExoplanetFloraFacet facet = new ExoplanetFloraFacet(region.getRegion(), border);
         ExoplanetSurfaceHeightFacet surfaceHeightFacet = region.getRegionFacet(ExoplanetSurfaceHeightFacet.class);
-        Rect2i worldRegion = surfaceHeightFacet.getWorldRegion();
 
-        for (int wz = worldRegion.minY(); wz <= worldRegion.maxY(); wz++) {
-            for (int wx = worldRegion.minX(); wx <= worldRegion.maxX(); wx++) {
-                int surfaceHeight = TeraMath.floorToInt(surfaceHeightFacet.getWorld(wx, wz));
+        for (BaseVector2i position : surfaceHeightFacet.getWorldRegion().contents()) {
+            int surfaceHeight = TeraMath.floorToInt(surfaceHeightFacet.getWorld(position));
 
-                // check if height is within this region
-                if (surfaceHeight >= facet.getWorldRegion().minY() &&
-                        surfaceHeight <= facet.getWorldRegion().maxY() && surfaceHeight > EXOPLANET_SEA_LEVEL) {
-
-                    if (treeNoise.noise(wx, wz) > 0.98) {
-                        facet.setWorld(wx, surfaceHeight, wz, new ExoplanetTree());
-                    }
-                }
+            if (facet.getWorldRegion().encompasses(position.x(), surfaceHeight, position.y())
+                    && surfaceHeight > EXOPLANET_SEA_LEVEL && floraNoise.noise(position.x(), position.y()) > 0.96) {
+                facet.setWorld(position.x(), surfaceHeight, position.y(), true);
             }
         }
 
-        region.setRegionFacet(ExoplanetTreeFacet.class, facet);
+        region.setRegionFacet(ExoplanetFloraFacet.class, facet);
     }
 }

@@ -29,7 +29,7 @@ import org.terasology.world.generation.Updates;
 @Updates(@Facet(ExoplanetSurfaceHeightFacet.class))
 public class ExoplanetMountainsProvider implements FacetProvider {
     private Noise mountainNoise;
-    private int mountainHeight = 500;
+    private int mountainHeight;
 
     public ExoplanetMountainsProvider(int mountainHeight) {
         this.mountainHeight = mountainHeight;
