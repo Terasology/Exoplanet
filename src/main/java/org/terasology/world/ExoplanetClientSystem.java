@@ -34,6 +34,7 @@ import org.terasology.registry.In;
 import org.terasology.world.block.BlockComponent;
 import org.terasology.world.generation.Region;
 import org.terasology.world.generation.World;
+import org.terasology.world.generation.facets.SurfaceHeightFacet;
 import org.terasology.world.generator.WorldGenerator;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
@@ -42,6 +43,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import static org.terasology.generator.ExoplanetWorldGenerator.EXOPLANET_BORDER;
 import static org.terasology.generator.ExoplanetWorldGenerator.EXOPLANET_HEIGHT;
 import static org.terasology.generator.ExoplanetWorldGenerator.EXOPLANET_SEA_LEVEL;
 
@@ -78,12 +80,23 @@ public class ExoplanetClientSystem extends BaseComponentSystem implements Update
         EntityRef character = localPlayer.getCharacterEntity();
         EntityRef client = localPlayer.getClientEntity();
 
-        Vector3f spawnPos = findExoplanetSpawnPos(blockComponent.position);
-        if (spawnPos != null) {
-            character.send(new EnterExoplanetEvent(client));
-            teleportQueue.put(character, spawnPos);
+        Vector3f spawnPos;
+        if (blockComponent.position.y >= EXOPLANET_BORDER) {
+            spawnPos = findEarthSpawnPos(blockComponent.position);
+            if (spawnPos != null) {
+                character.send(new ExitExoplanetEvent(client));
+                teleportQueue.put(character, spawnPos);
+                LOGGER.info("Portal Activate Event Sent - Earth");
+            }
+        } else {
+            spawnPos = findExoplanetSpawnPos(blockComponent.position);
+            if (spawnPos != null) {
+                character.send(new EnterExoplanetEvent(client));
+                teleportQueue.put(character, spawnPos);
+                LOGGER.info("Portal Activate Event Sent - Exoplanet");
+            }
         }
-        LOGGER.info("Portal Activate Event Sent");
+
         event.consume();
     }
 
@@ -97,8 +110,27 @@ public class ExoplanetClientSystem extends BaseComponentSystem implements Update
         if (surfaceHeightFacet != null) {
             for (BaseVector2i pos : surfaceHeightFacet.getWorldRegion().contents()) {
                 float surfaceHeight = surfaceHeightFacet.getWorld(pos);
-                LOGGER.info("SurfaceHeight: " + surfaceHeight);
+
                 if (surfaceHeight >= EXOPLANET_SEA_LEVEL){
+                    return new Vector3f(pos.x(), surfaceHeight + 1, pos.y());
+                }
+            }
+        }
+        return null;
+    }
+
+    private Vector3f findEarthSpawnPos (Vector3i currentPos){
+        World world = worldGenerator.getWorld();
+        Vector3i searchRadius = new Vector3i(32, 1, 32);
+        Region3i searchArea = Region3i.createFromCenterExtents(new Vector3i(currentPos.x, 0, currentPos.z), searchRadius);
+        Region worldRegion = world.getWorldData(searchArea);
+
+        SurfaceHeightFacet surfaceHeightFacet = worldRegion.getFacet(SurfaceHeightFacet.class);
+        if (surfaceHeightFacet != null) {
+            for (BaseVector2i pos : surfaceHeightFacet.getWorldRegion().contents()) {
+                float surfaceHeight = surfaceHeightFacet.getWorld(pos);
+
+                if (surfaceHeight >= 32){
                     return new Vector3f(pos.x(), surfaceHeight + 1, pos.y());
                 }
             }
