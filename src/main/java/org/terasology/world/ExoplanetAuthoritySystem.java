@@ -31,11 +31,11 @@ public class ExoplanetAuthoritySystem extends BaseComponentSystem {
 
     @ReceiveEvent
     public void onEnterExoplanet(EnterExoplanetEvent event, EntityRef clientEntity) {
-        event.clientEntity.send(new ChatMessageEvent("Teleporting to Exoplanet: TS-180812R", EntityRef.NULL));
+        event.getClientEntity().send(new ChatMessageEvent("Teleporting to Exoplanet: TS-180812R", EntityRef.NULL));
     }
 
     @ReceiveEvent
     public void onExitExoplanet(ExitExoplanetEvent event, EntityRef clientEntity) {
-        event.clientEntity.send(new ChatMessageEvent("Teleporting back to Earth", EntityRef.NULL));
+        event.getClientEntity().send(new ChatMessageEvent("Teleporting back to Earth", EntityRef.NULL));
     }
 }
