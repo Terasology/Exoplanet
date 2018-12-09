@@ -21,29 +21,20 @@ import org.terasology.core.world.generator.rasterizers.SolidRasterizer;
 import org.terasology.core.world.generator.rasterizers.TreeRasterizer;
 import org.terasology.engine.SimpleUri;
 import org.terasology.generator.facets.ExoplanetSurfaceHeightFacet;
-import org.terasology.generator.providers.ExoplanetFloraProvider;
-import org.terasology.generator.providers.ExoplanetMountainsProvider;
-import org.terasology.generator.providers.ExoplanetSurfaceProvider;
-import org.terasology.generator.providers.ExoplanetTreeProvider;
-import org.terasology.generator.rasterizers.ExoplanetFloraRasterizer;
-import org.terasology.generator.rasterizers.ExoplanetOceanRasterizer;
-import org.terasology.generator.rasterizers.ExoplanetTreeRasterizer;
-import org.terasology.generator.rasterizers.ExoplanetWorldRasterizer;
+import org.terasology.generator.providers.*;
+import org.terasology.generator.rasterizers.*;
 import org.terasology.math.TeraMath;
 import org.terasology.math.geom.ImmutableVector2i;
 import org.terasology.registry.In;
 import org.terasology.world.generation.BaseFacetedWorldGenerator;
 import org.terasology.world.generation.WorldBuilder;
-import org.terasology.world.generation.WorldRasterizer;
 import org.terasology.world.generator.RegisterWorldGenerator;
 import org.terasology.world.generator.plugin.WorldGeneratorPluginLibrary;
 import org.terasology.world.zones.ConstantLayerThickness;
 import org.terasology.world.zones.LayeredZoneRegionFunction;
-import org.terasology.world.zones.SingleBlockRasterizer;
 import org.terasology.world.zones.Zone;
 
 import static org.terasology.world.zones.LayeredZoneRegionFunction.LayeredZoneOrdering.ABOVE_GROUND;
-import static org.terasology.world.zones.LayeredZoneRegionFunction.LayeredZoneOrdering.GROUND;
 
 @RegisterWorldGenerator(id = "exoplanetWorld", displayName = "Exoplanet")
 public class ExoplanetWorldGenerator extends BaseFacetedWorldGenerator {
@@ -99,13 +90,5 @@ public class ExoplanetWorldGenerator extends BaseFacetedWorldGenerator {
                 .addProvider(new ExoplanetTreeProvider())
                 .addRasterizer(new ExoplanetFloraRasterizer())
                 .addRasterizer(new ExoplanetTreeRasterizer());
-
-//                .addZone(new Zone("ExoplanetGround", new LayeredZoneRegionFunction(new ConstantLayerThickness(10),
-//                        GROUND + EXOPLANET_HEIGHT))
-//
-//                        .addZone(new Zone("ExoplanetBeach", (x, y, z, region) ->
-//                                region.getFacet(ExoplanetSurfaceHeightFacet.class).getWorld(x, z) <= EXOPLANET_SEA_LEVEL + 3)
-//                                .addRasterizer(new SingleBlockRasterizer("core:sand")))
-//                );
     }
 }
