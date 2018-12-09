@@ -36,9 +36,10 @@ public class ExoplanetFloraRasterizer implements WorldRasterizer {
 
     @Override
     public void initialize() {
-        flora.put(CoreRegistry.get(BlockManager.class).getBlock("Exoplanet:ExoplanetTallGrass1"), 0.45f);
+        flora.put(CoreRegistry.get(BlockManager.class).getBlock("Exoplanet:ExoplanetTallGrass1"), 0.35f);
         flora.put(CoreRegistry.get(BlockManager.class).getBlock("Exoplanet:ExoplanetTallGrass2"), 0.45f);
         flora.put(CoreRegistry.get(BlockManager.class).getBlock("Exoplanet:ExoplanetTallGrass3"), 0.45f);
+        flora.put(CoreRegistry.get(BlockManager.class).getBlock("Exoplanet:ExoplanetTallGrass4"), 0.3f);
     }
 
     @Override
@@ -46,17 +47,18 @@ public class ExoplanetFloraRasterizer implements WorldRasterizer {
         ExoplanetFloraFacet facet = chunkRegion.getFacet(ExoplanetFloraFacet.class);
         for (Vector3i position : chunkRegion.getRegion()) {
             if (facet.getWorld(position)
-                    && chunk.getBlock(ChunkMath.calcBlockPos(new Vector3i(position).subY(1))).getURI() != BlockManager.AIR_ID) {
-                chunk.setBlock(ChunkMath.calcBlockPos(position.addY(1)), getRandomFlora());
+                    && chunk.getBlock(ChunkMath.calcBlockPos(new Vector3i(position).subY(1))).getURI() != BlockManager.AIR_ID
+                    && !chunk.getBlock(ChunkMath.calcBlockPos(new Vector3i(position).subY(1))).isLiquid()) {
+                chunk.setBlock(ChunkMath.calcBlockPos(position.addY(1)), getRandomFlora(flora));
             }
         }
     }
 
-    private Block getRandomFlora() {
+    private Block getRandomFlora(Map<Block, Float> floraMap) {
         float rand = random.nextFloat(0, 1);
         float cumulativeProbability = 0.0f;
 
-        for (Map.Entry<Block, Float> entry : flora.entrySet()) {
+        for (Map.Entry<Block, Float> entry : floraMap.entrySet()) {
             cumulativeProbability += entry.getValue();
             if (rand <= cumulativeProbability) {
                 return entry.getKey();

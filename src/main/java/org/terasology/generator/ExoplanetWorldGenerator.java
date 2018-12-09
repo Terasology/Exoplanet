@@ -95,10 +95,10 @@ public class ExoplanetWorldGenerator extends BaseFacetedWorldGenerator {
 
                             .addRasterizer(new ExoplanetOceanRasterizer())
                             ))
-                .addProvider(new ExoplanetTreeProvider())
                 .addProvider(new ExoplanetFloraProvider())
-                .addRasterizer(new ExoplanetTreeRasterizer())
-                .addRasterizer(new ExoplanetFloraRasterizer());
+                .addProvider(new ExoplanetTreeProvider())
+                .addRasterizer(new ExoplanetFloraRasterizer())
+                .addRasterizer(new ExoplanetTreeRasterizer());
 
 //                .addZone(new Zone("ExoplanetGround", new LayeredZoneRegionFunction(new ConstantLayerThickness(10),
 //                        GROUND + EXOPLANET_HEIGHT))

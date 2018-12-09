@@ -23,7 +23,8 @@ import org.terasology.utilities.procedural.Noise;
 import org.terasology.utilities.procedural.WhiteNoise;
 import org.terasology.world.generation.*;
 
-import static org.terasology.generator.ExoplanetWorldGenerator.EXOPLANET_SEA_LEVEL;
+import static org.terasology.generator.ExoplanetWorldGenerator.EXOPLANET_BORDER;
+
 
 @Produces(ExoplanetFloraFacet.class)
 @Requires(@Facet(ExoplanetSurfaceHeightFacet.class))
@@ -45,7 +46,7 @@ public class ExoplanetFloraProvider implements FacetProvider {
             int surfaceHeight = TeraMath.floorToInt(surfaceHeightFacet.getWorld(position));
 
             if (facet.getWorldRegion().encompasses(position.x(), surfaceHeight, position.y())
-                    && surfaceHeight > EXOPLANET_SEA_LEVEL && floraNoise.noise(position.x(), position.y()) > 0.96) {
+                    && surfaceHeight > EXOPLANET_BORDER && floraNoise.noise(position.x(), position.y()) > 0.96) {
                 facet.setWorld(position.x(), surfaceHeight, position.y(), true);
             }
         }
