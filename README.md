@@ -3,8 +3,7 @@
 This world generator generates an exotic world from a distant galaxy as an additional dimension.
 
 ## How to get there?
-1. There is a portal block which can teleport you to this exotic world. Right now, it is not possible to obtain it. So, use the command
-`give exoplanetportal`
+1. There is a portal block which can teleport you to this exotic world. 2 portal blocks will be given when you spawn. So, you can use the blocks to teleport to Exoplanet and teleport back to Earth.
 2. Place the block and interact
 
 ![Portal](https://raw.githubusercontent.com/PutawanDE/Exoplanet/master/Screenshots/PortalBlock.png)
@@ -17,7 +16,7 @@ This world generator generates an exotic world from a distant galaxy as an addit
 
 3. **Undersea Grass** - this planet's grass is special, it can grow both on the ground and undersea.
 
-4. **Glowing Grass** - this planet is far too different from Earth. The grass here can glow in the dark. At night, it is not really dark at all.
+4. **Glowing Grass** - this planet is far too different from Earth. The grass here can glow in the dark. At night, Exoplanet is not really dark at all.
 
 ![Portal](https://raw.githubusercontent.com/PutawanDE/Exoplanet/master/Screenshots/Ore1.png)
 ![Portal](https://raw.githubusercontent.com/PutawanDE/Exoplanet/master/Screenshots/Sea1.png)
