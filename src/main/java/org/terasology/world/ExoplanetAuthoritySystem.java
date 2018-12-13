@@ -22,12 +22,21 @@ import org.terasology.entitySystem.systems.BaseComponentSystem;
 import org.terasology.entitySystem.systems.RegisterMode;
 import org.terasology.entitySystem.systems.RegisterSystem;
 import org.terasology.logic.chat.ChatMessageEvent;
+import org.terasology.logic.inventory.InventoryComponent;
+import org.terasology.logic.inventory.InventoryManager;
+import org.terasology.logic.players.event.OnPlayerSpawnedEvent;
 import org.terasology.registry.In;
+import org.terasology.world.block.BlockManager;
+import org.terasology.world.block.items.BlockItemFactory;
 
 @RegisterSystem(RegisterMode.AUTHORITY)
 public class ExoplanetAuthoritySystem extends BaseComponentSystem {
     @In
     EntityManager entityManager;
+    @In
+    BlockManager blockManager;
+    @In
+    InventoryManager inventoryManager;
 
     @ReceiveEvent
     public void onEnterExoplanet(EnterExoplanetEvent event, EntityRef clientEntity) {
@@ -37,5 +46,12 @@ public class ExoplanetAuthoritySystem extends BaseComponentSystem {
     @ReceiveEvent
     public void onExitExoplanet(ExitExoplanetEvent event, EntityRef clientEntity) {
         event.getClientEntity().send(new ChatMessageEvent("Teleporting back to Earth", EntityRef.NULL));
+    }
+
+    @ReceiveEvent(components = InventoryComponent.class)
+    public void onPlayerSpawnedEvent(OnPlayerSpawnedEvent event, EntityRef player) {
+        BlockItemFactory blockFactory = new BlockItemFactory(entityManager);
+
+        inventoryManager.giveItem(player, EntityRef.NULL, blockFactory.newInstance(blockManager.getBlockFamily("Exoplanet:ExoplanetPortal"), 2));
     }
 }

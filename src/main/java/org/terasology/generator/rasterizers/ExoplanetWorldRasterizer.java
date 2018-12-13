@@ -34,7 +34,7 @@ import java.util.Map;
 import static org.terasology.generator.ExoplanetWorldGenerator.*;
 
 public class ExoplanetWorldRasterizer implements WorldRasterizer {
-    private Block grass, dirt, sand, stone, snow;
+    private Block grass, dirt, sand, stone, snow, borderBlock;
     private Map<Block, Float> ore = new LinkedHashMap<>();
 
     private final int ORE_DEPTH = 30;
@@ -49,6 +49,7 @@ public class ExoplanetWorldRasterizer implements WorldRasterizer {
         stone = CoreRegistry.get(BlockManager.class).getBlock("Core:Stone");
         snow = CoreRegistry.get(BlockManager.class).getBlock("Core:Snow");
         sand = CoreRegistry.get(BlockManager.class).getBlock("Core:Sand");
+        borderBlock = CoreRegistry.get(BlockManager.class).getBlock("Exoplanet:ExoplanetBorder");
 
         ore.put(CoreRegistry.get(BlockManager.class).getBlock("Core:CoalOre"), 0.1f);
         ore.put(CoreRegistry.get(BlockManager.class).getBlock("Core:CopperOre"), 0.2f);
@@ -66,7 +67,9 @@ public class ExoplanetWorldRasterizer implements WorldRasterizer {
                 float surfaceHeight = surfaceHeightFacet.getWorld(position.x, position.z);
                 int rockLayerDepth = surfaceHeightFacet.getRockLayerDepth();
 
-                if (position.y > EXOPLANET_BORDER) {
+                if (position.y == EXOPLANET_BORDER) {
+                    chunk.setBlock(ChunkMath.calcBlockPos(position), borderBlock);
+                } else if (position.y > EXOPLANET_BORDER) {
                     if (position.y < surfaceHeight - rockLayerDepth) {
                         chunk.setBlock(ChunkMath.calcBlockPos(position), stone);
                         if (position.y < surfaceHeight - ORE_DEPTH && position.y > surfaceHeight - ORE_DEPTH - ORE_VEIN_THICKNESS) {
@@ -75,7 +78,7 @@ public class ExoplanetWorldRasterizer implements WorldRasterizer {
                     } else if (position.y < surfaceHeight - 1 && position.y >= surfaceHeight - rockLayerDepth) {
                         chunk.setBlock(ChunkMath.calcBlockPos(position), dirt);
                     } else if (position.y < surfaceHeight) {
-                        if (position.y < EXOPLANET_SEA_LEVEL || position.y == EXOPLANET_SEA_LEVEL) {
+                        if (position.y <= EXOPLANET_SEA_LEVEL) {
                             chunk.setBlock(ChunkMath.calcBlockPos(position), sand);
                         } else if (position.y <= EXOPLANET_HEIGHT + EXOPLANET_MOUNTAIN_HEIGHT
                                 && position.y >= EXOPLANET_HEIGHT + 125) {

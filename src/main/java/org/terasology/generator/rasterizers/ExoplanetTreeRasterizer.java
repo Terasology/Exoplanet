@@ -48,11 +48,6 @@ public class ExoplanetTreeRasterizer implements WorldRasterizer {
         for (Map.Entry<BaseVector3i, ExoplanetTree> entry : facet.getWorldEntries().entrySet()) {
             Vector3i treePosition = new Vector3i(entry.getKey()).addY(1);
 
-            // checks if tree is underwater, if it is then skip - don't build
-            if (treePosition.y <= EXOPLANET_SEA_LEVEL) {
-                continue;
-            }
-
             int height = entry.getValue().getHeight();
             int width = entry.getValue().getWidth();
             int radius = entry.getValue().getCrownRadius();
