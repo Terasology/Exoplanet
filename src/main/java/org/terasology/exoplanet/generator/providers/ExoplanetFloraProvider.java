@@ -13,17 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.terasology.generator.providers;
+package org.terasology.exoplanet.generator.providers;
 
-import org.terasology.generator.facets.ExoplanetFloraFacet;
-import org.terasology.generator.facets.ExoplanetSurfaceHeightFacet;
+import org.terasology.exoplanet.generator.facets.ExoplanetFloraFacet;
+import org.terasology.exoplanet.generator.facets.ExoplanetSurfaceHeightFacet;
 import org.terasology.math.TeraMath;
 import org.terasology.math.geom.BaseVector2i;
 import org.terasology.utilities.procedural.Noise;
 import org.terasology.utilities.procedural.WhiteNoise;
 import org.terasology.world.generation.*;
 
-import static org.terasology.generator.ExoplanetWorldGenerator.EXOPLANET_BORDER;
+import static org.terasology.exoplanet.generator.ExoplanetWorldGenerator.EXOPLANET_BORDER;
 
 
 @Produces(ExoplanetFloraFacet.class)

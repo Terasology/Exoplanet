@@ -13,19 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.terasology.world;
+package org.terasology.exoplanet.teleport;
 
-import org.terasology.entitySystem.entity.EntityRef;
-import org.terasology.entitySystem.event.Event;
+import org.terasology.entitySystem.Component;
 
-public class ExitExoplanetEvent implements Event {
-    EntityRef clientEntity;
-
-    public ExitExoplanetEvent(EntityRef clientEntity) {
-        this.clientEntity = clientEntity;
-    }
-
-    public EntityRef getClientEntity() {
-        return clientEntity;
-    }
+public class ExoplanetPortalOnActivateComponent implements Component {
 }

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.terasology.generator;
+package org.terasology.exoplanet.generator;
 
 public class ExoplanetTree {
     private final int TRUNK_HEIGHT = 4;

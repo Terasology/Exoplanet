@@ -13,16 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.terasology.generator.facets;
+package org.terasology.exoplanet.teleport;
 
-import org.terasology.generator.ExoplanetTree;
-import org.terasology.math.Region3i;
-import org.terasology.world.generation.Border3D;
-import org.terasology.world.generation.facets.base.SparseObjectFacet3D;
+import org.terasology.entitySystem.entity.EntityRef;
+import org.terasology.entitySystem.event.Event;
 
-public class ExoplanetTreeFacet extends SparseObjectFacet3D<ExoplanetTree> {
+public class ExitExoplanetEvent implements Event {
+    EntityRef clientEntity;
 
-    public ExoplanetTreeFacet(Region3i targetRegion, Border3D border) {
-        super(targetRegion, border);
+    public ExitExoplanetEvent(EntityRef clientEntity) {
+        this.clientEntity = clientEntity;
+    }
+
+    public EntityRef getClientEntity() {
+        return clientEntity;
     }
 }

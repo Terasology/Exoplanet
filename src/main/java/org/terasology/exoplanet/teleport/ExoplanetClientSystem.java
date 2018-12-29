@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.terasology.world;
+package org.terasology.exoplanet.teleport;
 
 import org.terasology.entitySystem.entity.EntityRef;
 import org.terasology.entitySystem.event.ReceiveEvent;
@@ -21,10 +21,9 @@ import org.terasology.entitySystem.systems.BaseComponentSystem;
 import org.terasology.entitySystem.systems.RegisterMode;
 import org.terasology.entitySystem.systems.RegisterSystem;
 import org.terasology.entitySystem.systems.UpdateSubscriberSystem;
-import org.terasology.generator.facets.ExoplanetSurfaceHeightFacet;
+import org.terasology.exoplanet.generator.facets.ExoplanetSurfaceHeightFacet;
 import org.terasology.logic.characters.CharacterTeleportEvent;
 import org.terasology.logic.common.ActivateEvent;
-import org.terasology.logic.location.LocationComponent;
 import org.terasology.logic.players.LocalPlayer;
 import org.terasology.math.Region3i;
 import org.terasology.math.geom.BaseVector2i;
@@ -43,9 +42,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import static org.terasology.generator.ExoplanetWorldGenerator.EXOPLANET_BORDER;
-import static org.terasology.generator.ExoplanetWorldGenerator.EXOPLANET_HEIGHT;
-import static org.terasology.generator.ExoplanetWorldGenerator.EXOPLANET_SEA_LEVEL;
+import static org.terasology.exoplanet.generator.ExoplanetWorldGenerator.EXOPLANET_BORDER;
+import static org.terasology.exoplanet.generator.ExoplanetWorldGenerator.EXOPLANET_HEIGHT;
+import static org.terasology.exoplanet.generator.ExoplanetWorldGenerator.EXOPLANET_SEA_LEVEL;
 
 @RegisterSystem(RegisterMode.CLIENT)
 public class ExoplanetClientSystem extends BaseComponentSystem implements UpdateSubscriberSystem {

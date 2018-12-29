@@ -13,16 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.terasology.generator;
+package org.terasology.exoplanet.generator;
 
 import org.terasology.core.world.generator.facetProviders.*;
 import org.terasology.core.world.generator.rasterizers.FloraRasterizer;
 import org.terasology.core.world.generator.rasterizers.SolidRasterizer;
 import org.terasology.core.world.generator.rasterizers.TreeRasterizer;
 import org.terasology.engine.SimpleUri;
-import org.terasology.generator.facets.ExoplanetSurfaceHeightFacet;
-import org.terasology.generator.providers.*;
-import org.terasology.generator.rasterizers.*;
+import org.terasology.exoplanet.generator.facets.ExoplanetSurfaceHeightFacet;
+import org.terasology.exoplanet.generator.providers.*;
+import org.terasology.exoplanet.generator.rasterizers.*;
 import org.terasology.math.TeraMath;
 import org.terasology.math.geom.ImmutableVector2i;
 import org.terasology.registry.In;

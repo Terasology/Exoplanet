@@ -10,7 +10,7 @@ This world generator generates an exotic world from a distant galaxy as an addit
 *Portal Block*
 
 ## Features
-1. **Ore** - this planet has a large ore vein underground (Diamon, Gold, Iron, Copper, Coal).
+1. **Ore** - this planet has a large ore vein underground (Diamond, Gold, Iron, Copper, Coal).
 
 2. **Red Tree and Grass** - this planet's plants mostly have red leaves as they use different pigment for their photosynthesis.
 

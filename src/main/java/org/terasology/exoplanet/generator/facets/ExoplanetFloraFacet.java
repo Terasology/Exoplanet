@@ -13,30 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.terasology.generator.facets;
+package org.terasology.exoplanet.generator.facets;
 
 import org.terasology.math.Region3i;
 import org.terasology.world.generation.Border3D;
-import org.terasology.world.generation.facets.base.BaseFieldFacet2D;
+import org.terasology.world.generation.facets.base.BaseBooleanFieldFacet3D;
 
-public class ExoplanetSurfaceHeightFacet extends BaseFieldFacet2D {
-    private int baseSurfaceHeight;
-
-    private final int ROCKY_LAYER_DEPTH = 10;
-
-    public ExoplanetSurfaceHeightFacet(Region3i targetRegion, Border3D border) {
+public class ExoplanetFloraFacet extends BaseBooleanFieldFacet3D {
+    public ExoplanetFloraFacet(Region3i targetRegion, Border3D border) {
         super(targetRegion, border);
-    }
-
-    public void setBaseSurfaceHeight(int baseSurfaceHeight) {
-        this.baseSurfaceHeight = baseSurfaceHeight;
-    }
-
-    public int getBaseSurfaceHeight() {
-        return baseSurfaceHeight;
-    }
-
-    public int getRockLayerDepth() {
-        return ROCKY_LAYER_DEPTH;
     }
 }

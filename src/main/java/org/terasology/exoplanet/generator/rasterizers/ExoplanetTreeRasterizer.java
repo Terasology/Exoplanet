@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.terasology.generator.rasterizers;
+package org.terasology.exoplanet.generator.rasterizers;
 
-import org.terasology.generator.ExoplanetTree;
-import org.terasology.generator.facets.ExoplanetTreeFacet;
+import org.terasology.exoplanet.generator.ExoplanetTree;
+import org.terasology.exoplanet.generator.facets.ExoplanetTreeFacet;
 import org.terasology.math.ChunkMath;
 import org.terasology.math.Region3i;
 import org.terasology.math.geom.BaseVector3i;
@@ -27,8 +27,6 @@ import org.terasology.world.block.BlockManager;
 import org.terasology.world.chunks.CoreChunk;
 import org.terasology.world.generation.Region;
 import org.terasology.world.generation.WorldRasterizer;
-
-import static org.terasology.generator.ExoplanetWorldGenerator.EXOPLANET_SEA_LEVEL;
 
 import java.util.Map;
 

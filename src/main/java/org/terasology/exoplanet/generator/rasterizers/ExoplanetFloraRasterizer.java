@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.terasology.generator.rasterizers;
+package org.terasology.exoplanet.generator.rasterizers;
 
-import org.terasology.generator.facets.ExoplanetFloraFacet;
+import org.terasology.exoplanet.generator.facets.ExoplanetFloraFacet;
 import org.terasology.math.ChunkMath;
 import org.terasology.math.geom.Vector3i;
 import org.terasology.registry.CoreRegistry;

@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.terasology.generator.rasterizers;
+package org.terasology.exoplanet.generator.rasterizers;
 
-import org.terasology.generator.facets.ExoplanetSurfaceHeightFacet;
+import org.terasology.exoplanet.generator.facets.ExoplanetSurfaceHeightFacet;
 import org.terasology.math.ChunkMath;
 import org.terasology.math.geom.Vector3i;
 import org.terasology.registry.CoreRegistry;
@@ -31,7 +31,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 
-import static org.terasology.generator.ExoplanetWorldGenerator.*;
+import static org.terasology.exoplanet.generator.ExoplanetWorldGenerator.*;
 
 public class ExoplanetWorldRasterizer implements WorldRasterizer {
     private Block grass, dirt, sand, stone, snow, borderBlock;
