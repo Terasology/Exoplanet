@@ -18,20 +18,26 @@ package org.terasology.exoplanet;
 import org.terasology.world.biomes.Biome;
 
 public enum ExoplanetBiome implements Biome {
-    MOUNTAINS("Mountains"),
-    SNOW("Snow"),
-    DESERT("Desert"),
-    FOREST("Forest"),
-    OCEAN("Ocean"),
-    BEACH("Beach"),
-    PLAINS("Plains");
+    MOUNTAINS("Mountains", 0.9f, 0.4f, 0.25f),
+    SNOW("Snow", 1.0f, 0.75f, 0.15f),
+    DESERT("Desert", 0.0f, 0.15f, 0.75f),
+    FOREST("Forest", 0.8f, 0.6f, 0.5f),
+    OCEAN("Ocean", 0.2f, 1.0f, 0.4f),
+    BEACH("Beach", 0.1f, 0.5f, 0.4f),
+    PLAINS("Plains", 0.0f, 0.5f, 0.6f);
 
     private final String id;
     private final String name;
+    private final float fog;
+    private final float humidity;
+    private final float temperature;
 
-    ExoplanetBiome(String name) {
+    ExoplanetBiome(String name, float fog, float humidity, float temperature) {
         this.id = "Exoplanet:" + name().toLowerCase();
         this.name = name;
+        this.fog = fog;
+        this.humidity = humidity;
+        this.temperature = temperature;
     }
 
     @Override
@@ -42,6 +48,21 @@ public enum ExoplanetBiome implements Biome {
     @Override
     public String getName() {
         return this.name;
+    }
+
+    @Override
+    public float getFog() {
+        return fog;
+    }
+
+    @Override
+    public float getHumidity() {
+        return humidity;
+    }
+
+    @Override
+    public float getTemperature() {
+        return temperature;
     }
 
     @Override
