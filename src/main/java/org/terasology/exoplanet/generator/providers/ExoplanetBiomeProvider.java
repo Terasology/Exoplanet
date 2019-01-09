@@ -15,8 +15,8 @@
  */
 package org.terasology.exoplanet.generator.providers;
 
-import org.terasology.core.world.generator.facets.BiomeFacet;
 import org.terasology.exoplanet.ExoplanetBiome;
+import org.terasology.exoplanet.generator.facets.ExoplanetBiomeFacet;
 import org.terasology.exoplanet.generator.facets.ExoplanetHumidityFacet;
 import org.terasology.exoplanet.generator.facets.ExoplanetSurfaceHeightFacet;
 import org.terasology.exoplanet.generator.facets.ExoplanetSurfaceTempFacet;
@@ -25,7 +25,7 @@ import org.terasology.world.generation.*;
 
 import static org.terasology.exoplanet.generator.ExoplanetWorldGenerator.EXOPLANET_SEA_LEVEL;
 
-@Produces(BiomeFacet.class)
+@Produces(ExoplanetBiomeFacet.class)
 @Requires({
         @Facet(ExoplanetSurfaceHeightFacet.class),
         @Facet(ExoplanetSurfaceTempFacet.class),
@@ -43,8 +43,8 @@ public class ExoplanetBiomeProvider implements FacetProvider {
         ExoplanetSurfaceTempFacet temperatureFacet = region.getRegionFacet(ExoplanetSurfaceTempFacet.class);
         ExoplanetHumidityFacet humidityFacet = region.getRegionFacet(ExoplanetHumidityFacet.class);
 
-        Border3D border = region.getBorderForFacet(BiomeFacet.class);
-        BiomeFacet biomeFacet = new BiomeFacet(region.getRegion(), border);
+        Border3D border = region.getBorderForFacet(ExoplanetBiomeFacet.class);
+        ExoplanetBiomeFacet biomeFacet = new ExoplanetBiomeFacet(region.getRegion(), border);
 
         int seaLevel = EXOPLANET_SEA_LEVEL;
 
@@ -69,6 +69,6 @@ public class ExoplanetBiomeProvider implements FacetProvider {
                 biomeFacet.set(pos, ExoplanetBiome.FOREST);
             }
         }
-        region.setRegionFacet(BiomeFacet.class, biomeFacet);
+        region.setRegionFacet(ExoplanetBiomeFacet.class, biomeFacet);
     }
 }

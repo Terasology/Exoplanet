@@ -20,21 +20,14 @@ import org.terasology.core.world.generator.rasterizers.FloraRasterizer;
 import org.terasology.core.world.generator.rasterizers.SolidRasterizer;
 import org.terasology.core.world.generator.rasterizers.TreeRasterizer;
 import org.terasology.engine.SimpleUri;
-import org.terasology.exoplanet.generator.facets.ExoplanetSurfaceHeightFacet;
 import org.terasology.exoplanet.generator.providers.*;
 import org.terasology.exoplanet.generator.rasterizers.*;
-import org.terasology.math.TeraMath;
 import org.terasology.math.geom.ImmutableVector2i;
 import org.terasology.registry.In;
 import org.terasology.world.generation.BaseFacetedWorldGenerator;
 import org.terasology.world.generation.WorldBuilder;
 import org.terasology.world.generator.RegisterWorldGenerator;
 import org.terasology.world.generator.plugin.WorldGeneratorPluginLibrary;
-import org.terasology.world.zones.ConstantLayerThickness;
-import org.terasology.world.zones.LayeredZoneRegionFunction;
-import org.terasology.world.zones.Zone;
-
-import static org.terasology.world.zones.LayeredZoneRegionFunction.LayeredZoneOrdering.ABOVE_GROUND;
 
 @RegisterWorldGenerator(id = "exoplanetWorld", displayName = "Exoplanet")
 public class ExoplanetWorldGenerator extends BaseFacetedWorldGenerator {
@@ -76,16 +69,10 @@ public class ExoplanetWorldGenerator extends BaseFacetedWorldGenerator {
                 // Exoplanet World
                 .addProvider(new ExoplanetSurfaceProvider(EXOPLANET_HEIGHT))
                 .addProvider(new ExoplanetMountainsProvider(EXOPLANET_MOUNTAIN_HEIGHT))
+                .addProvider(new ExoplanetHumidityProvider())
+                .addProvider(new ExoplanetSurfaceTempProvider())
+                .addProvider(new ExoplanetBiomeProvider())
                 .addRasterizer(new ExoplanetWorldRasterizer())
-                .addZone(new Zone("ExoplanetSurface", new LayeredZoneRegionFunction(new ConstantLayerThickness(10),
-                        ABOVE_GROUND + EXOPLANET_HEIGHT))
-
-                    .addZone(new Zone("ExoplanetOcean", (x, y, z, region) ->
-                            TeraMath.floorToInt(region.getFacet(ExoplanetSurfaceHeightFacet.class).getWorld(x, z)) < y
-                                    && y <= EXOPLANET_SEA_LEVEL )
-
-                            .addRasterizer(new ExoplanetOceanRasterizer())
-                            ))
                 .addProvider(new ExoplanetFloraProvider())
                 .addProvider(new ExoplanetTreeProvider())
                 .addRasterizer(new ExoplanetFloraRasterizer())
