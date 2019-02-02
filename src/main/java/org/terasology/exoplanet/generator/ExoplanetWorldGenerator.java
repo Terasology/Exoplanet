@@ -33,7 +33,6 @@ import org.terasology.world.generator.plugin.WorldGeneratorPluginLibrary;
 public class ExoplanetWorldGenerator extends BaseFacetedWorldGenerator {
     public static final int EXOPLANET_HEIGHT = 10000;
     public static final int EXOPLANET_BORDER = 9900;
-    public static final int EXOPLANET_SEA_LEVEL = 10020;
     public static final int EXOPLANET_MOUNTAIN_HEIGHT = 400;
 
     @In
@@ -45,13 +44,15 @@ public class ExoplanetWorldGenerator extends BaseFacetedWorldGenerator {
 
     @Override
     protected WorldBuilder createWorld() {
-        int seaLevel = 32;
+        int perlinSeaLevel = 32;
+        int exoplanetSeaLevel = 35;
+
         ImmutableVector2i spawnPos = new ImmutableVector2i(0, 0);
 
         return new WorldBuilder(worldGeneratorPluginLibrary)
                 // Perlin World (Earth)
-                .setSeaLevel(seaLevel)
-                .addProvider(new SeaLevelProvider(seaLevel))
+                .setSeaLevel(perlinSeaLevel)
+                .addProvider(new SeaLevelProvider(perlinSeaLevel))
                 .addProvider(new PerlinHumidityProvider())
                 .addProvider(new PerlinSurfaceTemperatureProvider())
                 .addProvider(new PerlinBaseSurfaceProvider())
@@ -62,11 +63,12 @@ public class ExoplanetWorldGenerator extends BaseFacetedWorldGenerator {
                 .addProvider(new SurfaceToDensityProvider())
                 .addProvider(new DefaultFloraProvider())
                 .addProvider(new DefaultTreeProvider())
-                .addProvider(new PlateauProvider(spawnPos, seaLevel + 4, 10, 30))
+                .addProvider(new PlateauProvider(spawnPos, perlinSeaLevel + 4, 10, 30))
                 .addRasterizer(new SolidRasterizer())
                 .addRasterizer(new FloraRasterizer())
                 .addRasterizer(new TreeRasterizer())
                 // Exoplanet World
+                .addProvider(new ExoplanetSeaLevelProvider(exoplanetSeaLevel))
                 .addProvider(new ExoplanetSurfaceProvider(EXOPLANET_HEIGHT))
                 .addProvider(new ExoplanetMountainsProvider(EXOPLANET_MOUNTAIN_HEIGHT))
                 .addProvider(new ExoplanetHumidityProvider())

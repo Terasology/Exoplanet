@@ -17,6 +17,7 @@ package org.terasology.exoplanet.generator.rasterizers;
 
 import org.terasology.exoplanet.ExoplanetBiome;
 import org.terasology.exoplanet.generator.facets.ExoplanetBiomeFacet;
+import org.terasology.exoplanet.generator.facets.ExoplanetSeaLevelFacet;
 import org.terasology.exoplanet.generator.facets.ExoplanetSurfaceHeightFacet;
 import org.terasology.math.ChunkMath;
 import org.terasology.math.TeraMath;
@@ -31,8 +32,6 @@ import org.terasology.world.block.BlockManager;
 import org.terasology.world.chunks.CoreChunk;
 import org.terasology.world.generation.Region;
 import org.terasology.world.generation.WorldRasterizer;
-import org.terasology.world.liquid.LiquidData;
-import org.terasology.world.liquid.LiquidType;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -71,9 +70,11 @@ public class ExoplanetWorldRasterizer implements WorldRasterizer {
 
     @Override
     public void generateChunk(CoreChunk chunk, Region chunkRegion) {
-        LiquidData waterLiquid = new LiquidData(LiquidType.WATER, LiquidData.MAX_LIQUID_DEPTH);
         ExoplanetSurfaceHeightFacet surfaceHeightFacet = chunkRegion.getFacet(ExoplanetSurfaceHeightFacet.class);
         ExoplanetBiomeFacet biomeFacet = chunkRegion.getFacet(ExoplanetBiomeFacet.class);
+        ExoplanetSeaLevelFacet seaLevelFacet = chunkRegion.getFacet(ExoplanetSeaLevelFacet.class);
+
+        int seaLevelWorldHeight = seaLevelFacet.getWorldSeaLevel();
 
         Vector2i pos2d = new Vector2i();
         if (chunkRegion.getRegion().maxY() > EXOPLANET_BORDER) {
@@ -90,15 +91,14 @@ public class ExoplanetWorldRasterizer implements WorldRasterizer {
                     Biome biome = biomeFacet.getWorld(pos2d);
                     chunk.setBiome(ChunkMath.calcBlockPos(position), biome);
 
-                    if (position.y == EXOPLANET_SEA_LEVEL && ExoplanetBiome.SNOW == biome) {
+                    if (position.y == seaLevelWorldHeight && ExoplanetBiome.SNOW == biome) {
                         chunk.setBlock(ChunkMath.calcBlockPos(position), ice);
-                    } else if (position.y <= EXOPLANET_SEA_LEVEL) {
+                    } else if (position.y <= seaLevelWorldHeight) {
                         chunk.setBlock(ChunkMath.calcBlockPos(position), water);
-                        chunk.setLiquid(ChunkMath.calcBlockPos(position), waterLiquid);
                     }
 
                     if (position.y <= surfaceHeight) {
-                        Block block = getBlockToPlace(surfaceHeight, position.y, biome, EXOPLANET_SEA_LEVEL, rockLayerDepth);
+                        Block block = getBlockToPlace(surfaceHeight, position.y, biome, seaLevelWorldHeight, rockLayerDepth);
                         chunk.setBlock(ChunkMath.calcBlockPos(position), block);
                     }
                 }
@@ -129,9 +129,9 @@ public class ExoplanetWorldRasterizer implements WorldRasterizer {
                         return dirt;
                     }
                 case MOUNTAINS:
-                    if (surfaceHeight == currentHeight && currentHeight > seaLevel && currentHeight < seaLevel + 125) {
+                    if (surfaceHeight == currentHeight && currentHeight > seaLevel && currentHeight < seaLevel + 100) {
                         return grass;
-                    } else if (surfaceHeight == currentHeight && currentHeight >= seaLevel + 125) {
+                    } else if (surfaceHeight == currentHeight && currentHeight >= seaLevel + 100) {
                         return snow;
                     } else if (currentHeight < surfaceHeight - rockLayerDepth) {
                         return stone;

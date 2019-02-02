@@ -23,24 +23,19 @@ import org.terasology.world.chunks.ChunkConstants;
 import org.terasology.world.chunks.CoreChunk;
 import org.terasology.world.generation.Region;
 import org.terasology.world.generation.WorldRasterizer;
-import org.terasology.world.liquid.LiquidData;
-import org.terasology.world.liquid.LiquidType;
 
 public class ExoplanetOceanRasterizer implements WorldRasterizer {
     private Block water;
-    private LiquidData waterLiquid;
 
     @Override
     public void initialize() {
         water = CoreRegistry.get(BlockManager.class).getBlock("core:water");
-        waterLiquid = new LiquidData(LiquidType.WATER, LiquidData.MAX_LIQUID_DEPTH);
     }
 
     @Override
     public void generateChunk(CoreChunk chunk, Region chunkRegion) {
         for (Vector3i pos : ChunkConstants.CHUNK_REGION) {
             chunk.setBlock(pos, water);
-            chunk.setLiquid(pos, waterLiquid);
         }
     }
 }

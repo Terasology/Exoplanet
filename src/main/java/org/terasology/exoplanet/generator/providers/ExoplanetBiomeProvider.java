@@ -16,17 +16,13 @@
 package org.terasology.exoplanet.generator.providers;
 
 import org.terasology.exoplanet.ExoplanetBiome;
-import org.terasology.exoplanet.generator.facets.ExoplanetBiomeFacet;
-import org.terasology.exoplanet.generator.facets.ExoplanetHumidityFacet;
-import org.terasology.exoplanet.generator.facets.ExoplanetSurfaceHeightFacet;
-import org.terasology.exoplanet.generator.facets.ExoplanetSurfaceTempFacet;
+import org.terasology.exoplanet.generator.facets.*;
 import org.terasology.math.geom.BaseVector2i;
 import org.terasology.world.generation.*;
 
-import static org.terasology.exoplanet.generator.ExoplanetWorldGenerator.EXOPLANET_SEA_LEVEL;
-
 @Produces(ExoplanetBiomeFacet.class)
 @Requires({
+        @Facet(ExoplanetSeaLevelFacet.class),
         @Facet(ExoplanetSurfaceHeightFacet.class),
         @Facet(ExoplanetSurfaceTempFacet.class),
         @Facet(ExoplanetHumidityFacet.class)
@@ -39,29 +35,30 @@ public class ExoplanetBiomeProvider implements FacetProvider {
 
     @Override
     public void process(GeneratingRegion region) {
-        ExoplanetSurfaceHeightFacet heightFacet = region.getRegionFacet(ExoplanetSurfaceHeightFacet.class);
+        ExoplanetSurfaceHeightFacet surfaceHeightFacet = region.getRegionFacet(ExoplanetSurfaceHeightFacet.class);
         ExoplanetSurfaceTempFacet temperatureFacet = region.getRegionFacet(ExoplanetSurfaceTempFacet.class);
         ExoplanetHumidityFacet humidityFacet = region.getRegionFacet(ExoplanetHumidityFacet.class);
+        ExoplanetSeaLevelFacet seaLevelFacet = region.getRegionFacet(ExoplanetSeaLevelFacet.class);
 
         Border3D border = region.getBorderForFacet(ExoplanetBiomeFacet.class);
         ExoplanetBiomeFacet biomeFacet = new ExoplanetBiomeFacet(region.getRegion(), border);
 
-        int seaLevel = EXOPLANET_SEA_LEVEL;
+        int seaLevelWorldHeight = seaLevelFacet.getWorldSeaLevel();
 
         for (BaseVector2i pos : biomeFacet.getRelativeRegion().contents()) {
             float temp = temperatureFacet.get(pos);
             float hum = temp * humidityFacet.get(pos);
-            float height = heightFacet.get(pos);
+            float height = surfaceHeightFacet.get(pos);
 
-            if (height <= seaLevel) {
+            if (height <= seaLevelWorldHeight) {
                 biomeFacet.set(pos, ExoplanetBiome.OCEAN);
-            } else if (height <= seaLevel + 2) {
+            } else if (height <= seaLevelWorldHeight + 2) {
                 biomeFacet.set(pos, ExoplanetBiome.BEACH);
             } else if (temp >= 0.7f && hum < 0.2f) {
                 biomeFacet.set(pos, ExoplanetBiome.DESERT);
             } else if (hum >= 0.2f && hum <= 0.6f && temp >= 0.5f) {
                 biomeFacet.set(pos, ExoplanetBiome.PLAINS);
-            } else if (temp <= 0.3f && hum > 0.5f) {
+            } else if (temp <= 0.3f) {
                 biomeFacet.set(pos, ExoplanetBiome.SNOW);
             } else if (hum >= 0.2f && hum <= 0.6f && temp < 0.5f) {
                 biomeFacet.set(pos, ExoplanetBiome.MOUNTAINS);

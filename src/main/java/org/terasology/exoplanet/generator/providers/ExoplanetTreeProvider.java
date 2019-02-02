@@ -16,6 +16,7 @@
 package org.terasology.exoplanet.generator.providers;
 
 import org.terasology.exoplanet.generator.ExoplanetTree;
+import org.terasology.exoplanet.generator.facets.ExoplanetSeaLevelFacet;
 import org.terasology.exoplanet.generator.facets.ExoplanetSurfaceHeightFacet;
 import org.terasology.exoplanet.generator.facets.ExoplanetTreeFacet;
 import org.terasology.math.TeraMath;
@@ -24,10 +25,8 @@ import org.terasology.utilities.procedural.Noise;
 import org.terasology.utilities.procedural.WhiteNoise;
 import org.terasology.world.generation.*;
 
-import static org.terasology.exoplanet.generator.ExoplanetWorldGenerator.EXOPLANET_SEA_LEVEL;
-
 @Produces(ExoplanetTreeFacet.class)
-@Requires(@Facet(ExoplanetSurfaceHeightFacet.class))
+@Requires({@Facet(ExoplanetSurfaceHeightFacet.class), @Facet(ExoplanetSeaLevelFacet.class)})
 public class ExoplanetTreeProvider implements FacetProvider {
     private Noise treeNoise;
 
@@ -42,6 +41,9 @@ public class ExoplanetTreeProvider implements FacetProvider {
         ExoplanetTreeFacet facet = new ExoplanetTreeFacet(region.getRegion(), border);
 
         ExoplanetSurfaceHeightFacet surfaceHeightFacet = region.getRegionFacet(ExoplanetSurfaceHeightFacet.class);
+        ExoplanetSeaLevelFacet seaLevelFacet = region.getRegionFacet(ExoplanetSeaLevelFacet.class);
+
+        int seaLevelWorldHeight = seaLevelFacet.getWorldSeaLevel();
         Rect2i worldRegion = surfaceHeightFacet.getWorldRegion();
 
         for (int wz = worldRegion.minY(); wz <= worldRegion.maxY(); wz++) {
@@ -50,7 +52,7 @@ public class ExoplanetTreeProvider implements FacetProvider {
 
                 // check if height is within this region
                 if (surfaceHeight >= facet.getWorldRegion().minY() &&
-                        surfaceHeight <= facet.getWorldRegion().maxY() && surfaceHeight > EXOPLANET_SEA_LEVEL) {
+                        surfaceHeight <= facet.getWorldRegion().maxY() && surfaceHeight > seaLevelWorldHeight) {
 
                     if (treeNoise.noise(wx, wz) > 0.98) {
                         facet.setWorld(wx, surfaceHeight, wz, new ExoplanetTree());
