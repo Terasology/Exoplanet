@@ -21,6 +21,7 @@ import org.terasology.math.geom.BaseVector2i;
 import org.terasology.math.geom.Rect2i;
 import org.terasology.math.geom.Vector2f;
 import org.terasology.utilities.procedural.Noise;
+import org.terasology.utilities.procedural.PerlinNoise;
 import org.terasology.utilities.procedural.SimplexNoise;
 import org.terasology.utilities.procedural.SubSampledNoise;
 import org.terasology.world.generation.*;
@@ -39,7 +40,7 @@ public class ExoplanetSurfaceProvider implements FacetProvider {
 
     @Override
     public void setSeed(long seed) {
-        surfaceNoise = new SubSampledNoise(new SimplexNoise(seed), new Vector2f(0.005f, 0.005f), 1);
+        surfaceNoise = new SubSampledNoise(new PerlinNoise(seed), new Vector2f(0.003f, 0.003f), 1);
     }
 
     @Override

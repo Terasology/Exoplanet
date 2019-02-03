@@ -15,42 +15,60 @@
  */
 package org.terasology.exoplanet.generator.providers;
 
+import org.terasology.exoplanet.generator.facets.ExoplanetHumidityFacet;
 import org.terasology.exoplanet.generator.facets.ExoplanetSurfaceHeightFacet;
+import org.terasology.exoplanet.generator.facets.ExoplanetSurfaceTempFacet;
 import org.terasology.math.TeraMath;
 import org.terasology.math.geom.BaseVector2i;
-import org.terasology.math.geom.Rect2i;
 import org.terasology.math.geom.Vector2f;
 import org.terasology.utilities.procedural.*;
-import org.terasology.world.generation.Facet;
-import org.terasology.world.generation.FacetProvider;
-import org.terasology.world.generation.GeneratingRegion;
-import org.terasology.world.generation.Updates;
+import org.terasology.world.generation.*;
+
+import java.util.Iterator;
 
 @Updates(@Facet(ExoplanetSurfaceHeightFacet.class))
+@Requires({@Facet(ExoplanetSurfaceTempFacet.class), @Facet(ExoplanetHumidityFacet.class)})
 public class ExoplanetMountainsProvider implements FacetProvider {
-    private Noise mountainNoise;
-    private int mountainHeight;
+    private SubSampledNoise mountainNoise;
+    private SubSampledNoise hillNoise;
 
-    public ExoplanetMountainsProvider(int mountainHeight) {
-        this.mountainHeight = mountainHeight;
+    private float amplitude;
+
+    public ExoplanetMountainsProvider(float amplitude) {
+        this.amplitude = amplitude;
     }
 
     @Override
     public void setSeed(long seed) {
         mountainNoise = new SubSampledNoise(new BrownianNoise(new PerlinNoise(seed + 2), 8),
                 new Vector2f(0.001f, 0.001f), 1);
+        hillNoise = new SubSampledNoise(new BrownianNoise(new PerlinNoise(seed + 3)),
+                new Vector2f(0.0004f, 0.0004f), 1);
     }
 
     @Override
     public void process(GeneratingRegion region) {
         ExoplanetSurfaceHeightFacet facet = region.getRegionFacet(ExoplanetSurfaceHeightFacet.class);
 
-        Rect2i processRegion = facet.getWorldRegion();
-        for (BaseVector2i position : processRegion.contents()) {
-            float additiveMountainHeight = mountainNoise.noise(position.x(), position.y()) * mountainHeight;
-            additiveMountainHeight = TeraMath.clamp(additiveMountainHeight, 0, mountainHeight);
+        float[] mountainData = mountainNoise.noise(facet.getWorldRegion());
+        float[] hillData = hillNoise.noise(facet.getWorldRegion());
 
-            facet.setWorld(position, facet.getWorld(position) + additiveMountainHeight);
+        ExoplanetSurfaceTempFacet tempFacet = region.getRegionFacet(ExoplanetSurfaceTempFacet.class);
+        ExoplanetHumidityFacet humidityFacet = region.getRegionFacet(ExoplanetHumidityFacet.class);
+
+        float[] heightData = facet.getInternal();
+        Iterator<BaseVector2i> positionIterator = facet.getRelativeRegion().contents().iterator();
+        for (int i = 0; i < heightData.length; ++i) {
+            BaseVector2i pos = positionIterator.next();
+            float temp = tempFacet.get(pos);
+            float hum = humidityFacet.get(pos);
+            Vector2f distanceToMountainBiome = new Vector2f(temp - 0.25f, (temp * hum) - 0.35f);
+            float mIntens = TeraMath.clamp(1.0f - distanceToMountainBiome.length() * 3.0f);
+            float densityMountains = Math.max(mountainData[i] * 2.12f, 0) * mIntens * amplitude;
+            float densityHills = Math.max(hillData[i] * 2.12f - 0.1f, 0) * (1.0f - mIntens) * amplitude;
+
+            heightData[i] = heightData[i] + 512 * densityMountains + 64 * densityHills;
         }
     }
 }
+

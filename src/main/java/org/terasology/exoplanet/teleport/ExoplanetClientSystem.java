@@ -99,7 +99,7 @@ public class ExoplanetClientSystem extends BaseComponentSystem implements Update
         event.consume();
     }
 
-    private Vector3f findExoplanetSpawnPos (Vector3i currentPos){
+    private Vector3f findExoplanetSpawnPos(Vector3i currentPos) {
         World world = worldGenerator.getWorld();
         Vector3i searchRadius = new Vector3i(32, 1, 32);
         Region3i searchArea = Region3i.createFromCenterExtents(new Vector3i(currentPos.x, EXOPLANET_HEIGHT, currentPos.z), searchRadius);
@@ -113,7 +113,7 @@ public class ExoplanetClientSystem extends BaseComponentSystem implements Update
             for (BaseVector2i pos : surfaceHeightFacet.getWorldRegion().contents()) {
                 float surfaceHeight = surfaceHeightFacet.getWorld(pos);
 
-                if (surfaceHeight >= seaLevelWorldHeight){
+                if (surfaceHeight >= seaLevelWorldHeight) {
                     return new Vector3f(pos.x(), surfaceHeight + 1, pos.y());
                 }
             }
@@ -121,7 +121,7 @@ public class ExoplanetClientSystem extends BaseComponentSystem implements Update
         return null;
     }
 
-    private Vector3f findEarthSpawnPos (Vector3i currentPos){
+    private Vector3f findEarthSpawnPos(Vector3i currentPos) {
         World world = worldGenerator.getWorld();
         Vector3i searchRadius = new Vector3i(32, 1, 32);
         Region3i searchArea = Region3i.createFromCenterExtents(new Vector3i(currentPos.x, 0, currentPos.z), searchRadius);
@@ -132,7 +132,7 @@ public class ExoplanetClientSystem extends BaseComponentSystem implements Update
             for (BaseVector2i pos : surfaceHeightFacet.getWorldRegion().contents()) {
                 float surfaceHeight = surfaceHeightFacet.getWorld(pos);
 
-                if (surfaceHeight >= 32){
+                if (surfaceHeight >= 32) {
                     return new Vector3f(pos.x(), surfaceHeight + 1, pos.y());
                 }
             }

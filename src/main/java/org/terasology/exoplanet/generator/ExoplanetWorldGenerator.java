@@ -33,7 +33,6 @@ import org.terasology.world.generator.plugin.WorldGeneratorPluginLibrary;
 public class ExoplanetWorldGenerator extends BaseFacetedWorldGenerator {
     public static final int EXOPLANET_HEIGHT = 10000;
     public static final int EXOPLANET_BORDER = 9900;
-    public static final int EXOPLANET_MOUNTAIN_HEIGHT = 400;
 
     @In
     private WorldGeneratorPluginLibrary worldGeneratorPluginLibrary;
@@ -70,9 +69,9 @@ public class ExoplanetWorldGenerator extends BaseFacetedWorldGenerator {
                 // Exoplanet World
                 .addProvider(new ExoplanetSeaLevelProvider(exoplanetSeaLevel))
                 .addProvider(new ExoplanetSurfaceProvider(EXOPLANET_HEIGHT))
-                .addProvider(new ExoplanetMountainsProvider(EXOPLANET_MOUNTAIN_HEIGHT))
                 .addProvider(new ExoplanetHumidityProvider())
                 .addProvider(new ExoplanetSurfaceTempProvider())
+                .addProvider(new ExoplanetMountainsProvider(1f))
                 .addProvider(new ExoplanetBiomeProvider())
                 .addRasterizer(new ExoplanetWorldRasterizer())
                 .addProvider(new ExoplanetFloraProvider())
