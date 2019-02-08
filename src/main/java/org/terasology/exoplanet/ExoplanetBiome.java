@@ -19,6 +19,7 @@ import org.terasology.world.biomes.Biome;
 
 public enum ExoplanetBiome implements Biome {
     MOUNTAINS("Mountains",  0.4f, 0.4f),
+    SNOWMOUNTAINS("Snow Mountains",  0.5f, 0.3f),
     SNOW("Snow",  0.6f, 0.2f),
     DESERT("Desert",  0.15f, 0.75f),
     FOREST("Forest",  0.6f, 0.5f),

@@ -71,7 +71,7 @@ public class ExoplanetWorldGenerator extends BaseFacetedWorldGenerator {
                 .addProvider(new ExoplanetSurfaceProvider(EXOPLANET_HEIGHT))
                 .addProvider(new ExoplanetHumidityProvider())
                 .addProvider(new ExoplanetSurfaceTempProvider())
-                .addProvider(new ExoplanetMountainsProvider(1f))
+                .addProvider(new ExoplanetMountainsProvider(1.1f))
                 .addProvider(new ExoplanetBiomeProvider())
                 .addRasterizer(new ExoplanetWorldRasterizer())
                 .addProvider(new ExoplanetFloraProvider())

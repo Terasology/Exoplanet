@@ -40,7 +40,7 @@ import java.util.Map;
 import static org.terasology.exoplanet.generator.ExoplanetWorldGenerator.*;
 
 public class ExoplanetWorldRasterizer implements WorldRasterizer {
-    private Block grass, dirt, sand, stone, snow, ice, water, borderBlock, air;
+    private Block grass, dirt, sand, stone, snowyStone, snow, ice, water, borderBlock, air;
     private Map<Block, Float> ore = new LinkedHashMap<>();
 
     private final int ORE_DEPTH = 30;
@@ -54,6 +54,7 @@ public class ExoplanetWorldRasterizer implements WorldRasterizer {
         grass = blockManager.getBlock("Exoplanet:ExoplanetGrass");
         dirt = blockManager.getBlock("Exoplanet:ExoplanetDirt");
         stone = blockManager.getBlock("Core:Stone");
+        snowyStone = blockManager.getBlock("Exoplanet:SnowyStone");
         snow = blockManager.getBlock("Core:Snow");
         sand = blockManager.getBlock("Core:Sand");
         ice = blockManager.getBlock("Core:Ice");
@@ -131,9 +132,21 @@ public class ExoplanetWorldRasterizer implements WorldRasterizer {
                 case MOUNTAINS:
                     if (surfaceHeight == currentHeight && currentHeight > seaLevel && currentHeight < seaLevel + 100) {
                         return grass;
-                    } else if (surfaceHeight == currentHeight && currentHeight >= seaLevel + 100) {
-                        return snow;
                     } else if (currentHeight < surfaceHeight - rockLayerDepth) {
+                        return stone;
+                    } else {
+                        return dirt;
+                    }
+                case SNOWMOUNTAINS:
+                    if (surfaceHeight == currentHeight) {
+                        if (currentHeight >= seaLevel + 70 && currentHeight < seaLevel + 90) {
+                            return snow;
+                        } else if (currentHeight >= seaLevel + 90) {
+                            return snowyStone;
+                        }
+                    } else if (currentHeight < surfaceHeight - rockLayerDepth) {
+                        return stone;
+                    } else if (currentHeight < surfaceHeight && currentHeight >= seaLevel + 90) {
                         return stone;
                     } else {
                         return dirt;
@@ -183,6 +196,6 @@ public class ExoplanetWorldRasterizer implements WorldRasterizer {
                 return entry.getKey();
             }
         }
-        return null;
+        return stone;
     }
 }

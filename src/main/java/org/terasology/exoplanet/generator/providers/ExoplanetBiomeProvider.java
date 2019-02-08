@@ -54,8 +54,8 @@ public class ExoplanetBiomeProvider implements FacetProvider {
                 biomeFacet.set(pos, ExoplanetBiome.OCEAN);
             } else if (height <= seaLevelWorldHeight + 2) {
                 biomeFacet.set(pos, ExoplanetBiome.BEACH);
-            } else if (height > seaLevelWorldHeight + 100) {
-                biomeFacet.set(pos, ExoplanetBiome.SNOW);
+            } else if (height >= seaLevelWorldHeight + 70) {
+                biomeFacet.set(pos, ExoplanetBiome.SNOWMOUNTAINS);
             } else if (temp >= 0.65f && hum < 0.3f) {
                 biomeFacet.set(pos, ExoplanetBiome.DESERT);
             } else if (temp >= 0.5 && hum >= 0.3f && hum <= 0.6f) {
