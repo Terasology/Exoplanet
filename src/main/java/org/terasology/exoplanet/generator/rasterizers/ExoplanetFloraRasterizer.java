@@ -36,10 +36,10 @@ public class ExoplanetFloraRasterizer implements WorldRasterizer {
 
     @Override
     public void initialize() {
-        flora.put(CoreRegistry.get(BlockManager.class).getBlock("Exoplanet:ExoplanetTallGrass1"), 0.25f);
-        flora.put(CoreRegistry.get(BlockManager.class).getBlock("Exoplanet:ExoplanetTallGrass2"), 0.25f);
-        flora.put(CoreRegistry.get(BlockManager.class).getBlock("Exoplanet:ExoplanetTallGrass3"), 0.25f);
-        flora.put(CoreRegistry.get(BlockManager.class).getBlock("Exoplanet:ExoplanetTallGrass4"), 0.25f);
+        flora.put(CoreRegistry.get(BlockManager.class).getBlock("Exoplanet:AlbidusGrass1"), 0.25f);
+        flora.put(CoreRegistry.get(BlockManager.class).getBlock("Exoplanet:AlbidusGrass2"), 0.25f);
+        flora.put(CoreRegistry.get(BlockManager.class).getBlock("Exoplanet:RubidusGrass1"), 0.25f);
+        flora.put(CoreRegistry.get(BlockManager.class).getBlock("Exoplanet:RubidusGrass2"), 0.25f);
     }
 
     @Override

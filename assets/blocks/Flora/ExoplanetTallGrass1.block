@@ -1,8 +1,0 @@
-/**
- * Tall grass of Exoplanet variety 1 (higher number = taller)
- */
-{
-    "basedOn": "Exoplanet:exoplanetPlant",
-    "displayName": "Exoplanet Red Grass",
-    "waving": true
-}

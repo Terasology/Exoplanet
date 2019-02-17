@@ -1,0 +1,9 @@
+{
+    "basedOn": "Exoplanet:exoplanetWood",
+    "displayName": "Rufusleaf Tree Log",
+    // Graphics
+    "tiles": {
+        "sides": "Exoplanet:RufusleafTreeBark",
+        "topBottom": "Exoplanet:RufusleafTreeTrunk"
+    }
+}

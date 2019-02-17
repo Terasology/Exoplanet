@@ -35,8 +35,8 @@ public class ExoplanetTreeRasterizer implements WorldRasterizer {
 
     @Override
     public void initialize() {
-        trunk = CoreRegistry.get(BlockManager.class).getBlock("Exoplanet:ExoplanetTreeTrunk");
-        leaf = CoreRegistry.get(BlockManager.class).getBlock("Exoplanet:ExoplanetTreeLeaf");
+        trunk = CoreRegistry.get(BlockManager.class).getBlock("Exoplanet:RufusleafTreeTrunk");
+        leaf = CoreRegistry.get(BlockManager.class).getBlock("Exoplanet:RufusleafTreeLeaf");
     }
 
     @Override
