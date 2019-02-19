@@ -41,9 +41,9 @@ public class ExoplanetMountainsProvider implements FacetProvider {
     @Override
     public void setSeed(long seed) {
         mountainNoise = new SubSampledNoise(new BrownianNoise(new PerlinNoise(seed + 2), 8),
-                new Vector2f(0.0003f, 0.0003f), 1);
+                new Vector2f(0.0003f, 0.0003f), 4);
         hillNoise = new SubSampledNoise(new BrownianNoise(new PerlinNoise(seed + 3)),
-                new Vector2f(0.0007f, 0.0007f), 1);
+                new Vector2f(0.0007f, 0.0007f), 4);
     }
 
     @Override

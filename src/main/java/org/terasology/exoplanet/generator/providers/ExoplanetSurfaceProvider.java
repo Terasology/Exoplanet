@@ -28,7 +28,7 @@ public class ExoplanetSurfaceProvider implements FacetProvider {
     private SubSampledNoise surfaceNoise;
     private int exoplanetWorldHeight;
 
-    private int terrainHeight = 20;
+    private int baseHeight = 20;
 
     public ExoplanetSurfaceProvider(int worldHeight) {
         this.exoplanetWorldHeight = worldHeight;
@@ -37,7 +37,7 @@ public class ExoplanetSurfaceProvider implements FacetProvider {
     @Override
     public void setSeed(long seed) {
         BrownianNoise source = new BrownianNoise(new PerlinNoise(seed), 8);
-        surfaceNoise = new SubSampledNoise(source, new Vector2f(0.004f, 0.004f), 1);
+        surfaceNoise = new SubSampledNoise(source, new Vector2f(0.004f, 0.004f),  4);
     }
 
     @Override
@@ -50,7 +50,7 @@ public class ExoplanetSurfaceProvider implements FacetProvider {
         float[] noise = surfaceNoise.noise(processRegion);
 
         for (int i = 0; i < noise.length; ++i) {
-            noise[i] = (terrainHeight + terrainHeight * ((noise[i] * 2.11f + 1f) / 2f)) + exoplanetWorldHeight;
+            noise[i] = (baseHeight + baseHeight * ((noise[i] * 2.11f + 1f) / 2f)) + exoplanetWorldHeight;
         }
 
         facet.set(noise);

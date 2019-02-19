@@ -44,7 +44,7 @@ public class ExoplanetWorldGenerator extends BaseFacetedWorldGenerator {
     @Override
     protected WorldBuilder createWorld() {
         int perlinSeaLevel = 32;
-        int exoplanetSeaLevel = 35;
+        int exoplanetSeaLevel = 37;
 
         ImmutableVector2i spawnPos = new ImmutableVector2i(0, 0);
 
@@ -71,7 +71,7 @@ public class ExoplanetWorldGenerator extends BaseFacetedWorldGenerator {
                 .addProvider(new ExoplanetSurfaceProvider(EXOPLANET_HEIGHT))
                 .addProvider(new ExoplanetHumidityProvider())
                 .addProvider(new ExoplanetSurfaceTempProvider())
-                .addProvider(new ExoplanetMountainsProvider(1.1f))
+                .addProvider(new ExoplanetMountainsProvider(1.2f))
                 .addProvider(new ExoplanetBiomeProvider())
                 .addRasterizer(new ExoplanetWorldRasterizer())
                 .addProvider(new ExoplanetFloraProvider())
