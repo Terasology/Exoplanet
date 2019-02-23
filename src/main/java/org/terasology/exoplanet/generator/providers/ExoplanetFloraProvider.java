@@ -36,7 +36,7 @@ public class ExoplanetFloraProvider implements FacetProvider {
 
     @Override
     public void setSeed(long seed) {
-        floraNoise = new WhiteNoise(seed + 3);
+        floraNoise = new WhiteNoise(seed + 7);
     }
 
     @Override

@@ -31,7 +31,7 @@ public class ExoplanetSurfaceTempProvider implements FacetProvider {
 
     @Override
     public void setSeed(long seed) {
-        temperatureNoise = new SubSampledNoise(new BrownianNoise(new PerlinNoise(seed + 6), 4),
+        temperatureNoise = new SubSampledNoise(new BrownianNoise(new PerlinNoise(seed + 5), 4),
                 new Vector2f(0.0006f, 0.0006f), 1);
     }
 

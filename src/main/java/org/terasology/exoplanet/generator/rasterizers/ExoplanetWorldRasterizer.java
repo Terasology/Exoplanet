@@ -33,7 +33,7 @@ import org.terasology.world.chunks.CoreChunk;
 import org.terasology.world.generation.Region;
 import org.terasology.world.generation.WorldRasterizer;
 
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.Map;
 
 
@@ -41,7 +41,7 @@ import static org.terasology.exoplanet.generator.ExoplanetWorldGenerator.*;
 
 public class ExoplanetWorldRasterizer implements WorldRasterizer {
     private Block grass, dirt, sand, stone, snowyStone, snow, ice, water, borderBlock, air;
-    private Map<Block, Float> ore = new LinkedHashMap<>();
+    private Map<Block, Float> ore = new HashMap<>();
 
     private final int ORE_DEPTH = 30;
     private final int ORE_VEIN_THICKNESS = 40;
@@ -139,14 +139,14 @@ public class ExoplanetWorldRasterizer implements WorldRasterizer {
                     }
                 case SNOWMOUNTAINS:
                     if (surfaceHeight == currentHeight) {
-                        if (currentHeight >= seaLevel + 70 && currentHeight < seaLevel + 90) {
+                        if (currentHeight >= seaLevel + 80 && currentHeight < seaLevel + 100) {
                             return snow;
-                        } else if (currentHeight >= seaLevel + 90) {
+                        } else if (currentHeight >= seaLevel + 100) {
                             return snowyStone;
                         }
                     } else if (currentHeight < surfaceHeight - rockLayerDepth) {
                         return stone;
-                    } else if (currentHeight < surfaceHeight && currentHeight >= seaLevel + 90) {
+                    } else if (currentHeight < surfaceHeight && currentHeight >= seaLevel + 100) {
                         return stone;
                     } else {
                         return dirt;

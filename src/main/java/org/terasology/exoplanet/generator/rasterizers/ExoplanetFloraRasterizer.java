@@ -30,12 +30,12 @@ import org.terasology.world.chunks.CoreChunk;
 import org.terasology.world.generation.Region;
 import org.terasology.world.generation.WorldRasterizer;
 
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.Map;
 
 public class ExoplanetFloraRasterizer implements WorldRasterizer {
     private Random random = new FastRandom();
-    private Map<Block, Float> flora = new LinkedHashMap<>();
+    private Map<Block, Float> flora = new HashMap<>();
 
     private Block air, AlbidusGrass1, AlbidusGrass2, RubidusGrass1, RubidusGrass2;
 

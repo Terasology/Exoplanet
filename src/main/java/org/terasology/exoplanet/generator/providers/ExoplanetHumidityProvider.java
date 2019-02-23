@@ -32,7 +32,7 @@ public class ExoplanetHumidityProvider implements FacetProvider {
 
     @Override
     public void setSeed(long seed) {
-        humidityNoise = new SubSampledNoise(new BrownianNoise(new PerlinNoise(seed + 5), 4),
+        humidityNoise = new SubSampledNoise(new BrownianNoise(new PerlinNoise(seed + 4), 4),
                 new Vector2f(0.0006f, 0.0006f), 1);
     }
 
