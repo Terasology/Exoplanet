@@ -107,12 +107,12 @@ public class ExoplanetWorldRasterizer implements WorldRasterizer {
         }
     }
 
-    private Block getBlockToPlace(int surfaceHeight, int currentHeight, Biome type, int seaLevel, int rockLayerDepth) {
+    private Block getBlockToPlace(int surfaceHeight, int currentHeight, Biome biome, int seaLevel, int rockLayerDepth) {
         if (currentHeight < surfaceHeight - ORE_DEPTH && currentHeight > surfaceHeight - ORE_DEPTH - ORE_VEIN_THICKNESS) {
             return getRandomOre();
         }
-        if (type instanceof ExoplanetBiome) {
-            switch ((ExoplanetBiome) type) {
+        if (biome instanceof ExoplanetBiome) {
+            switch ((ExoplanetBiome) biome) {
                 case FOREST:
                     if (surfaceHeight == currentHeight) {
                         return grass;
