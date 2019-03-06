@@ -31,6 +31,7 @@ import org.terasology.world.generation.Region;
 import org.terasology.world.generation.WorldRasterizer;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 public class ExoplanetFloraRasterizer implements WorldRasterizer {
@@ -38,6 +39,8 @@ public class ExoplanetFloraRasterizer implements WorldRasterizer {
     private Map<Block, Float> flora = new HashMap<>();
 
     private Block air, AlbidusGrass1, AlbidusGrass2, RubidusGrass1, RubidusGrass2;
+
+    private ExoplanetBiome previousBiome;
 
     @Override
     public void initialize() {
@@ -68,26 +71,12 @@ public class ExoplanetFloraRasterizer implements WorldRasterizer {
 
     private Block getRandomFlora(Biome biome) {
         if (biome instanceof ExoplanetBiome) {
-            flora.clear();
-            switch ((ExoplanetBiome) biome) {
-                case DESERT:
-                    flora.clear();
-                    break;
-                case SNOW:
-                    flora.put(AlbidusGrass1, 0.5f);
-                    flora.put(AlbidusGrass2, 0.5f);
-                    break;
-                case SNOWMOUNTAINS:
-                    flora.put(AlbidusGrass1, 0.4f);
-                    flora.put(AlbidusGrass2, 0.4f);
-                    flora.put(RubidusGrass1, 0.2f);
-                    break;
-                default:
-                    flora.put(AlbidusGrass1, 0.25f);
-                    flora.put(AlbidusGrass2, 0.25f);
-                    flora.put(RubidusGrass1, 0.25f);
-                    flora.put(RubidusGrass2, 0.25f);
-                    break;
+            if (previousBiome == null) {
+                previousBiome = (ExoplanetBiome) biome;
+                registerFlora(biome);
+            } else if (previousBiome != biome) {
+                previousBiome = (ExoplanetBiome) biome;
+                registerFlora(biome);
             }
         }
 
@@ -104,5 +93,32 @@ public class ExoplanetFloraRasterizer implements WorldRasterizer {
         }
 
         return air;
+    }
+
+    private void registerFlora(Biome biome) {
+        Iterator it = flora.entrySet().iterator();
+        while (it.hasNext()) {
+            Object entry = it.next();
+            it.remove();
+        }
+        switch ((ExoplanetBiome) biome) {
+            case DESERT:
+                break;
+            case SNOW:
+                flora.put(AlbidusGrass1, 0.5f);
+                flora.put(AlbidusGrass2, 0.5f);
+                break;
+            case SNOWMOUNTAINS:
+                flora.put(AlbidusGrass1, 0.4f);
+                flora.put(AlbidusGrass2, 0.4f);
+                flora.put(RubidusGrass1, 0.2f);
+                break;
+            default:
+                flora.put(AlbidusGrass1, 0.25f);
+                flora.put(AlbidusGrass2, 0.25f);
+                flora.put(RubidusGrass1, 0.25f);
+                flora.put(RubidusGrass2, 0.25f);
+                break;
+        }
     }
 }
