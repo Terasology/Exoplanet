@@ -16,21 +16,19 @@
 package org.terasology.exoplanet.generator.providers;
 
 import org.terasology.exoplanet.generator.facets.ExoplanetSurfaceHeightFacet;
-import org.terasology.math.geom.BaseVector2i;
 import org.terasology.math.geom.Rect2i;
 import org.terasology.math.geom.Vector2f;
-import org.terasology.utilities.procedural.Noise;
-import org.terasology.utilities.procedural.SimplexNoise;
+import org.terasology.utilities.procedural.BrownianNoise;
+import org.terasology.utilities.procedural.PerlinNoise;
 import org.terasology.utilities.procedural.SubSampledNoise;
-import org.terasology.world.generation.Border3D;
-import org.terasology.world.generation.FacetProvider;
-import org.terasology.world.generation.GeneratingRegion;
-import org.terasology.world.generation.Produces;
+import org.terasology.world.generation.*;
 
 @Produces(ExoplanetSurfaceHeightFacet.class)
 public class ExoplanetSurfaceProvider implements FacetProvider {
-    private Noise surfaceNoise;
+    private SubSampledNoise surfaceNoise;
     private int exoplanetWorldHeight;
+
+    private int baseHeight = 20;
 
     public ExoplanetSurfaceProvider(int worldHeight) {
         this.exoplanetWorldHeight = worldHeight;
@@ -38,7 +36,8 @@ public class ExoplanetSurfaceProvider implements FacetProvider {
 
     @Override
     public void setSeed(long seed) {
-        surfaceNoise = new SubSampledNoise(new SimplexNoise(seed), new Vector2f(0.01f, 0.01f), 1);
+        BrownianNoise source = new BrownianNoise(new PerlinNoise(seed), 8);
+        surfaceNoise = new SubSampledNoise(source, new Vector2f(0.004f, 0.004f),  4);
     }
 
     @Override
@@ -48,9 +47,13 @@ public class ExoplanetSurfaceProvider implements FacetProvider {
         facet.setBaseSurfaceHeight(exoplanetWorldHeight);
 
         Rect2i processRegion = facet.getWorldRegion();
-        for (BaseVector2i position : processRegion.contents()) {
-            facet.setWorld(position, surfaceNoise.noise(position.x(), position.y()) * 30 + exoplanetWorldHeight);
+        float[] noise = surfaceNoise.noise(processRegion);
+
+        for (int i = 0; i < noise.length; ++i) {
+            noise[i] = (baseHeight + baseHeight * ((noise[i] * 2.11f + 1f) / 2f)) + exoplanetWorldHeight;
         }
+
+        facet.set(noise);
         region.setRegionFacet(ExoplanetSurfaceHeightFacet.class, facet);
     }
 }

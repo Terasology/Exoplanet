@@ -21,6 +21,7 @@ import org.terasology.entitySystem.systems.BaseComponentSystem;
 import org.terasology.entitySystem.systems.RegisterMode;
 import org.terasology.entitySystem.systems.RegisterSystem;
 import org.terasology.entitySystem.systems.UpdateSubscriberSystem;
+import org.terasology.exoplanet.generator.facets.ExoplanetSeaLevelFacet;
 import org.terasology.exoplanet.generator.facets.ExoplanetSurfaceHeightFacet;
 import org.terasology.logic.characters.CharacterTeleportEvent;
 import org.terasology.logic.common.ActivateEvent;
@@ -44,7 +45,6 @@ import java.util.Map;
 
 import static org.terasology.exoplanet.generator.ExoplanetWorldGenerator.EXOPLANET_BORDER;
 import static org.terasology.exoplanet.generator.ExoplanetWorldGenerator.EXOPLANET_HEIGHT;
-import static org.terasology.exoplanet.generator.ExoplanetWorldGenerator.EXOPLANET_SEA_LEVEL;
 
 @RegisterSystem(RegisterMode.CLIENT)
 public class ExoplanetClientSystem extends BaseComponentSystem implements UpdateSubscriberSystem {
@@ -99,18 +99,21 @@ public class ExoplanetClientSystem extends BaseComponentSystem implements Update
         event.consume();
     }
 
-    private Vector3f findExoplanetSpawnPos (Vector3i currentPos){
+    private Vector3f findExoplanetSpawnPos(Vector3i currentPos) {
         World world = worldGenerator.getWorld();
         Vector3i searchRadius = new Vector3i(32, 1, 32);
         Region3i searchArea = Region3i.createFromCenterExtents(new Vector3i(currentPos.x, EXOPLANET_HEIGHT, currentPos.z), searchRadius);
         Region worldRegion = world.getWorldData(searchArea);
+
+        ExoplanetSeaLevelFacet seaLevelFacet = worldRegion.getFacet(ExoplanetSeaLevelFacet.class);
+        int seaLevelWorldHeight = seaLevelFacet.getWorldSeaLevel();
 
         ExoplanetSurfaceHeightFacet surfaceHeightFacet = worldRegion.getFacet(ExoplanetSurfaceHeightFacet.class);
         if (surfaceHeightFacet != null) {
             for (BaseVector2i pos : surfaceHeightFacet.getWorldRegion().contents()) {
                 float surfaceHeight = surfaceHeightFacet.getWorld(pos);
 
-                if (surfaceHeight >= EXOPLANET_SEA_LEVEL){
+                if (surfaceHeight >= seaLevelWorldHeight) {
                     return new Vector3f(pos.x(), surfaceHeight + 1, pos.y());
                 }
             }
@@ -118,7 +121,7 @@ public class ExoplanetClientSystem extends BaseComponentSystem implements Update
         return null;
     }
 
-    private Vector3f findEarthSpawnPos (Vector3i currentPos){
+    private Vector3f findEarthSpawnPos(Vector3i currentPos) {
         World world = worldGenerator.getWorld();
         Vector3i searchRadius = new Vector3i(32, 1, 32);
         Region3i searchArea = Region3i.createFromCenterExtents(new Vector3i(currentPos.x, 0, currentPos.z), searchRadius);
@@ -129,7 +132,7 @@ public class ExoplanetClientSystem extends BaseComponentSystem implements Update
             for (BaseVector2i pos : surfaceHeightFacet.getWorldRegion().contents()) {
                 float surfaceHeight = surfaceHeightFacet.getWorld(pos);
 
-                if (surfaceHeight >= 32){
+                if (surfaceHeight >= 32) {
                     return new Vector3f(pos.x(), surfaceHeight + 1, pos.y());
                 }
             }

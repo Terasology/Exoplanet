@@ -20,28 +20,19 @@ import org.terasology.core.world.generator.rasterizers.FloraRasterizer;
 import org.terasology.core.world.generator.rasterizers.SolidRasterizer;
 import org.terasology.core.world.generator.rasterizers.TreeRasterizer;
 import org.terasology.engine.SimpleUri;
-import org.terasology.exoplanet.generator.facets.ExoplanetSurfaceHeightFacet;
 import org.terasology.exoplanet.generator.providers.*;
 import org.terasology.exoplanet.generator.rasterizers.*;
-import org.terasology.math.TeraMath;
 import org.terasology.math.geom.ImmutableVector2i;
 import org.terasology.registry.In;
 import org.terasology.world.generation.BaseFacetedWorldGenerator;
 import org.terasology.world.generation.WorldBuilder;
 import org.terasology.world.generator.RegisterWorldGenerator;
 import org.terasology.world.generator.plugin.WorldGeneratorPluginLibrary;
-import org.terasology.world.zones.ConstantLayerThickness;
-import org.terasology.world.zones.LayeredZoneRegionFunction;
-import org.terasology.world.zones.Zone;
-
-import static org.terasology.world.zones.LayeredZoneRegionFunction.LayeredZoneOrdering.ABOVE_GROUND;
 
 @RegisterWorldGenerator(id = "exoplanetWorld", displayName = "Exoplanet")
 public class ExoplanetWorldGenerator extends BaseFacetedWorldGenerator {
     public static final int EXOPLANET_HEIGHT = 10000;
     public static final int EXOPLANET_BORDER = 9900;
-    public static final int EXOPLANET_SEA_LEVEL = 10020;
-    public static final int EXOPLANET_MOUNTAIN_HEIGHT = 400;
 
     @In
     private WorldGeneratorPluginLibrary worldGeneratorPluginLibrary;
@@ -52,13 +43,15 @@ public class ExoplanetWorldGenerator extends BaseFacetedWorldGenerator {
 
     @Override
     protected WorldBuilder createWorld() {
-        int seaLevel = 32;
+        int perlinSeaLevel = 32;
+        int exoplanetSeaLevel = 37;
+
         ImmutableVector2i spawnPos = new ImmutableVector2i(0, 0);
 
         return new WorldBuilder(worldGeneratorPluginLibrary)
                 // Perlin World (Earth)
-                .setSeaLevel(seaLevel)
-                .addProvider(new SeaLevelProvider(seaLevel))
+                .setSeaLevel(perlinSeaLevel)
+                .addProvider(new SeaLevelProvider(perlinSeaLevel))
                 .addProvider(new PerlinHumidityProvider())
                 .addProvider(new PerlinSurfaceTemperatureProvider())
                 .addProvider(new PerlinBaseSurfaceProvider())
@@ -69,23 +62,18 @@ public class ExoplanetWorldGenerator extends BaseFacetedWorldGenerator {
                 .addProvider(new SurfaceToDensityProvider())
                 .addProvider(new DefaultFloraProvider())
                 .addProvider(new DefaultTreeProvider())
-                .addProvider(new PlateauProvider(spawnPos, seaLevel + 4, 10, 30))
+                .addProvider(new PlateauProvider(spawnPos, perlinSeaLevel + 4, 10, 30))
                 .addRasterizer(new SolidRasterizer())
                 .addRasterizer(new FloraRasterizer())
                 .addRasterizer(new TreeRasterizer())
                 // Exoplanet World
+                .addProvider(new ExoplanetSeaLevelProvider(exoplanetSeaLevel))
                 .addProvider(new ExoplanetSurfaceProvider(EXOPLANET_HEIGHT))
-                .addProvider(new ExoplanetMountainsProvider(EXOPLANET_MOUNTAIN_HEIGHT))
+                .addProvider(new ExoplanetHumidityProvider())
+                .addProvider(new ExoplanetSurfaceTempProvider())
+                .addProvider(new ExoplanetMountainsProvider(1.2f))
+                .addProvider(new ExoplanetBiomeProvider())
                 .addRasterizer(new ExoplanetWorldRasterizer())
-                .addZone(new Zone("ExoplanetSurface", new LayeredZoneRegionFunction(new ConstantLayerThickness(10),
-                        ABOVE_GROUND + EXOPLANET_HEIGHT))
-
-                    .addZone(new Zone("ExoplanetOcean", (x, y, z, region) ->
-                            TeraMath.floorToInt(region.getFacet(ExoplanetSurfaceHeightFacet.class).getWorld(x, z)) < y
-                                    && y <= EXOPLANET_SEA_LEVEL )
-
-                            .addRasterizer(new ExoplanetOceanRasterizer())
-                            ))
                 .addProvider(new ExoplanetFloraProvider())
                 .addProvider(new ExoplanetTreeProvider())
                 .addRasterizer(new ExoplanetFloraRasterizer())

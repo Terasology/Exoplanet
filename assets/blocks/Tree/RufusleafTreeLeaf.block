@@ -1,0 +1,7 @@
+/**
+ * Leaf of Rufusleaf (red leaf) Tree in Exoplanet
+ */
+{
+    "basedOn": "Exoplanet:exoplanetLeaf",
+    "displayName": "Rufusleaf Tree Leaf"
+}
