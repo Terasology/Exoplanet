@@ -31,7 +31,6 @@ import org.terasology.world.generation.Region;
 import org.terasology.world.generation.WorldRasterizer;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 public class ExoplanetFloraRasterizer implements WorldRasterizer {
@@ -96,11 +95,8 @@ public class ExoplanetFloraRasterizer implements WorldRasterizer {
     }
 
     private void registerFlora(Biome biome) {
-        Iterator it = flora.entrySet().iterator();
-        while (it.hasNext()) {
-            Object entry = it.next();
-            it.remove();
-        }
+        flora.clear();
+
         switch ((ExoplanetBiome) biome) {
             case DESERT:
                 break;
