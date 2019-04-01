@@ -26,7 +26,8 @@ import org.terasology.math.geom.Vector3i;
 import org.terasology.registry.CoreRegistry;
 import org.terasology.utilities.random.FastRandom;
 import org.terasology.utilities.random.Random;
-import org.terasology.world.biomes.Biome;
+import org.terasology.biomesAPI.Biome;
+import org.terasology.biomesAPI.BiomeRegistry;
 import org.terasology.world.block.Block;
 import org.terasology.world.block.BlockManager;
 import org.terasology.world.chunks.CoreChunk;
@@ -41,6 +42,7 @@ import static org.terasology.exoplanet.generator.ExoplanetWorldGenerator.*;
 
 public class ExoplanetWorldRasterizer implements WorldRasterizer {
     private Block grass, dirt, sand, stone, snowyStone, snow, ice, water, borderBlock, air;
+    private BiomeRegistry biomeRegistry;
     private Map<Block, Float> ore = new HashMap<>();
 
     private final int ORE_DEPTH = 30;
@@ -51,6 +53,7 @@ public class ExoplanetWorldRasterizer implements WorldRasterizer {
     @Override
     public void initialize() {
         BlockManager blockManager = CoreRegistry.get(BlockManager.class);
+        biomeRegistry = CoreRegistry.get(BiomeRegistry.class);
         grass = blockManager.getBlock("Exoplanet:ExoplanetGrass");
         dirt = blockManager.getBlock("Exoplanet:ExoplanetDirt");
         stone = blockManager.getBlock("Core:Stone");
@@ -90,7 +93,7 @@ public class ExoplanetWorldRasterizer implements WorldRasterizer {
                 } else if (position.y > EXOPLANET_BORDER) {
 
                     Biome biome = biomeFacet.getWorld(pos2d);
-                    chunk.setBiome(ChunkMath.calcBlockPos(position), biome);
+                    biomeRegistry.setBiome(biome, chunk, position.x, position.y, position.z);
 
                     if (position.y == seaLevelWorldHeight && ExoplanetBiome.SNOW == biome) {
                         chunk.setBlock(ChunkMath.calcBlockPos(position), ice);
