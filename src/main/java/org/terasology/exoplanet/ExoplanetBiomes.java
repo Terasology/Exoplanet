@@ -15,15 +15,26 @@
  */
 package org.terasology.exoplanet;
 
-import org.terasology.world.biomes.BiomeRegistrator;
-import org.terasology.world.biomes.BiomeRegistry;
+import org.terasology.biomesAPI.BiomeRegistry;
+import org.terasology.entitySystem.systems.BaseComponentSystem;
+import org.terasology.entitySystem.systems.RegisterSystem;
+import org.terasology.registry.In;
 
-public class ExoplanetBiomes implements BiomeRegistrator {
+import java.util.stream.Stream;
 
+/**
+ * Registers all Exoplanet biomes with the engine.
+ */
+@RegisterSystem
+public class ExoplanetBiomes extends BaseComponentSystem {
+    @In
+    private BiomeRegistry biomeRegistry;
+
+    /**
+     * Registration of systems must be done in preBegin to be early enough.
+     */
     @Override
-    public void registerBiomes(BiomeRegistry registry) {
-        for (ExoplanetBiome biome : ExoplanetBiome.values()) {
-            registry.registerBiome(biome);
-        }
+    public void preBegin() {
+        Stream.of(ExoplanetBiome.values()).forEach(biomeRegistry::registerBiome);
     }
 }

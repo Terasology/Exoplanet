@@ -15,7 +15,7 @@
  */
 package org.terasology.exoplanet;
 
-import org.terasology.world.biomes.Biome;
+import org.terasology.biomesAPI.Biome;
 
 public enum ExoplanetBiome implements Biome {
     MOUNTAINS("Mountains", 0.4f, 0.4f, 0.4f, 0.4f),
@@ -53,12 +53,10 @@ public enum ExoplanetBiome implements Biome {
         return this.name;
     }
 
-    @Override
     public float getHumidity() {
         return humidity;
     }
 
-    @Override
     public float getTemperature() {
         return temperature;
     }

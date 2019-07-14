@@ -25,7 +25,7 @@ import org.terasology.math.TeraMath;
 import org.terasology.math.geom.Rect2i;
 import org.terasology.utilities.procedural.Noise;
 import org.terasology.utilities.procedural.WhiteNoise;
-import org.terasology.world.biomes.Biome;
+import org.terasology.biomesAPI.Biome;
 import org.terasology.world.generation.*;
 
 @Produces(ExoplanetTreeFacet.class)
