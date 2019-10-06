@@ -9,5 +9,5 @@
     "debrisOnDestroy": false,
     "waving": true,
     "mass": 7,
-    "sounds": "Core:leaf"
+    "sounds": "CoreAssets:leaf"
 }

@@ -14,5 +14,5 @@
     "luminance": 8,
     "doubleSided": true,
     "debrisOnDestroy": false,
-    "sounds": "Core:leaf"
+    "sounds": "CoreAssets:leaf"
 }
