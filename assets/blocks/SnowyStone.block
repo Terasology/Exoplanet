@@ -2,12 +2,12 @@
  * Snow covered stone of Exoplanet
  */
 {
-    "basedOn": "Core:Rock",
+    "basedOn": "CoreAssets:Rock",
     "displayName": "Snowy Stone",
     // Graphics
     "tiles": {
-        "top": "Core:Snow",
+        "top": "CoreAssets:Snow",
         "sides": "Exoplanet:SnowyStone",
-        "bottom": "Core:Stone"
+        "bottom": "CoreAssets:Stone"
     }
 }

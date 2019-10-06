@@ -6,5 +6,5 @@
     "categories": ["exoplanetSoil"],
     "hardness": 8,
     "mass": 30,
-    "sounds": "Core:soil"
+    "sounds": "CoreAssets:soil"
 }
