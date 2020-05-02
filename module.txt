@@ -1,12 +1,12 @@
 {
     "id" : "Exoplanet",
-    "version" : "0.1.2-SNAPSHOT",
+    "version" : "0.2.0",
     "author" : "PutawanDE",
     "displayName" : "Exoplanet",
     "description" : "A module that adds an exotic world from a distant galaxy as an additional dimension.",
     "dependencies" : [
-        {"id": "Core", "minVersion": "3.0.0"},
         {"id": "CoreBlocks", "minVersion": "1.0.0"}
     ],
-    "serverSideOnly" : false
+    "serverSideOnly" : false,
+    "isWorld": true
 }
