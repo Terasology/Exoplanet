@@ -6,7 +6,8 @@
     "description" : "A module that adds an exotic world from a distant galaxy as an additional dimension.",
     "dependencies" : [
         {"id": "CoreBlocks", "minVersion": "1.0.0"},
-        {"id" : "BiomesAPI", "minVersion" : "3.2.1"}
+        {"id": "BiomesAPI", "minVersion": "3.2.1"},
+        {"id": "CoreWorlds", "minVersion": "1.0.0"}
     ],
     "serverSideOnly" : false,
     "isWorld": true
