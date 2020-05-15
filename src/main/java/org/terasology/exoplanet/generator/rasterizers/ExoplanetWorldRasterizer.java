@@ -56,20 +56,20 @@ public class ExoplanetWorldRasterizer implements WorldRasterizer {
         biomeRegistry = CoreRegistry.get(BiomeRegistry.class);
         grass = blockManager.getBlock("Exoplanet:ExoplanetGrass");
         dirt = blockManager.getBlock("Exoplanet:ExoplanetDirt");
-        stone = blockManager.getBlock("CoreBlocks:Stone");
+        stone = blockManager.getBlock("CoreAssets:Stone");
         snowyStone = blockManager.getBlock("Exoplanet:SnowyStone");
-        snow = blockManager.getBlock("CoreBlocks:Snow");
-        sand = blockManager.getBlock("CoreBlocks:Sand");
-        ice = blockManager.getBlock("CoreBlocks:Ice");
-        water = blockManager.getBlock("CoreBlocks:water");
+        snow = blockManager.getBlock("CoreAssets:Snow");
+        sand = blockManager.getBlock("CoreAssets:Sand");
+        ice = blockManager.getBlock("CoreAssets:Ice");
+        water = blockManager.getBlock("CoreAssets:water");
         borderBlock = blockManager.getBlock("Exoplanet:ExoplanetBorder");
         air = blockManager.getBlock(BlockManager.AIR_ID);
 
-        ore.put(blockManager.getBlock("CoreBlocks:CoalOre"), 0.1f);
-        ore.put(blockManager.getBlock("CoreBlocks:CopperOre"), 0.2f);
-        ore.put(blockManager.getBlock("CoreBlocks:IronOre"), 0.2f);
-        ore.put(blockManager.getBlock("CoreBlocks:GoldOre"), 0.3f);
-        ore.put(blockManager.getBlock("CoreBlocks:DiamondOre"), 0.2f);
+        ore.put(blockManager.getBlock("CoreAssets:CoalOre"), 0.1f);
+        ore.put(blockManager.getBlock("CoreAssets:CopperOre"), 0.2f);
+        ore.put(blockManager.getBlock("CoreAssets:IronOre"), 0.2f);
+        ore.put(blockManager.getBlock("CoreAssets:GoldOre"), 0.3f);
+        ore.put(blockManager.getBlock("CoreAssets:DiamondOre"), 0.2f);
     }
 
     @Override
