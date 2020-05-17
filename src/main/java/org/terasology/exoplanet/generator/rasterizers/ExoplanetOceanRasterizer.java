@@ -29,7 +29,7 @@ public class ExoplanetOceanRasterizer implements WorldRasterizer {
 
     @Override
     public void initialize() {
-        water = CoreRegistry.get(BlockManager.class).getBlock("CoreBlocks:water");
+        water = CoreRegistry.get(BlockManager.class).getBlock("CoreAssets:water");
     }
 
     @Override

@@ -1,12 +1,16 @@
 {
-    "id" : "Exoplanet",
-    "version" : "0.1.2-SNAPSHOT",
-    "author" : "PutawanDE",
-    "displayName" : "Exoplanet",
-    "description" : "A module that adds an exotic world from a distant galaxy as an additional dimension.",
-    "dependencies" : [
-        {"id": "Core", "minVersion": "3.0.0"},
-        {"id": "CoreBlocks", "minVersion": "1.0.0"}
+    "id": "Exoplanet",
+    "version": "1.0.0",
+    "author": "PutawanDE",
+    "displayName": "Exoplanet",
+    "description": "A module that adds an exotic world from a distant galaxy as an additional dimension.",
+    "dependencies": [
+        { "id": "BiomesAPI", "minVersion": "4.0.0" },
+        { "id": "CoreAssets", "minVersion": "2.0.1" },
+        { "id": "CoreWorlds", "minVersion": "1.1.0" },
+        { "id": "Inventory", "minVersion": "1.1.0" }
     ],
-    "serverSideOnly" : false
+    "serverSideOnly": false,
+    "isAsset": true,
+    "isWorld": true
 }
