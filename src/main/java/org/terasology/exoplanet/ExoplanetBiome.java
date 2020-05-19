@@ -16,6 +16,7 @@
 package org.terasology.exoplanet;
 
 import org.terasology.biomesAPI.Biome;
+import org.terasology.naming.Name;
 
 public enum ExoplanetBiome implements Biome {
     MOUNTAINS("Mountains", 0.4f, 0.4f, 0.4f, 0.4f),
@@ -27,7 +28,7 @@ public enum ExoplanetBiome implements Biome {
     BEACH("Beach", 0.5f, 0.4f, 0.3f, 0f),
     PLAINS("Plains", 0.5f, 0.55f, 0.45f, 0.25f);
 
-    private final String id;
+    private final Name id;
     private final String name;
     private final float humidity;
     private final float temperature;
@@ -35,7 +36,7 @@ public enum ExoplanetBiome implements Biome {
     private final float treeDensity;
 
     ExoplanetBiome(String name, float humidity, float temperature, float floraDensity, float treeDensity) {
-        this.id = "Exoplanet:" + name().toLowerCase();
+        this.id = new Name("Exoplanet:" + name().toLowerCase());
         this.name = name;
         this.humidity = humidity;
         this.temperature = temperature;
@@ -44,12 +45,12 @@ public enum ExoplanetBiome implements Biome {
     }
 
     @Override
-    public String getId() {
+    public Name getId() {
         return id;
     }
 
     @Override
-    public String getName() {
+    public String getDisplayName() {
         return this.name;
     }
 
