@@ -61,9 +61,9 @@ public class ExoplanetFloraRasterizer implements WorldRasterizer {
             Biome biome = biomeFacet.getWorld(position.x, position.z);
 
             if (facet.getWorld(position)
-                    && chunk.getBlock(ChunkMath.calcBlockPos(new Vector3i(position).subY(1))).getURI() != BlockManager.AIR_ID
-                    && !chunk.getBlock(ChunkMath.calcBlockPos(new Vector3i(position).subY(1))).isLiquid()) {
-                chunk.setBlock(ChunkMath.calcBlockPos(position.addY(1)), getRandomFlora(biome));
+                    && chunk.getBlock(ChunkMath.calcRelativeBlockPos(new Vector3i(position).subY(1))).getURI() != BlockManager.AIR_ID
+                    && !chunk.getBlock(ChunkMath.calcRelativeBlockPos(new Vector3i(position).subY(1))).isLiquid()) {
+                chunk.setBlock(ChunkMath.calcRelativeBlockPos(position.addY(1)), getRandomFlora(biome));
             }
         }
     }
