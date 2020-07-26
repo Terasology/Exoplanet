@@ -93,7 +93,7 @@ public class ExoplanetWorldRasterizer implements WorldRasterizer {
                 } else if (position.y > EXOPLANET_BORDER) {
 
                     Biome biome = biomeFacet.getWorld(pos2d);
-                    biomeRegistry.setBiome(biome, chunk, position.x, position.y, position.z);
+                    biomeRegistry.setBiome(biome, chunk, ChunkMath.calcRelativeBlockPos(position));
 
                     if (position.y == seaLevelWorldHeight && ExoplanetBiome.SNOW == biome) {
                         chunk.setBlock(ChunkMath.calcRelativeBlockPos(position), ice);
