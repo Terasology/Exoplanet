@@ -1,33 +1,40 @@
-/*
- * Copyright 2018 MovingBlocks
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+// Copyright 2020 The Terasology Foundation
+// SPDX-License-Identifier: Apache-2.0
 package org.terasology.exoplanet.generator;
 
-import org.terasology.core.world.generator.facetProviders.*;
-import org.terasology.core.world.generator.rasterizers.FloraRasterizer;
-import org.terasology.core.world.generator.rasterizers.SolidRasterizer;
-import org.terasology.core.world.generator.rasterizers.TreeRasterizer;
-import org.terasology.engine.SimpleUri;
-import org.terasology.exoplanet.generator.providers.*;
-import org.terasology.exoplanet.generator.rasterizers.*;
+import org.terasology.coreworlds.generator.facetProviders.BiomeProvider;
+import org.terasology.coreworlds.generator.facetProviders.DefaultFloraProvider;
+import org.terasology.coreworlds.generator.facetProviders.DefaultTreeProvider;
+import org.terasology.coreworlds.generator.facetProviders.PerlinBaseSurfaceProvider;
+import org.terasology.coreworlds.generator.facetProviders.PerlinHillsAndMountainsProvider;
+import org.terasology.coreworlds.generator.facetProviders.PerlinHumidityProvider;
+import org.terasology.coreworlds.generator.facetProviders.PerlinOceanProvider;
+import org.terasology.coreworlds.generator.facetProviders.PerlinRiverProvider;
+import org.terasology.coreworlds.generator.facetProviders.PerlinSurfaceTemperatureProvider;
+import org.terasology.coreworlds.generator.facetProviders.PlateauProvider;
+import org.terasology.coreworlds.generator.facetProviders.SeaLevelProvider;
+import org.terasology.coreworlds.generator.facetProviders.SurfaceToDensityProvider;
+import org.terasology.coreworlds.generator.rasterizers.FloraRasterizer;
+import org.terasology.coreworlds.generator.rasterizers.SolidRasterizer;
+import org.terasology.coreworlds.generator.rasterizers.TreeRasterizer;
+import org.terasology.engine.core.SimpleUri;
+import org.terasology.engine.registry.In;
+import org.terasology.engine.world.generation.BaseFacetedWorldGenerator;
+import org.terasology.engine.world.generation.WorldBuilder;
+import org.terasology.engine.world.generator.RegisterWorldGenerator;
+import org.terasology.engine.world.generator.plugin.WorldGeneratorPluginLibrary;
+import org.terasology.exoplanet.generator.providers.ExoplanetBiomeProvider;
+import org.terasology.exoplanet.generator.providers.ExoplanetFloraProvider;
+import org.terasology.exoplanet.generator.providers.ExoplanetHumidityProvider;
+import org.terasology.exoplanet.generator.providers.ExoplanetMountainsProvider;
+import org.terasology.exoplanet.generator.providers.ExoplanetSeaLevelProvider;
+import org.terasology.exoplanet.generator.providers.ExoplanetSurfaceProvider;
+import org.terasology.exoplanet.generator.providers.ExoplanetSurfaceTempProvider;
+import org.terasology.exoplanet.generator.providers.ExoplanetTreeProvider;
+import org.terasology.exoplanet.generator.rasterizers.ExoplanetFloraRasterizer;
+import org.terasology.exoplanet.generator.rasterizers.ExoplanetTreeRasterizer;
+import org.terasology.exoplanet.generator.rasterizers.ExoplanetWorldRasterizer;
 import org.terasology.math.geom.ImmutableVector2i;
-import org.terasology.registry.In;
-import org.terasology.world.generation.BaseFacetedWorldGenerator;
-import org.terasology.world.generation.WorldBuilder;
-import org.terasology.world.generator.RegisterWorldGenerator;
-import org.terasology.world.generator.plugin.WorldGeneratorPluginLibrary;
 
 @RegisterWorldGenerator(id = "exoplanetWorld", displayName = "Exoplanet")
 public class ExoplanetWorldGenerator extends BaseFacetedWorldGenerator {

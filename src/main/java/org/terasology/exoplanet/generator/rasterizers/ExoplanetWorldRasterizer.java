@@ -1,54 +1,38 @@
-/*
- * Copyright 2018 MovingBlocks
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+// Copyright 2020 The Terasology Foundation
+// SPDX-License-Identifier: Apache-2.0
 package org.terasology.exoplanet.generator.rasterizers;
 
+import org.terasology.biomesAPI.Biome;
+import org.terasology.biomesAPI.BiomeRegistry;
+import org.terasology.engine.math.ChunkMath;
+import org.terasology.engine.registry.CoreRegistry;
+import org.terasology.engine.utilities.random.FastRandom;
+import org.terasology.engine.utilities.random.Random;
+import org.terasology.engine.world.block.Block;
+import org.terasology.engine.world.block.BlockManager;
+import org.terasology.engine.world.chunks.CoreChunk;
+import org.terasology.engine.world.generation.Region;
+import org.terasology.engine.world.generation.WorldRasterizer;
 import org.terasology.exoplanet.ExoplanetBiome;
 import org.terasology.exoplanet.generator.facets.ExoplanetBiomeFacet;
 import org.terasology.exoplanet.generator.facets.ExoplanetSeaLevelFacet;
 import org.terasology.exoplanet.generator.facets.ExoplanetSurfaceHeightFacet;
-import org.terasology.math.ChunkMath;
 import org.terasology.math.TeraMath;
 import org.terasology.math.geom.Vector2i;
 import org.terasology.math.geom.Vector3i;
-import org.terasology.registry.CoreRegistry;
-import org.terasology.utilities.random.FastRandom;
-import org.terasology.utilities.random.Random;
-import org.terasology.biomesAPI.Biome;
-import org.terasology.biomesAPI.BiomeRegistry;
-import org.terasology.world.block.Block;
-import org.terasology.world.block.BlockManager;
-import org.terasology.world.chunks.CoreChunk;
-import org.terasology.world.generation.Region;
-import org.terasology.world.generation.WorldRasterizer;
 
 import java.util.HashMap;
 import java.util.Map;
 
-
-import static org.terasology.exoplanet.generator.ExoplanetWorldGenerator.*;
+import static org.terasology.exoplanet.generator.ExoplanetWorldGenerator.EXOPLANET_BORDER;
 
 public class ExoplanetWorldRasterizer implements WorldRasterizer {
-    private Block grass, dirt, sand, stone, snowyStone, snow, ice, water, borderBlock, air;
-    private BiomeRegistry biomeRegistry;
-    private Map<Block, Float> ore = new HashMap<>();
-
+    private final Map<Block, Float> ore = new HashMap<>();
     private final int ORE_DEPTH = 30;
     private final int ORE_VEIN_THICKNESS = 40;
-
-    private Random random = new FastRandom();
+    private final Random random = new FastRandom();
+    private Block grass, dirt, sand, stone, snowyStone, snow, ice, water, borderBlock, air;
+    private BiomeRegistry biomeRegistry;
 
     @Override
     public void initialize() {
@@ -102,7 +86,8 @@ public class ExoplanetWorldRasterizer implements WorldRasterizer {
                     }
 
                     if (position.y <= surfaceHeight) {
-                        Block block = getBlockToPlace(surfaceHeight, position.y, biome, seaLevelWorldHeight, rockLayerDepth);
+                        Block block = getBlockToPlace(surfaceHeight, position.y, biome, seaLevelWorldHeight,
+                                rockLayerDepth);
                         chunk.setBlock(ChunkMath.calcRelativeBlockPos(position), block);
                     }
                 }

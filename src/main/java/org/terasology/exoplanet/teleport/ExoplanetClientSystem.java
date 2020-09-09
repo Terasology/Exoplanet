@@ -1,43 +1,30 @@
-/*
- * Copyright 2018 MovingBlocks
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+// Copyright 2020 The Terasology Foundation
+// SPDX-License-Identifier: Apache-2.0
 package org.terasology.exoplanet.teleport;
 
-import org.terasology.entitySystem.entity.EntityRef;
-import org.terasology.entitySystem.event.ReceiveEvent;
-import org.terasology.entitySystem.systems.BaseComponentSystem;
-import org.terasology.entitySystem.systems.RegisterMode;
-import org.terasology.entitySystem.systems.RegisterSystem;
-import org.terasology.entitySystem.systems.UpdateSubscriberSystem;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.terasology.engine.entitySystem.entity.EntityRef;
+import org.terasology.engine.entitySystem.event.ReceiveEvent;
+import org.terasology.engine.entitySystem.systems.BaseComponentSystem;
+import org.terasology.engine.entitySystem.systems.RegisterMode;
+import org.terasology.engine.entitySystem.systems.RegisterSystem;
+import org.terasology.engine.entitySystem.systems.UpdateSubscriberSystem;
+import org.terasology.engine.logic.characters.CharacterTeleportEvent;
+import org.terasology.engine.logic.common.ActivateEvent;
+import org.terasology.engine.logic.players.LocalPlayer;
+import org.terasology.engine.math.Region3i;
+import org.terasology.engine.registry.In;
+import org.terasology.engine.world.block.BlockComponent;
+import org.terasology.engine.world.generation.Region;
+import org.terasology.engine.world.generation.World;
+import org.terasology.engine.world.generation.facets.SurfaceHeightFacet;
+import org.terasology.engine.world.generator.WorldGenerator;
 import org.terasology.exoplanet.generator.facets.ExoplanetSeaLevelFacet;
 import org.terasology.exoplanet.generator.facets.ExoplanetSurfaceHeightFacet;
-import org.terasology.logic.characters.CharacterTeleportEvent;
-import org.terasology.logic.common.ActivateEvent;
-import org.terasology.logic.players.LocalPlayer;
-import org.terasology.math.Region3i;
 import org.terasology.math.geom.BaseVector2i;
 import org.terasology.math.geom.Vector3f;
 import org.terasology.math.geom.Vector3i;
-import org.terasology.registry.In;
-import org.terasology.world.block.BlockComponent;
-import org.terasology.world.generation.Region;
-import org.terasology.world.generation.World;
-import org.terasology.world.generation.facets.SurfaceHeightFacet;
-import org.terasology.world.generator.WorldGenerator;
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -48,15 +35,12 @@ import static org.terasology.exoplanet.generator.ExoplanetWorldGenerator.EXOPLAN
 
 @RegisterSystem(RegisterMode.CLIENT)
 public class ExoplanetClientSystem extends BaseComponentSystem implements UpdateSubscriberSystem {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ExoplanetClientSystem.class);
+    private final Map<EntityRef, Vector3f> teleportQueue = new HashMap<>();
     @In
     private LocalPlayer localPlayer;
-
     @In
     private WorldGenerator worldGenerator;
-
-    private Map<EntityRef, Vector3f> teleportQueue = new HashMap<>();
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(ExoplanetClientSystem.class);
 
     @Override
     public void update(float delta) {
@@ -102,7 +86,8 @@ public class ExoplanetClientSystem extends BaseComponentSystem implements Update
     private Vector3f findExoplanetSpawnPos(Vector3i currentPos) {
         World world = worldGenerator.getWorld();
         Vector3i searchRadius = new Vector3i(32, 1, 32);
-        Region3i searchArea = Region3i.createFromCenterExtents(new Vector3i(currentPos.x, EXOPLANET_HEIGHT, currentPos.z), searchRadius);
+        Region3i searchArea = Region3i.createFromCenterExtents(new Vector3i(currentPos.x, EXOPLANET_HEIGHT,
+                currentPos.z), searchRadius);
         Region worldRegion = world.getWorldData(searchArea);
 
         ExoplanetSeaLevelFacet seaLevelFacet = worldRegion.getFacet(ExoplanetSeaLevelFacet.class);
@@ -124,7 +109,8 @@ public class ExoplanetClientSystem extends BaseComponentSystem implements Update
     private Vector3f findEarthSpawnPos(Vector3i currentPos) {
         World world = worldGenerator.getWorld();
         Vector3i searchRadius = new Vector3i(32, 1, 32);
-        Region3i searchArea = Region3i.createFromCenterExtents(new Vector3i(currentPos.x, 0, currentPos.z), searchRadius);
+        Region3i searchArea = Region3i.createFromCenterExtents(new Vector3i(currentPos.x, 0, currentPos.z),
+                searchRadius);
         Region worldRegion = world.getWorldData(searchArea);
 
         SurfaceHeightFacet surfaceHeightFacet = worldRegion.getFacet(SurfaceHeightFacet.class);
