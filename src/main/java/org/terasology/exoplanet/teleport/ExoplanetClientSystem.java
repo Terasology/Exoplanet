@@ -26,6 +26,7 @@ import org.terasology.exoplanet.generator.facets.ExoplanetSurfaceHeightFacet;
 import org.terasology.logic.characters.CharacterTeleportEvent;
 import org.terasology.logic.common.ActivateEvent;
 import org.terasology.logic.players.LocalPlayer;
+import org.terasology.math.JomlUtil;
 import org.terasology.math.Region3i;
 import org.terasology.math.geom.BaseVector2i;
 import org.terasology.math.geom.Vector3f;
@@ -66,7 +67,7 @@ public class ExoplanetClientSystem extends BaseComponentSystem implements Update
                 Map.Entry<EntityRef, Vector3f> entry = teleportIt.next();
                 EntityRef character = entry.getKey();
                 Vector3f targetPos = entry.getValue();
-                character.send(new CharacterTeleportEvent(targetPos));
+                character.send(new CharacterTeleportEvent(JomlUtil.from(targetPos)));
                 teleportIt.remove();
             }
         }
