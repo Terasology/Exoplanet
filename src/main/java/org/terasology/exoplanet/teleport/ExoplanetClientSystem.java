@@ -15,6 +15,8 @@
  */
 package org.terasology.exoplanet.teleport;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.terasology.entitySystem.entity.EntityRef;
 import org.terasology.entitySystem.event.ReceiveEvent;
 import org.terasology.entitySystem.systems.BaseComponentSystem;
@@ -26,6 +28,7 @@ import org.terasology.exoplanet.generator.facets.ExoplanetSurfaceHeightFacet;
 import org.terasology.logic.characters.CharacterTeleportEvent;
 import org.terasology.logic.common.ActivateEvent;
 import org.terasology.logic.players.LocalPlayer;
+import org.terasology.logic.spawner.FixedSpawner;
 import org.terasology.math.JomlUtil;
 import org.terasology.math.Region3i;
 import org.terasology.math.geom.BaseVector2i;
@@ -35,10 +38,7 @@ import org.terasology.registry.In;
 import org.terasology.world.block.BlockComponent;
 import org.terasology.world.generation.Region;
 import org.terasology.world.generation.World;
-import org.terasology.world.generation.facets.SurfaceHeightFacet;
 import org.terasology.world.generator.WorldGenerator;
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -82,7 +82,7 @@ public class ExoplanetClientSystem extends BaseComponentSystem implements Update
 
         Vector3f spawnPos;
         if (blockComponent.position.y >= EXOPLANET_BORDER) {
-            spawnPos = findEarthSpawnPos(blockComponent.position);
+            spawnPos = findEarthSpawnPos(blockComponent.position, character);
             if (spawnPos != null) {
                 character.send(new ExitExoplanetEvent(client));
                 teleportQueue.put(character, spawnPos);
@@ -122,22 +122,7 @@ public class ExoplanetClientSystem extends BaseComponentSystem implements Update
         return null;
     }
 
-    private Vector3f findEarthSpawnPos(Vector3i currentPos) {
-        World world = worldGenerator.getWorld();
-        Vector3i searchRadius = new Vector3i(32, 1, 32);
-        Region3i searchArea = Region3i.createFromCenterExtents(new Vector3i(currentPos.x, 0, currentPos.z), searchRadius);
-        Region worldRegion = world.getWorldData(searchArea);
-
-        SurfaceHeightFacet surfaceHeightFacet = worldRegion.getFacet(SurfaceHeightFacet.class);
-        if (surfaceHeightFacet != null) {
-            for (BaseVector2i pos : surfaceHeightFacet.getWorldRegion().contents()) {
-                float surfaceHeight = surfaceHeightFacet.getWorld(pos);
-
-                if (surfaceHeight >= 32) {
-                    return new Vector3f(pos.x(), surfaceHeight + 1, pos.y());
-                }
-            }
-        }
-        return null;
+    private Vector3f findEarthSpawnPos(Vector3i currentPos, EntityRef character) {
+        return JomlUtil.from(new FixedSpawner(currentPos.x, currentPos.z).getSpawnPosition(worldGenerator.getWorld(), character));
     }
 }
