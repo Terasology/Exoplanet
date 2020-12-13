@@ -56,7 +56,7 @@ public class ExoplanetFloraProvider implements FacetProvider {
                 floraDensity = exoplanetBiome.getFloraDensity();
             }
 
-            if (facet.getWorldRegion().encompasses(position.x(), surfaceHeight, position.y())
+            if (facet.getWorldRegion().containsBlock(position.x(), surfaceHeight, position.y())
                     && surfaceHeight > EXOPLANET_BORDER && floraNoise.noise(position.x(), position.y()) > 1 - (floraDensity * 0.1f)) {
                 facet.setWorld(position.x(), surfaceHeight, position.y(), true);
             }

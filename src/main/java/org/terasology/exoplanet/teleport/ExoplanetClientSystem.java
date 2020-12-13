@@ -15,6 +15,7 @@
  */
 package org.terasology.exoplanet.teleport;
 
+import org.joml.Vector3i;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.terasology.entitySystem.entity.EntityRef;
@@ -30,12 +31,12 @@ import org.terasology.logic.common.ActivateEvent;
 import org.terasology.logic.players.LocalPlayer;
 import org.terasology.logic.spawner.FixedSpawner;
 import org.terasology.math.JomlUtil;
-import org.terasology.math.Region3i;
 import org.terasology.math.geom.BaseVector2i;
 import org.terasology.math.geom.Vector3f;
-import org.terasology.math.geom.Vector3i;
 import org.terasology.registry.In;
 import org.terasology.world.block.BlockComponent;
+import org.terasology.world.block.BlockRegion;
+import org.terasology.world.block.BlockRegions;
 import org.terasology.world.generation.Region;
 import org.terasology.world.generation.World;
 import org.terasology.world.generator.WorldGenerator;
@@ -82,14 +83,14 @@ public class ExoplanetClientSystem extends BaseComponentSystem implements Update
 
         Vector3f spawnPos;
         if (blockComponent.position.y >= EXOPLANET_BORDER) {
-            spawnPos = findEarthSpawnPos(blockComponent.position, character);
+            spawnPos = findEarthSpawnPos(JomlUtil.from(blockComponent.position), character);
             if (spawnPos != null) {
                 character.send(new ExitExoplanetEvent(client));
                 teleportQueue.put(character, spawnPos);
                 LOGGER.info("Portal Activate Event Sent - Earth");
             }
         } else {
-            spawnPos = findExoplanetSpawnPos(blockComponent.position);
+            spawnPos = findExoplanetSpawnPos(JomlUtil.from(blockComponent.position));
             if (spawnPos != null) {
                 character.send(new EnterExoplanetEvent(client));
                 teleportQueue.put(character, spawnPos);
@@ -103,7 +104,7 @@ public class ExoplanetClientSystem extends BaseComponentSystem implements Update
     private Vector3f findExoplanetSpawnPos(Vector3i currentPos) {
         World world = worldGenerator.getWorld();
         Vector3i searchRadius = new Vector3i(32, 1, 32);
-        Region3i searchArea = Region3i.createFromCenterExtents(new Vector3i(currentPos.x, EXOPLANET_HEIGHT, currentPos.z), searchRadius);
+        BlockRegion searchArea = BlockRegions.createFromCenterAndExtents(new Vector3i(currentPos.x, EXOPLANET_HEIGHT, currentPos.z), searchRadius);
         Region worldRegion = world.getWorldData(searchArea);
 
         ExoplanetSeaLevelFacet seaLevelFacet = worldRegion.getFacet(ExoplanetSeaLevelFacet.class);

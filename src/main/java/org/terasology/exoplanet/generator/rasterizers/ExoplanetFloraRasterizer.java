@@ -15,17 +15,18 @@
  */
 package org.terasology.exoplanet.generator.rasterizers;
 
+import org.joml.Vector3i;
+import org.terasology.biomesAPI.Biome;
 import org.terasology.exoplanet.ExoplanetBiome;
 import org.terasology.exoplanet.generator.facets.ExoplanetBiomeFacet;
 import org.terasology.exoplanet.generator.facets.ExoplanetFloraFacet;
 import org.terasology.math.ChunkMath;
-import org.terasology.math.geom.Vector3i;
 import org.terasology.registry.CoreRegistry;
 import org.terasology.utilities.random.FastRandom;
 import org.terasology.utilities.random.Random;
-import org.terasology.biomesAPI.Biome;
 import org.terasology.world.block.Block;
 import org.terasology.world.block.BlockManager;
+import org.terasology.world.block.BlockRegions;
 import org.terasology.world.chunks.CoreChunk;
 import org.terasology.world.generation.Region;
 import org.terasology.world.generation.WorldRasterizer;
@@ -57,13 +58,13 @@ public class ExoplanetFloraRasterizer implements WorldRasterizer {
         ExoplanetFloraFacet facet = chunkRegion.getFacet(ExoplanetFloraFacet.class);
         ExoplanetBiomeFacet biomeFacet = chunkRegion.getFacet(ExoplanetBiomeFacet.class);
 
-        for (Vector3i position : chunkRegion.getRegion()) {
-            Biome biome = biomeFacet.getWorld(position.x, position.z);
+        for (Vector3i position : BlockRegions.iterable(chunkRegion.getRegion())) {
+            Biome biome = biomeFacet.getWorld(position.x(), position.z());
 
             if (facet.getWorld(position)
-                    && chunk.getBlock(ChunkMath.calcRelativeBlockPos(new Vector3i(position).subY(1))).getURI() != BlockManager.AIR_ID
-                    && !chunk.getBlock(ChunkMath.calcRelativeBlockPos(new Vector3i(position).subY(1))).isLiquid()) {
-                chunk.setBlock(ChunkMath.calcRelativeBlockPos(position.addY(1)), getRandomFlora(biome));
+                    && chunk.getBlock(ChunkMath.calcRelativeBlockPos(new Vector3i(position).sub(0,1,0), new Vector3i())).getURI() != BlockManager.AIR_ID
+                    && !chunk.getBlock(ChunkMath.calcRelativeBlockPos(new Vector3i(position).sub(0,1,0), new Vector3i())).isLiquid()) {
+                chunk.setBlock(ChunkMath.calcRelativeBlockPos(position.add(0,1,0), new Vector3i()), getRandomFlora(biome));
             }
         }
     }
