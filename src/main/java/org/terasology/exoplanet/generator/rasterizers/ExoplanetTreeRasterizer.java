@@ -20,12 +20,10 @@ import org.joml.Vector3ic;
 import org.terasology.exoplanet.generator.ExoplanetTree;
 import org.terasology.exoplanet.generator.facets.ExoplanetTreeFacet;
 import org.terasology.math.ChunkMath;
-import org.terasology.math.Region3i;
 import org.terasology.registry.CoreRegistry;
 import org.terasology.world.block.Block;
 import org.terasology.world.block.BlockManager;
 import org.terasology.world.block.BlockRegion;
-import org.terasology.world.block.BlockRegions;
 import org.terasology.world.chunks.CoreChunk;
 import org.terasology.world.generation.Region;
 import org.terasology.world.generation.WorldRasterizer;
@@ -46,7 +44,7 @@ public class ExoplanetTreeRasterizer implements WorldRasterizer {
         ExoplanetTreeFacet facet = chunkRegion.getFacet(ExoplanetTreeFacet.class);
 
         for (Map.Entry<Vector3ic, ExoplanetTree> entry : facet.getWorldEntries().entrySet()) {
-            Vector3i treePosition = new Vector3i(entry.getKey()).add(0,1,0);
+            Vector3i treePosition = new Vector3i(entry.getKey()).add(0, 1, 0);
 
             int height = entry.getValue().getHeight();
             int width = entry.getValue().getWidth();
@@ -60,23 +58,22 @@ public class ExoplanetTreeRasterizer implements WorldRasterizer {
             Vector3i treeMinimumPos = new Vector3i(treePosition).sub(radius, 0, radius);
 
             // creates regions for different parts of a tree
-            BlockRegion treeRegion = BlockRegions.createFromMinAndSize(treeMinimumPos, new Vector3i(width, height, width));
-            BlockRegion treeTrunk = BlockRegions.createFromMinAndSize(treePosition, new Vector3i(1, trunkHeight, 1));
-            BlockRegion treeCrown = BlockRegions.createFromMinAndSize(new Vector3i(treeMinimumPos).add(0,trunkHeight - 1,0),
-                    new Vector3i(width, crownHeight, width));
-            BlockRegion treeTop = BlockRegions.createFromMinAndSize(
-                    new Vector3i(treeMinimumPos).add((width - topCrownWidth) / 2, trunkHeight + crownHeight - 1,
-                            (width - topCrownWidth) / 2),
-                    new Vector3i(topCrownWidth, topCrownHeight, topCrownWidth));
+            BlockRegion treeRegion = new BlockRegion(treeMinimumPos).setSize(width, height, width);
+            BlockRegion treeTrunk = new BlockRegion(treePosition).setSize(1, trunkHeight, 1);
+            BlockRegion treeCrown = new BlockRegion(treeMinimumPos.add(0, trunkHeight - 1, 0)).setSize(width,
+                    crownHeight, width);
+            BlockRegion treeTop = new BlockRegion(treeMinimumPos.add((width - topCrownWidth) / 2,
+                    trunkHeight + crownHeight - 1,
+                    (width - topCrownWidth) / 2)).setSize(topCrownWidth, topCrownHeight, topCrownWidth);
 
             // loop through each of the positions in the created regions and placing blocks
-            for (Vector3ic newBlockPosition : BlockRegions.iterableInPlace(treeRegion)) {
-                if (chunkRegion.getRegion().containsBlock(newBlockPosition)) {
-                    if (treeTrunk.containsBlock(newBlockPosition)) {
+            for (Vector3ic newBlockPosition : treeRegion) {
+                if (chunkRegion.getRegion().contains(newBlockPosition)) {
+                    if (treeTrunk.contains(newBlockPosition)) {
                         chunk.setBlock(ChunkMath.calcRelativeBlockPos(newBlockPosition, new Vector3i()), trunk);
-                    } else if (!treeTrunk.containsBlock(newBlockPosition)) {
+                    } else if (!treeTrunk.contains(newBlockPosition)) {
 
-                        if (treeCrown.containsBlock(newBlockPosition) || treeTop.containsBlock(newBlockPosition)) {
+                        if (treeCrown.contains(newBlockPosition) || treeTop.contains(newBlockPosition)) {
                             chunk.setBlock(ChunkMath.calcRelativeBlockPos(newBlockPosition, new Vector3i()), leaf);
                         }
                     }

@@ -36,7 +36,6 @@ import org.terasology.math.geom.Vector3f;
 import org.terasology.registry.In;
 import org.terasology.world.block.BlockComponent;
 import org.terasology.world.block.BlockRegion;
-import org.terasology.world.block.BlockRegions;
 import org.terasology.world.generation.Region;
 import org.terasology.world.generation.World;
 import org.terasology.world.generator.WorldGenerator;
@@ -104,7 +103,7 @@ public class ExoplanetClientSystem extends BaseComponentSystem implements Update
     private Vector3f findExoplanetSpawnPos(Vector3i currentPos) {
         World world = worldGenerator.getWorld();
         Vector3i searchRadius = new Vector3i(32, 1, 32);
-        BlockRegion searchArea = BlockRegions.createFromCenterAndExtents(new Vector3i(currentPos.x, EXOPLANET_HEIGHT, currentPos.z), searchRadius);
+        BlockRegion searchArea = new BlockRegion(currentPos.x, EXOPLANET_HEIGHT, currentPos.z).expand(searchRadius);
         Region worldRegion = world.getWorldData(searchArea);
 
         ExoplanetSeaLevelFacet seaLevelFacet = worldRegion.getFacet(ExoplanetSeaLevelFacet.class);

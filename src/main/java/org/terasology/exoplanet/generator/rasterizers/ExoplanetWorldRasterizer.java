@@ -32,7 +32,6 @@ import org.terasology.utilities.random.FastRandom;
 import org.terasology.utilities.random.Random;
 import org.terasology.world.block.Block;
 import org.terasology.world.block.BlockManager;
-import org.terasology.world.block.BlockRegions;
 import org.terasology.world.chunks.CoreChunk;
 import org.terasology.world.generation.Region;
 import org.terasology.world.generation.WorldRasterizer;
@@ -83,8 +82,8 @@ public class ExoplanetWorldRasterizer implements WorldRasterizer {
         int seaLevelWorldHeight = seaLevelFacet.getWorldSeaLevel();
 
         Vector2i pos2d = new Vector2i();
-        if (chunkRegion.getRegion().getMaxY() > EXOPLANET_BORDER) {
-            for (Vector3ic position : BlockRegions.iterableInPlace(chunkRegion.getRegion())) {
+        if (chunkRegion.getRegion().maxY() > EXOPLANET_BORDER) {
+            for (Vector3ic position : chunkRegion.getRegion()) {
                 pos2d.set(position.x(), position.z());
 
                 int surfaceHeight = TeraMath.floorToInt(surfaceHeightFacet.getWorld(pos2d));

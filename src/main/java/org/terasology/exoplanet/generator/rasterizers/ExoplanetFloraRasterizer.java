@@ -16,6 +16,7 @@
 package org.terasology.exoplanet.generator.rasterizers;
 
 import org.joml.Vector3i;
+import org.joml.Vector3ic;
 import org.terasology.biomesAPI.Biome;
 import org.terasology.exoplanet.ExoplanetBiome;
 import org.terasology.exoplanet.generator.facets.ExoplanetBiomeFacet;
@@ -26,7 +27,6 @@ import org.terasology.utilities.random.FastRandom;
 import org.terasology.utilities.random.Random;
 import org.terasology.world.block.Block;
 import org.terasology.world.block.BlockManager;
-import org.terasology.world.block.BlockRegions;
 import org.terasology.world.chunks.CoreChunk;
 import org.terasology.world.generation.Region;
 import org.terasology.world.generation.WorldRasterizer;
@@ -58,7 +58,8 @@ public class ExoplanetFloraRasterizer implements WorldRasterizer {
         ExoplanetFloraFacet facet = chunkRegion.getFacet(ExoplanetFloraFacet.class);
         ExoplanetBiomeFacet biomeFacet = chunkRegion.getFacet(ExoplanetBiomeFacet.class);
 
-        for (Vector3i position : BlockRegions.iterable(chunkRegion.getRegion())) {
+        for (Vector3ic pos : chunkRegion.getRegion()) {
+            Vector3i position = new Vector3i(pos);
             Biome biome = biomeFacet.getWorld(position.x(), position.z());
 
             if (facet.getWorld(position)
