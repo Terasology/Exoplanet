@@ -33,6 +33,7 @@ import org.terasology.world.generator.plugin.WorldGeneratorPluginLibrary;
 public class ExoplanetWorldGenerator extends BaseFacetedWorldGenerator {
     public static final int EXOPLANET_HEIGHT = 10000;
     public static final int EXOPLANET_BORDER = 9900;
+    private static final ImmutableVector2i SPAWN_POS = new ImmutableVector2i(0, 0);
 
     @In
     private WorldGeneratorPluginLibrary worldGeneratorPluginLibrary;
@@ -43,26 +44,25 @@ public class ExoplanetWorldGenerator extends BaseFacetedWorldGenerator {
 
     @Override
     protected WorldBuilder createWorld() {
-        int perlinSeaLevel = 32;
+        int earthSeaLevel = 15;
         int exoplanetSeaLevel = 37;
 
         ImmutableVector2i spawnPos = new ImmutableVector2i(0, 0);
 
         return new WorldBuilder(worldGeneratorPluginLibrary)
-                // Perlin World (Earth)
-                .setSeaLevel(perlinSeaLevel)
-                .addProvider(new SeaLevelProvider(perlinSeaLevel))
-                .addProvider(new PerlinHumidityProvider())
-                .addProvider(new PerlinSurfaceTemperatureProvider())
-                .addProvider(new PerlinBaseSurfaceProvider())
-                .addProvider(new PerlinRiverProvider())
-                .addProvider(new PerlinOceanProvider())
-                .addProvider(new PerlinHillsAndMountainsProvider())
+                .setSeaLevel(earthSeaLevel)
+                .addProvider(new SeaLevelProvider(earthSeaLevel))
+                .addProvider(new SimplexHumidityProvider())
+                .addProvider(new SimplexSurfaceTemperatureProvider())
+                .addProvider(new SimplexBaseSurfaceProvider())
+                .addProvider(new SimplexRiverProvider())
+                .addProvider(new SimplexRoughnessProvider())
                 .addProvider(new BiomeProvider())
                 .addProvider(new SurfaceToDensityProvider())
+                .addProvider(new DensityNoiseProvider())
                 .addProvider(new DefaultFloraProvider())
                 .addProvider(new DefaultTreeProvider())
-                .addProvider(new PlateauProvider(spawnPos, perlinSeaLevel + 4, 10, 30))
+                .addProvider(new SpawnPlateauProvider(SPAWN_POS))
                 .addRasterizer(new SolidRasterizer())
                 .addRasterizer(new FloraRasterizer())
                 .addRasterizer(new TreeRasterizer())
@@ -76,6 +76,7 @@ public class ExoplanetWorldGenerator extends BaseFacetedWorldGenerator {
                 .addRasterizer(new ExoplanetWorldRasterizer())
                 .addProvider(new ExoplanetFloraProvider())
                 .addProvider(new ExoplanetTreeProvider())
+                .addPlugins()
                 .addRasterizer(new ExoplanetFloraRasterizer())
                 .addRasterizer(new ExoplanetTreeRasterizer());
     }
