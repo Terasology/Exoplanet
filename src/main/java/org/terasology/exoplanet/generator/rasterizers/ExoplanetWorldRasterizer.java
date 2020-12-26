@@ -15,19 +15,21 @@
  */
 package org.terasology.exoplanet.generator.rasterizers;
 
+import org.joml.Vector3i;
+import org.joml.Vector3ic;
+import org.terasology.biomesAPI.Biome;
+import org.terasology.biomesAPI.BiomeRegistry;
 import org.terasology.exoplanet.ExoplanetBiome;
 import org.terasology.exoplanet.generator.facets.ExoplanetBiomeFacet;
 import org.terasology.exoplanet.generator.facets.ExoplanetSeaLevelFacet;
 import org.terasology.exoplanet.generator.facets.ExoplanetSurfaceHeightFacet;
 import org.terasology.math.ChunkMath;
+import org.terasology.math.JomlUtil;
 import org.terasology.math.TeraMath;
 import org.terasology.math.geom.Vector2i;
-import org.terasology.math.geom.Vector3i;
 import org.terasology.registry.CoreRegistry;
 import org.terasology.utilities.random.FastRandom;
 import org.terasology.utilities.random.Random;
-import org.terasology.biomesAPI.Biome;
-import org.terasology.biomesAPI.BiomeRegistry;
 import org.terasology.world.block.Block;
 import org.terasology.world.block.BlockManager;
 import org.terasology.world.chunks.CoreChunk;
@@ -37,8 +39,7 @@ import org.terasology.world.generation.WorldRasterizer;
 import java.util.HashMap;
 import java.util.Map;
 
-
-import static org.terasology.exoplanet.generator.ExoplanetWorldGenerator.*;
+import static org.terasology.exoplanet.generator.ExoplanetWorldGenerator.EXOPLANET_BORDER;
 
 public class ExoplanetWorldRasterizer implements WorldRasterizer {
     private Block grass, dirt, sand, stone, snowyStone, snow, ice, water, borderBlock, air;
@@ -80,30 +81,31 @@ public class ExoplanetWorldRasterizer implements WorldRasterizer {
 
         int seaLevelWorldHeight = seaLevelFacet.getWorldSeaLevel();
 
-        Vector2i pos2d = new Vector2i();
         if (chunkRegion.getRegion().maxY() > EXOPLANET_BORDER) {
-            for (Vector3i position : chunkRegion.getRegion()) {
-                pos2d.set(position.x, position.z);
+            Vector2i pos2d = new Vector2i();
+            Vector3i pos = new Vector3i();
+            for (Vector3ic position : chunkRegion.getRegion()) {
+                pos2d.set(position.x(), position.z());
 
                 int surfaceHeight = TeraMath.floorToInt(surfaceHeightFacet.getWorld(pos2d));
                 int rockLayerDepth = surfaceHeightFacet.getRockLayerDepth();
 
-                if (position.y == EXOPLANET_BORDER) {
-                    chunk.setBlock(ChunkMath.calcRelativeBlockPos(position), borderBlock);
-                } else if (position.y > EXOPLANET_BORDER) {
+                if (position.y() == EXOPLANET_BORDER) {
+                    chunk.setBlock(ChunkMath.calcRelativeBlockPos(position, pos), borderBlock);
+                } else if (position.y() > EXOPLANET_BORDER) {
 
                     Biome biome = biomeFacet.getWorld(pos2d);
-                    biomeRegistry.setBiome(biome, chunk, ChunkMath.calcRelativeBlockPos(position));
+                    biomeRegistry.setBiome(biome, chunk, JomlUtil.from(ChunkMath.calcRelativeBlockPos(position, pos)));
 
-                    if (position.y == seaLevelWorldHeight && ExoplanetBiome.SNOW == biome) {
-                        chunk.setBlock(ChunkMath.calcRelativeBlockPos(position), ice);
-                    } else if (position.y <= seaLevelWorldHeight) {
-                        chunk.setBlock(ChunkMath.calcRelativeBlockPos(position), water);
+                    if (position.y() == seaLevelWorldHeight && ExoplanetBiome.SNOW == biome) {
+                        chunk.setBlock(ChunkMath.calcRelativeBlockPos(position, pos), ice);
+                    } else if (position.y() <= seaLevelWorldHeight) {
+                        chunk.setBlock(ChunkMath.calcRelativeBlockPos(position, pos), water);
                     }
 
-                    if (position.y <= surfaceHeight) {
-                        Block block = getBlockToPlace(surfaceHeight, position.y, biome, seaLevelWorldHeight, rockLayerDepth);
-                        chunk.setBlock(ChunkMath.calcRelativeBlockPos(position), block);
+                    if (position.y() <= surfaceHeight) {
+                        Block block = getBlockToPlace(surfaceHeight, position.y(), biome, seaLevelWorldHeight, rockLayerDepth);
+                        chunk.setBlock(ChunkMath.calcRelativeBlockPos(position, pos), block);
                     }
                 }
             }

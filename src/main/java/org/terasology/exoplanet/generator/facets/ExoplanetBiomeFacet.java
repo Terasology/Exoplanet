@@ -15,13 +15,13 @@
  */
 package org.terasology.exoplanet.generator.facets;
 
-import org.terasology.math.Region3i;
 import org.terasology.biomesAPI.Biome;
+import org.terasology.world.block.BlockRegion;
 import org.terasology.world.generation.Border3D;
 import org.terasology.world.generation.facets.base.BaseObjectFacet2D;
 
 public class ExoplanetBiomeFacet extends BaseObjectFacet2D<Biome> {
-    public ExoplanetBiomeFacet(Region3i targetRegion, Border3D border) {
+    public ExoplanetBiomeFacet(BlockRegion targetRegion, Border3D border) {
         super(targetRegion, border, Biome.class);
     }
 }
