@@ -17,7 +17,6 @@ package org.terasology.exoplanet.generator.rasterizers;
 
 import org.joml.Vector3i;
 import org.joml.Vector3ic;
-import org.lwjgl.system.CallbackI;
 import org.terasology.biomesAPI.Biome;
 import org.terasology.exoplanet.ExoplanetBiome;
 import org.terasology.exoplanet.generator.facets.ExoplanetBiomeFacet;
