@@ -17,6 +17,7 @@ package org.terasology.exoplanet.generator.rasterizers;
 
 import org.joml.Vector3i;
 import org.joml.Vector3ic;
+import org.lwjgl.system.CallbackI;
 import org.terasology.biomesAPI.Biome;
 import org.terasology.exoplanet.ExoplanetBiome;
 import org.terasology.exoplanet.generator.facets.ExoplanetBiomeFacet;
@@ -58,14 +59,14 @@ public class ExoplanetFloraRasterizer implements WorldRasterizer {
         ExoplanetFloraFacet facet = chunkRegion.getFacet(ExoplanetFloraFacet.class);
         ExoplanetBiomeFacet biomeFacet = chunkRegion.getFacet(ExoplanetBiomeFacet.class);
 
+        Vector3i tempPos = new Vector3i();
         for (Vector3ic pos : chunkRegion.getRegion()) {
-            Vector3i position = new Vector3i(pos);
-            Biome biome = biomeFacet.getWorld(position.x(), position.z());
+            Biome biome = biomeFacet.getWorld(pos.x(), pos.z());
 
-            if (facet.getWorld(position)
-                    && chunk.getBlock(ChunkMath.calcRelativeBlockPos(new Vector3i(position).sub(0,1,0), new Vector3i())).getURI() != BlockManager.AIR_ID
-                    && !chunk.getBlock(ChunkMath.calcRelativeBlockPos(new Vector3i(position).sub(0,1,0), new Vector3i())).isLiquid()) {
-                chunk.setBlock(ChunkMath.calcRelativeBlockPos(position.add(0,1,0), new Vector3i()), getRandomFlora(biome));
+            if (facet.getWorld(pos)
+                    && chunk.getBlock(ChunkMath.calcRelativeBlockPos(pos.sub(0,1,0, tempPos), tempPos)).getURI() != BlockManager.AIR_ID
+                    && !chunk.getBlock(ChunkMath.calcRelativeBlockPos(pos.sub(0,1,0, tempPos), tempPos)).isLiquid()) {
+                chunk.setBlock(ChunkMath.calcRelativeBlockPos(pos.add(0,1,0, tempPos), tempPos), getRandomFlora(biome));
             }
         }
     }

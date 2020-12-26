@@ -81,8 +81,9 @@ public class ExoplanetWorldRasterizer implements WorldRasterizer {
 
         int seaLevelWorldHeight = seaLevelFacet.getWorldSeaLevel();
 
-        Vector2i pos2d = new Vector2i();
         if (chunkRegion.getRegion().maxY() > EXOPLANET_BORDER) {
+            Vector2i pos2d = new Vector2i();
+            Vector3i pos = new Vector3i();
             for (Vector3ic position : chunkRegion.getRegion()) {
                 pos2d.set(position.x(), position.z());
 
@@ -90,21 +91,21 @@ public class ExoplanetWorldRasterizer implements WorldRasterizer {
                 int rockLayerDepth = surfaceHeightFacet.getRockLayerDepth();
 
                 if (position.y() == EXOPLANET_BORDER) {
-                    chunk.setBlock(ChunkMath.calcRelativeBlockPos(position, new Vector3i()), borderBlock);
+                    chunk.setBlock(ChunkMath.calcRelativeBlockPos(position, pos), borderBlock);
                 } else if (position.y() > EXOPLANET_BORDER) {
 
                     Biome biome = biomeFacet.getWorld(pos2d);
-                    biomeRegistry.setBiome(biome, chunk, JomlUtil.from(ChunkMath.calcRelativeBlockPos(position, new Vector3i())));
+                    biomeRegistry.setBiome(biome, chunk, JomlUtil.from(ChunkMath.calcRelativeBlockPos(position, pos)));
 
                     if (position.y() == seaLevelWorldHeight && ExoplanetBiome.SNOW == biome) {
-                        chunk.setBlock(ChunkMath.calcRelativeBlockPos(position, new Vector3i()), ice);
+                        chunk.setBlock(ChunkMath.calcRelativeBlockPos(position, pos), ice);
                     } else if (position.y() <= seaLevelWorldHeight) {
-                        chunk.setBlock(ChunkMath.calcRelativeBlockPos(position, new Vector3i()), water);
+                        chunk.setBlock(ChunkMath.calcRelativeBlockPos(position, pos), water);
                     }
 
                     if (position.y() <= surfaceHeight) {
                         Block block = getBlockToPlace(surfaceHeight, position.y(), biome, seaLevelWorldHeight, rockLayerDepth);
-                        chunk.setBlock(ChunkMath.calcRelativeBlockPos(position, new Vector3i()), block);
+                        chunk.setBlock(ChunkMath.calcRelativeBlockPos(position, pos), block);
                     }
                 }
             }
