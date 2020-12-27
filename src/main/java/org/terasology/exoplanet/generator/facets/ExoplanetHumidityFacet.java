@@ -15,13 +15,13 @@
  */
 package org.terasology.exoplanet.generator.facets;
 
-import org.terasology.math.Region3i;
+import org.terasology.world.block.BlockRegion;
 import org.terasology.world.generation.Border3D;
 import org.terasology.world.generation.facets.base.BaseFieldFacet2D;
 
 public class ExoplanetHumidityFacet extends BaseFieldFacet2D {
 
-    public ExoplanetHumidityFacet(Region3i targetRegion, Border3D border) {
+    public ExoplanetHumidityFacet(BlockRegion targetRegion, Border3D border) {
         super(targetRegion, border);
     }
 }

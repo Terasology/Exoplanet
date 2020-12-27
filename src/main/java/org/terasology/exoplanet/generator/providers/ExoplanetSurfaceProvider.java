@@ -15,13 +15,16 @@
  */
 package org.terasology.exoplanet.generator.providers;
 
+import org.joml.Vector2f;
 import org.terasology.exoplanet.generator.facets.ExoplanetSurfaceHeightFacet;
 import org.terasology.math.geom.Rect2i;
-import org.terasology.math.geom.Vector2f;
 import org.terasology.utilities.procedural.BrownianNoise;
 import org.terasology.utilities.procedural.PerlinNoise;
 import org.terasology.utilities.procedural.SubSampledNoise;
-import org.terasology.world.generation.*;
+import org.terasology.world.generation.Border3D;
+import org.terasology.world.generation.FacetProvider;
+import org.terasology.world.generation.GeneratingRegion;
+import org.terasology.world.generation.Produces;
 
 @Produces(ExoplanetSurfaceHeightFacet.class)
 public class ExoplanetSurfaceProvider implements FacetProvider {

@@ -15,6 +15,7 @@
  */
 package org.terasology.exoplanet.generator.providers;
 
+import org.terasology.biomesAPI.Biome;
 import org.terasology.exoplanet.ExoplanetBiome;
 import org.terasology.exoplanet.generator.facets.ExoplanetBiomeFacet;
 import org.terasology.exoplanet.generator.facets.ExoplanetFloraFacet;
@@ -23,8 +24,12 @@ import org.terasology.math.TeraMath;
 import org.terasology.math.geom.BaseVector2i;
 import org.terasology.utilities.procedural.Noise;
 import org.terasology.utilities.procedural.WhiteNoise;
-import org.terasology.biomesAPI.Biome;
-import org.terasology.world.generation.*;
+import org.terasology.world.generation.Border3D;
+import org.terasology.world.generation.Facet;
+import org.terasology.world.generation.FacetProvider;
+import org.terasology.world.generation.GeneratingRegion;
+import org.terasology.world.generation.Produces;
+import org.terasology.world.generation.Requires;
 
 import static org.terasology.exoplanet.generator.ExoplanetWorldGenerator.EXOPLANET_BORDER;
 
@@ -56,7 +61,7 @@ public class ExoplanetFloraProvider implements FacetProvider {
                 floraDensity = exoplanetBiome.getFloraDensity();
             }
 
-            if (facet.getWorldRegion().encompasses(position.x(), surfaceHeight, position.y())
+            if (facet.getWorldRegion().contains(position.x(), surfaceHeight, position.y())
                     && surfaceHeight > EXOPLANET_BORDER && floraNoise.noise(position.x(), position.y()) > 1 - (floraDensity * 0.1f)) {
                 facet.setWorld(position.x(), surfaceHeight, position.y(), true);
             }

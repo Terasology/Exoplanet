@@ -1,6 +1,6 @@
 {
     "id": "Exoplanet",
-    "version": "1.0.0",
+    "version": "1.0.0-SNAPSHOT",
     "author": "PutawanDE",
     "displayName": "Exoplanet",
     "description": "A module that adds an exotic world from a distant galaxy as an additional dimension.",

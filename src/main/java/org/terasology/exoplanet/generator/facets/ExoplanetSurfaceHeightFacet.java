@@ -15,7 +15,7 @@
  */
 package org.terasology.exoplanet.generator.facets;
 
-import org.terasology.math.Region3i;
+import org.terasology.world.block.BlockRegion;
 import org.terasology.world.generation.Border3D;
 import org.terasology.world.generation.facets.base.BaseFieldFacet2D;
 
@@ -24,7 +24,7 @@ public class ExoplanetSurfaceHeightFacet extends BaseFieldFacet2D {
 
     private final int ROCKY_LAYER_DEPTH = 10;
 
-    public ExoplanetSurfaceHeightFacet(Region3i targetRegion, Border3D border) {
+    public ExoplanetSurfaceHeightFacet(BlockRegion targetRegion, Border3D border) {
         super(targetRegion, border);
     }
 

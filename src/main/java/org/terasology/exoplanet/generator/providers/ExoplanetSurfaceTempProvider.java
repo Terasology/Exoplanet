@@ -15,9 +15,9 @@
  */
 package org.terasology.exoplanet.generator.providers;
 
+import org.joml.Vector2f;
 import org.terasology.exoplanet.generator.facets.ExoplanetSurfaceTempFacet;
 import org.terasology.math.TeraMath;
-import org.terasology.math.geom.Vector2f;
 import org.terasology.utilities.procedural.BrownianNoise;
 import org.terasology.utilities.procedural.PerlinNoise;
 import org.terasology.utilities.procedural.SubSampledNoise;
