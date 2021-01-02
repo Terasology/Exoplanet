@@ -50,7 +50,7 @@ public class ExoplanetSurfaceProvider implements FacetProvider {
         ExoplanetSurfaceHeightFacet facet = new ExoplanetSurfaceHeightFacet(region.getRegion(), border);
         facet.setBaseSurfaceHeight(exoplanetWorldHeight);
 
-        BlockAreac processRegion = facet.getWorldRegion();
+        BlockAreac processRegion = facet.getWorldArea();
         float[] noise = surfaceNoise.noise(processRegion);
 
         for (int i = 0; i < noise.length; ++i) {

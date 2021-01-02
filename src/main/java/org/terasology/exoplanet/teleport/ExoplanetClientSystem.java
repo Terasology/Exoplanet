@@ -111,7 +111,7 @@ public class ExoplanetClientSystem extends BaseComponentSystem implements Update
 
         ExoplanetSurfaceHeightFacet surfaceHeightFacet = worldRegion.getFacet(ExoplanetSurfaceHeightFacet.class);
         if (surfaceHeightFacet != null) {
-            for (Vector2ic pos : surfaceHeightFacet.getWorldRegion()) {
+            for (Vector2ic pos : surfaceHeightFacet.getWorldArea()) {
                 float surfaceHeight = surfaceHeightFacet.getWorld(pos);
 
                 if (surfaceHeight >= seaLevelWorldHeight) {

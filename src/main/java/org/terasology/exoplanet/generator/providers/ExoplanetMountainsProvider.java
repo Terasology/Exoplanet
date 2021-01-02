@@ -57,14 +57,14 @@ public class ExoplanetMountainsProvider implements FacetProvider {
     public void process(GeneratingRegion region) {
         ExoplanetSurfaceHeightFacet facet = region.getRegionFacet(ExoplanetSurfaceHeightFacet.class);
 
-        float[] mountainData = mountainNoise.noise(facet.getWorldRegion());
-        float[] hillData = hillNoise.noise(facet.getWorldRegion());
+        float[] mountainData = mountainNoise.noise(facet.getWorldArea());
+        float[] hillData = hillNoise.noise(facet.getWorldArea());
 
         ExoplanetSurfaceTempFacet tempFacet = region.getRegionFacet(ExoplanetSurfaceTempFacet.class);
         ExoplanetHumidityFacet humidityFacet = region.getRegionFacet(ExoplanetHumidityFacet.class);
 
         float[] heightData = facet.getInternal();
-        Iterator<Vector2ic> positionIterator = facet.getRelativeRegion().iterator();
+        Iterator<Vector2ic> positionIterator = facet.getRelativeArea().iterator();
         for (int i = 0; i < heightData.length; ++i) {
             Vector2ic pos = positionIterator.next();
             float temp = tempFacet.get(pos);

@@ -52,7 +52,7 @@ public class ExoplanetFloraProvider implements FacetProvider {
         ExoplanetBiomeFacet biomeFacet = region.getRegionFacet(ExoplanetBiomeFacet.class);
         ExoplanetSurfaceHeightFacet surfaceHeightFacet = region.getRegionFacet(ExoplanetSurfaceHeightFacet.class);
 
-        for (Vector2ic position : surfaceHeightFacet.getWorldRegion()) {
+        for (Vector2ic position : surfaceHeightFacet.getWorldArea()) {
             int surfaceHeight = TeraMath.floorToInt(surfaceHeightFacet.getWorld(position));
             float floraDensity = 0.4f;
 

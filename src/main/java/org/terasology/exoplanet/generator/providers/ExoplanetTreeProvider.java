@@ -55,7 +55,7 @@ public class ExoplanetTreeProvider implements FacetProvider {
 
         int seaLevelWorldHeight = seaLevelFacet.getWorldSeaLevel();
         int maxGrowableAltitude = seaLevelWorldHeight + 100;
-        BlockAreac worldRegion = surfaceHeightFacet.getWorldRegion();
+        BlockAreac worldRegion = surfaceHeightFacet.getWorldArea();
 
         for (int wz = worldRegion.minY(); wz <= worldRegion.maxY(); wz++) {
             for (int wx = worldRegion.minX(); wx <= worldRegion.maxX(); wx++) {

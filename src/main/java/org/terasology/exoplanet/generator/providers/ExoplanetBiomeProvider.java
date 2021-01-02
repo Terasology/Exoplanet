@@ -55,7 +55,7 @@ public class ExoplanetBiomeProvider implements FacetProvider {
 
         int seaLevelWorldHeight = seaLevelFacet.getWorldSeaLevel();
 
-        for (Vector2ic pos : biomeFacet.getRelativeRegion()) {
+        for (Vector2ic pos : biomeFacet.getRelativeArea()) {
             float temp = temperatureFacet.get(pos);
             float hum = temp * humidityFacet.get(pos);
             float height = surfaceHeightFacet.get(pos);
