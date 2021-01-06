@@ -15,6 +15,7 @@
  */
 package org.terasology.exoplanet.generator.providers;
 
+import org.joml.Vector2ic;
 import org.terasology.biomesAPI.Biome;
 import org.terasology.exoplanet.ExoplanetBiome;
 import org.terasology.exoplanet.generator.facets.ExoplanetBiomeFacet;
@@ -51,7 +52,7 @@ public class ExoplanetFloraProvider implements FacetProvider {
         ExoplanetBiomeFacet biomeFacet = region.getRegionFacet(ExoplanetBiomeFacet.class);
         ExoplanetSurfaceHeightFacet surfaceHeightFacet = region.getRegionFacet(ExoplanetSurfaceHeightFacet.class);
 
-        for (BaseVector2i position : surfaceHeightFacet.getWorldRegion().contents()) {
+        for (Vector2ic position : surfaceHeightFacet.getWorldArea()) {
             int surfaceHeight = TeraMath.floorToInt(surfaceHeightFacet.getWorld(position));
             float floraDensity = 0.4f;
 

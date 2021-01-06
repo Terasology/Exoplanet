@@ -15,10 +15,20 @@
  */
 package org.terasology.exoplanet.generator.providers;
 
+import org.joml.Vector2ic;
 import org.terasology.exoplanet.ExoplanetBiome;
-import org.terasology.exoplanet.generator.facets.*;
+import org.terasology.exoplanet.generator.facets.ExoplanetBiomeFacet;
+import org.terasology.exoplanet.generator.facets.ExoplanetHumidityFacet;
+import org.terasology.exoplanet.generator.facets.ExoplanetSeaLevelFacet;
+import org.terasology.exoplanet.generator.facets.ExoplanetSurfaceHeightFacet;
+import org.terasology.exoplanet.generator.facets.ExoplanetSurfaceTempFacet;
 import org.terasology.math.geom.BaseVector2i;
-import org.terasology.world.generation.*;
+import org.terasology.world.generation.Border3D;
+import org.terasology.world.generation.Facet;
+import org.terasology.world.generation.FacetProvider;
+import org.terasology.world.generation.GeneratingRegion;
+import org.terasology.world.generation.Produces;
+import org.terasology.world.generation.Requires;
 
 @Produces(ExoplanetBiomeFacet.class)
 @Requires({
@@ -45,7 +55,7 @@ public class ExoplanetBiomeProvider implements FacetProvider {
 
         int seaLevelWorldHeight = seaLevelFacet.getWorldSeaLevel();
 
-        for (BaseVector2i pos : biomeFacet.getRelativeRegion().contents()) {
+        for (Vector2ic pos : biomeFacet.getRelativeArea()) {
             float temp = temperatureFacet.get(pos);
             float hum = temp * humidityFacet.get(pos);
             float height = surfaceHeightFacet.get(pos);

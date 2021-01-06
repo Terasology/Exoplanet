@@ -38,7 +38,7 @@ public class ExoplanetSurfaceTempProvider implements FacetProvider {
     @Override
     public void process(GeneratingRegion region) {
         ExoplanetSurfaceTempFacet facet = new ExoplanetSurfaceTempFacet(region.getRegion(), region.getBorderForFacet(ExoplanetSurfaceTempFacet.class));
-        float[] noise = this.temperatureNoise.noise(facet.getWorldRegion());
+        float[] noise = this.temperatureNoise.noise(facet.getWorldArea());
 
         for (int i = 0; i < noise.length; ++i) {
             noise[i] = TeraMath.clamp((noise[i] * 2.11f + 1f) * 0.5f);

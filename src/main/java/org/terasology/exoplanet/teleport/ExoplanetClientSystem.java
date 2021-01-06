@@ -15,6 +15,7 @@
  */
 package org.terasology.exoplanet.teleport;
 
+import org.joml.Vector2ic;
 import org.joml.Vector3i;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,7 +32,6 @@ import org.terasology.logic.common.ActivateEvent;
 import org.terasology.logic.players.LocalPlayer;
 import org.terasology.logic.spawner.FixedSpawner;
 import org.terasology.math.JomlUtil;
-import org.terasology.math.geom.BaseVector2i;
 import org.terasology.math.geom.Vector3f;
 import org.terasology.registry.In;
 import org.terasology.world.block.BlockComponent;
@@ -111,7 +111,7 @@ public class ExoplanetClientSystem extends BaseComponentSystem implements Update
 
         ExoplanetSurfaceHeightFacet surfaceHeightFacet = worldRegion.getFacet(ExoplanetSurfaceHeightFacet.class);
         if (surfaceHeightFacet != null) {
-            for (BaseVector2i pos : surfaceHeightFacet.getWorldRegion().contents()) {
+            for (Vector2ic pos : surfaceHeightFacet.getWorldArea()) {
                 float surfaceHeight = surfaceHeightFacet.getWorld(pos);
 
                 if (surfaceHeight >= seaLevelWorldHeight) {

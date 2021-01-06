@@ -16,6 +16,7 @@
 package org.terasology.exoplanet.generator.providers;
 
 import org.joml.Vector2f;
+import org.joml.Vector2ic;
 import org.terasology.exoplanet.generator.facets.ExoplanetHumidityFacet;
 import org.terasology.exoplanet.generator.facets.ExoplanetSurfaceHeightFacet;
 import org.terasology.exoplanet.generator.facets.ExoplanetSurfaceTempFacet;
@@ -56,16 +57,16 @@ public class ExoplanetMountainsProvider implements FacetProvider {
     public void process(GeneratingRegion region) {
         ExoplanetSurfaceHeightFacet facet = region.getRegionFacet(ExoplanetSurfaceHeightFacet.class);
 
-        float[] mountainData = mountainNoise.noise(facet.getWorldRegion());
-        float[] hillData = hillNoise.noise(facet.getWorldRegion());
+        float[] mountainData = mountainNoise.noise(facet.getWorldArea());
+        float[] hillData = hillNoise.noise(facet.getWorldArea());
 
         ExoplanetSurfaceTempFacet tempFacet = region.getRegionFacet(ExoplanetSurfaceTempFacet.class);
         ExoplanetHumidityFacet humidityFacet = region.getRegionFacet(ExoplanetHumidityFacet.class);
 
         float[] heightData = facet.getInternal();
-        Iterator<BaseVector2i> positionIterator = facet.getRelativeRegion().contents().iterator();
+        Iterator<Vector2ic> positionIterator = facet.getRelativeArea().iterator();
         for (int i = 0; i < heightData.length; ++i) {
-            BaseVector2i pos = positionIterator.next();
+            Vector2ic pos = positionIterator.next();
             float temp = tempFacet.get(pos);
             float hum = humidityFacet.get(pos);
             Vector2f distanceToMountainBiome = new Vector2f(temp - 0.25f, (temp * hum) - 0.35f);

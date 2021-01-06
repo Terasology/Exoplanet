@@ -15,6 +15,8 @@
  */
 package org.terasology.exoplanet.generator;
 
+import org.joml.Vector2i;
+import org.joml.Vector2ic;
 import org.terasology.core.world.generator.facetProviders.*;
 import org.terasology.core.world.generator.rasterizers.FloraRasterizer;
 import org.terasology.core.world.generator.rasterizers.SolidRasterizer;
@@ -33,7 +35,7 @@ import org.terasology.world.generator.plugin.WorldGeneratorPluginLibrary;
 public class ExoplanetWorldGenerator extends BaseFacetedWorldGenerator {
     public static final int EXOPLANET_HEIGHT = 10000;
     public static final int EXOPLANET_BORDER = 9900;
-    private static final ImmutableVector2i SPAWN_POS = new ImmutableVector2i(0, 0);
+    private static final Vector2ic SPAWN_POS = new Vector2i(0, 0);
 
     @In
     private WorldGeneratorPluginLibrary worldGeneratorPluginLibrary;

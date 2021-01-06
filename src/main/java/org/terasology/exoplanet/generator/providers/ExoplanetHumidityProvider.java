@@ -41,7 +41,7 @@ public class ExoplanetHumidityProvider implements FacetProvider {
         Border3D border = region.getBorderForFacet(ExoplanetHumidityFacet.class);
         ExoplanetHumidityFacet facet = new ExoplanetHumidityFacet(region.getRegion(), border);
 
-        float[] noise = humidityNoise.noise(facet.getWorldRegion());
+        float[] noise = humidityNoise.noise(facet.getWorldArea());
         for (int i = 0; i < noise.length; ++i) {
             noise[i] = TeraMath.clamp((noise[i] * 2.11f + 1f) * 0.5f);
         }
