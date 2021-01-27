@@ -102,11 +102,11 @@ public class ExoplanetWorldRasterizer implements WorldRasterizer {
                 int rockLayerDepth = surfaceHeightFacet.getRockLayerDepth();
 
                 if (position.y() == EXOPLANET_BORDER) {
-                    chunk.setBlock(ChunkMath.calcRelativeBlockPos(position, pos), borderBlock);
+                    chunk.setBlock(Chunks.toRelative(position, pos), borderBlock);
                 } else if (position.y() > EXOPLANET_BORDER) {
 
                     Biome biome = biomeFacet.getWorld(pos2d);
-                    biomeRegistry.setBiome(biome, chunk, JomlUtil.from(ChunkMath.calcRelativeBlockPos(position, pos)));
+                    biomeRegistry.setBiome(biome, chunk, Chunks.toRelative(position, pos));
 
                     if (position.y() == seaLevelWorldHeight && ExoplanetBiome.SNOW == biome) {
                         chunk.setBlock(Chunks.toRelative(position, pos), ice);
@@ -117,7 +117,7 @@ public class ExoplanetWorldRasterizer implements WorldRasterizer {
                     if (position.y() <= surfaceHeight) {
                         Block block = getBlockToPlace(surfaceHeight, position.y(), biome, seaLevelWorldHeight,
                             rockLayerDepth);
-                        chunk.setBlock(ChunkMath.calcRelativeBlockPos(position, pos), block);
+                        chunk.setBlock(Chunks.toRelative(position, pos), block);
                     }
                 }
             }

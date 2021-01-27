@@ -22,7 +22,6 @@ import org.terasology.exoplanet.generator.facets.ExoplanetHumidityFacet;
 import org.terasology.exoplanet.generator.facets.ExoplanetSeaLevelFacet;
 import org.terasology.exoplanet.generator.facets.ExoplanetSurfaceHeightFacet;
 import org.terasology.exoplanet.generator.facets.ExoplanetSurfaceTempFacet;
-import org.terasology.math.geom.BaseVector2i;
 import org.terasology.world.generation.Border3D;
 import org.terasology.world.generation.Facet;
 import org.terasology.world.generation.FacetProvider;

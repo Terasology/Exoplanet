@@ -16,6 +16,7 @@
 package org.terasology.exoplanet.teleport;
 
 import org.joml.Vector2ic;
+import org.joml.Vector3f;
 import org.joml.Vector3i;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,8 +32,6 @@ import org.terasology.logic.characters.CharacterTeleportEvent;
 import org.terasology.logic.common.ActivateEvent;
 import org.terasology.logic.players.LocalPlayer;
 import org.terasology.logic.spawner.FixedSpawner;
-import org.terasology.math.JomlUtil;
-import org.terasology.math.geom.Vector3f;
 import org.terasology.registry.In;
 import org.terasology.world.block.BlockComponent;
 import org.terasology.world.block.BlockRegion;
@@ -67,7 +66,7 @@ public class ExoplanetClientSystem extends BaseComponentSystem implements Update
                 Map.Entry<EntityRef, Vector3f> entry = teleportIt.next();
                 EntityRef character = entry.getKey();
                 Vector3f targetPos = entry.getValue();
-                character.send(new CharacterTeleportEvent(JomlUtil.from(targetPos)));
+                character.send(new CharacterTeleportEvent(targetPos));
                 teleportIt.remove();
             }
         }
@@ -82,14 +81,14 @@ public class ExoplanetClientSystem extends BaseComponentSystem implements Update
 
         Vector3f spawnPos;
         if (blockComponent.position.y >= EXOPLANET_BORDER) {
-            spawnPos = findEarthSpawnPos(JomlUtil.from(blockComponent.position), character);
+            spawnPos = findEarthSpawnPos(blockComponent.getPosition(new Vector3i()), character);
             if (spawnPos != null) {
                 character.send(new ExitExoplanetEvent(client));
                 teleportQueue.put(character, spawnPos);
                 LOGGER.info("Portal Activate Event Sent - Earth");
             }
         } else {
-            spawnPos = findExoplanetSpawnPos(JomlUtil.from(blockComponent.position));
+            spawnPos = findExoplanetSpawnPos(blockComponent.getPosition(new Vector3i()));
             if (spawnPos != null) {
                 character.send(new EnterExoplanetEvent(client));
                 teleportQueue.put(character, spawnPos);
@@ -123,6 +122,6 @@ public class ExoplanetClientSystem extends BaseComponentSystem implements Update
     }
 
     private Vector3f findEarthSpawnPos(Vector3i currentPos, EntityRef character) {
-        return JomlUtil.from(new FixedSpawner(currentPos.x, currentPos.z).getSpawnPosition(worldGenerator.getWorld(), character));
+        return new FixedSpawner(currentPos.x, currentPos.z).getSpawnPosition(worldGenerator.getWorld(), character);
     }
 }

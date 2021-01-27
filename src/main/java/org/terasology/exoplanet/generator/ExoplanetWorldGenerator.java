@@ -17,14 +17,33 @@ package org.terasology.exoplanet.generator;
 
 import org.joml.Vector2i;
 import org.joml.Vector2ic;
-import org.terasology.core.world.generator.facetProviders.*;
+import org.terasology.core.world.generator.facetProviders.BiomeProvider;
+import org.terasology.core.world.generator.facetProviders.DefaultFloraProvider;
+import org.terasology.core.world.generator.facetProviders.DefaultTreeProvider;
+import org.terasology.core.world.generator.facetProviders.DensityNoiseProvider;
+import org.terasology.core.world.generator.facetProviders.SeaLevelProvider;
+import org.terasology.core.world.generator.facetProviders.SimplexBaseSurfaceProvider;
+import org.terasology.core.world.generator.facetProviders.SimplexHumidityProvider;
+import org.terasology.core.world.generator.facetProviders.SimplexRiverProvider;
+import org.terasology.core.world.generator.facetProviders.SimplexRoughnessProvider;
+import org.terasology.core.world.generator.facetProviders.SimplexSurfaceTemperatureProvider;
+import org.terasology.core.world.generator.facetProviders.SpawnPlateauProvider;
+import org.terasology.core.world.generator.facetProviders.SurfaceToDensityProvider;
 import org.terasology.core.world.generator.rasterizers.FloraRasterizer;
 import org.terasology.core.world.generator.rasterizers.SolidRasterizer;
 import org.terasology.core.world.generator.rasterizers.TreeRasterizer;
 import org.terasology.engine.SimpleUri;
-import org.terasology.exoplanet.generator.providers.*;
-import org.terasology.exoplanet.generator.rasterizers.*;
-import org.terasology.math.geom.ImmutableVector2i;
+import org.terasology.exoplanet.generator.providers.ExoplanetBiomeProvider;
+import org.terasology.exoplanet.generator.providers.ExoplanetFloraProvider;
+import org.terasology.exoplanet.generator.providers.ExoplanetHumidityProvider;
+import org.terasology.exoplanet.generator.providers.ExoplanetMountainsProvider;
+import org.terasology.exoplanet.generator.providers.ExoplanetSeaLevelProvider;
+import org.terasology.exoplanet.generator.providers.ExoplanetSurfaceProvider;
+import org.terasology.exoplanet.generator.providers.ExoplanetSurfaceTempProvider;
+import org.terasology.exoplanet.generator.providers.ExoplanetTreeProvider;
+import org.terasology.exoplanet.generator.rasterizers.ExoplanetFloraRasterizer;
+import org.terasology.exoplanet.generator.rasterizers.ExoplanetTreeRasterizer;
+import org.terasology.exoplanet.generator.rasterizers.ExoplanetWorldRasterizer;
 import org.terasology.registry.In;
 import org.terasology.world.generation.BaseFacetedWorldGenerator;
 import org.terasology.world.generation.WorldBuilder;
@@ -48,8 +67,6 @@ public class ExoplanetWorldGenerator extends BaseFacetedWorldGenerator {
     protected WorldBuilder createWorld() {
         int earthSeaLevel = 15;
         int exoplanetSeaLevel = 37;
-
-        ImmutableVector2i spawnPos = new ImmutableVector2i(0, 0);
 
         return new WorldBuilder(worldGeneratorPluginLibrary)
                 .setSeaLevel(earthSeaLevel)

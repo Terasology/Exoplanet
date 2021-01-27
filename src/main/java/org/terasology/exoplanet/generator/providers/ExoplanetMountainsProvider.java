@@ -21,7 +21,6 @@ import org.terasology.exoplanet.generator.facets.ExoplanetHumidityFacet;
 import org.terasology.exoplanet.generator.facets.ExoplanetSurfaceHeightFacet;
 import org.terasology.exoplanet.generator.facets.ExoplanetSurfaceTempFacet;
 import org.terasology.math.TeraMath;
-import org.terasology.math.geom.BaseVector2i;
 import org.terasology.utilities.procedural.BrownianNoise;
 import org.terasology.utilities.procedural.PerlinNoise;
 import org.terasology.utilities.procedural.SubSampledNoise;

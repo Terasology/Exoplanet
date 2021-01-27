@@ -23,7 +23,6 @@ import org.terasology.exoplanet.generator.facets.ExoplanetSeaLevelFacet;
 import org.terasology.exoplanet.generator.facets.ExoplanetSurfaceHeightFacet;
 import org.terasology.exoplanet.generator.facets.ExoplanetTreeFacet;
 import org.terasology.math.TeraMath;
-import org.terasology.math.geom.Rect2i;
 import org.terasology.utilities.procedural.Noise;
 import org.terasology.utilities.procedural.WhiteNoise;
 import org.terasology.world.block.BlockAreac;

@@ -17,7 +17,6 @@ package org.terasology.exoplanet.generator.providers;
 
 import org.joml.Vector2f;
 import org.terasology.exoplanet.generator.facets.ExoplanetSurfaceHeightFacet;
-import org.terasology.math.geom.Rect2i;
 import org.terasology.utilities.procedural.BrownianNoise;
 import org.terasology.utilities.procedural.PerlinNoise;
 import org.terasology.utilities.procedural.SubSampledNoise;
