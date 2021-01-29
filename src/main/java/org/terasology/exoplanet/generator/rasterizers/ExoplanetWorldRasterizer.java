@@ -1,18 +1,5 @@
-/*
- * Copyright 2018 MovingBlocks
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+// Copyright 2021 The Terasology Foundation
+// SPDX-License-Identifier: Apache-2.0
 package org.terasology.exoplanet.generator.rasterizers;
 
 import org.joml.Vector2i;
@@ -24,8 +11,6 @@ import org.terasology.exoplanet.ExoplanetBiome;
 import org.terasology.exoplanet.generator.facets.ExoplanetBiomeFacet;
 import org.terasology.exoplanet.generator.facets.ExoplanetSeaLevelFacet;
 import org.terasology.exoplanet.generator.facets.ExoplanetSurfaceHeightFacet;
-import org.terasology.math.ChunkMath;
-import org.terasology.math.JomlUtil;
 import org.terasology.math.TeraMath;
 import org.terasology.registry.CoreRegistry;
 import org.terasology.utilities.random.FastRandom;
@@ -102,11 +87,11 @@ public class ExoplanetWorldRasterizer implements WorldRasterizer {
                 int rockLayerDepth = surfaceHeightFacet.getRockLayerDepth();
 
                 if (position.y() == EXOPLANET_BORDER) {
-                    chunk.setBlock(ChunkMath.calcRelativeBlockPos(position, pos), borderBlock);
+                    chunk.setBlock(Chunks.toRelative(position, pos), borderBlock);
                 } else if (position.y() > EXOPLANET_BORDER) {
 
                     Biome biome = biomeFacet.getWorld(pos2d);
-                    biomeRegistry.setBiome(biome, chunk, JomlUtil.from(ChunkMath.calcRelativeBlockPos(position, pos)));
+                    biomeRegistry.setBiome(biome, chunk, Chunks.toRelative(position, pos));
 
                     if (position.y() == seaLevelWorldHeight && ExoplanetBiome.SNOW == biome) {
                         chunk.setBlock(Chunks.toRelative(position, pos), ice);
@@ -117,7 +102,7 @@ public class ExoplanetWorldRasterizer implements WorldRasterizer {
                     if (position.y() <= surfaceHeight) {
                         Block block = getBlockToPlace(surfaceHeight, position.y(), biome, seaLevelWorldHeight,
                             rockLayerDepth);
-                        chunk.setBlock(ChunkMath.calcRelativeBlockPos(position, pos), block);
+                        chunk.setBlock(Chunks.toRelative(position, pos), block);
                     }
                 }
             }
