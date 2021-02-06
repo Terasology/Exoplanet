@@ -67,7 +67,7 @@ public class ExoplanetClientSystem extends BaseComponentSystem implements Update
         EntityRef client = localPlayer.getClientEntity();
 
         Vector3f spawnPos;
-        if (blockComponent.position.y >= EXOPLANET_BORDER) {
+        if (blockComponent.getPosition().y() >= EXOPLANET_BORDER) {
             spawnPos = findEarthSpawnPos(blockComponent.getPosition(new Vector3i()), character);
             if (spawnPos != null) {
                 character.send(new ExitExoplanetEvent(client));
