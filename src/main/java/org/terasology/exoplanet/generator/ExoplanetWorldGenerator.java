@@ -54,9 +54,6 @@ public class ExoplanetWorldGenerator extends BaseFacetedWorldGenerator {
     protected WorldBuilder createWorld() {
         int earthSeaLevel = 15;
         int exoplanetSeaLevel = 37;
-
-        Vector2ic spawnPos = new Vector2i(0, 0);
-
         return new WorldBuilder(worldGeneratorPluginLibrary)
                 .setSeaLevel(earthSeaLevel)
                 .addProvider(new SeaLevelProvider(earthSeaLevel))

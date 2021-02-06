@@ -19,7 +19,6 @@ import org.terasology.logic.characters.CharacterTeleportEvent;
 import org.terasology.logic.common.ActivateEvent;
 import org.terasology.logic.players.LocalPlayer;
 import org.terasology.logic.spawner.FixedSpawner;
-import org.terasology.math.JomlUtil;
 import org.terasology.registry.In;
 import org.terasology.world.block.BlockComponent;
 import org.terasology.world.block.BlockRegion;
@@ -69,14 +68,14 @@ public class ExoplanetClientSystem extends BaseComponentSystem implements Update
 
         Vector3f spawnPos;
         if (blockComponent.position.y >= EXOPLANET_BORDER) {
-            spawnPos = findEarthSpawnPos(JomlUtil.from(blockComponent.position), character);
+            spawnPos = findEarthSpawnPos(blockComponent.getPosition(new Vector3i()), character);
             if (spawnPos != null) {
                 character.send(new ExitExoplanetEvent(client));
                 teleportQueue.put(character, spawnPos);
                 LOGGER.info("Portal Activate Event Sent - Earth");
             }
         } else {
-            spawnPos = findExoplanetSpawnPos(JomlUtil.from(blockComponent.position));
+            spawnPos = findExoplanetSpawnPos(blockComponent.getPosition(new Vector3i()));
             if (spawnPos != null) {
                 character.send(new EnterExoplanetEvent(client));
                 teleportQueue.put(character, spawnPos);

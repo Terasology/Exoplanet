@@ -21,12 +21,12 @@ import org.terasology.biomesAPI.Biome;
 import org.terasology.exoplanet.ExoplanetBiome;
 import org.terasology.exoplanet.generator.facets.ExoplanetBiomeFacet;
 import org.terasology.exoplanet.generator.facets.ExoplanetFloraFacet;
-import org.terasology.math.ChunkMath;
 import org.terasology.registry.CoreRegistry;
 import org.terasology.utilities.random.FastRandom;
 import org.terasology.utilities.random.Random;
 import org.terasology.world.block.Block;
 import org.terasology.world.block.BlockManager;
+import org.terasology.world.chunks.Chunks;
 import org.terasology.world.chunks.CoreChunk;
 import org.terasology.world.generation.Region;
 import org.terasology.world.generation.WorldRasterizer;
@@ -63,9 +63,9 @@ public class ExoplanetFloraRasterizer implements WorldRasterizer {
             Biome biome = biomeFacet.getWorld(pos.x(), pos.z());
 
             if (facet.getWorld(pos)
-                    && chunk.getBlock(ChunkMath.calcRelativeBlockPos(pos.sub(0,1,0, tempPos), tempPos)).getURI() != BlockManager.AIR_ID
-                    && !chunk.getBlock(ChunkMath.calcRelativeBlockPos(pos.sub(0,1,0, tempPos), tempPos)).isLiquid()) {
-                chunk.setBlock(ChunkMath.calcRelativeBlockPos(pos.add(0,1,0, tempPos), tempPos), getRandomFlora(biome));
+                    && chunk.getBlock(Chunks.toRelative(pos.sub(0, 1, 0, tempPos), tempPos)).getURI() != BlockManager.AIR_ID
+                    && !chunk.getBlock(Chunks.toRelative(pos.sub(0,1,0, tempPos), tempPos)).isLiquid()) {
+                chunk.setBlock(Chunks.toRelative(pos.add(0,1,0, tempPos), tempPos), getRandomFlora(biome));
             }
         }
     }

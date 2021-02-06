@@ -19,11 +19,11 @@ import org.joml.Vector3i;
 import org.joml.Vector3ic;
 import org.terasology.exoplanet.generator.ExoplanetTree;
 import org.terasology.exoplanet.generator.facets.ExoplanetTreeFacet;
-import org.terasology.math.ChunkMath;
 import org.terasology.registry.CoreRegistry;
 import org.terasology.world.block.Block;
 import org.terasology.world.block.BlockManager;
 import org.terasology.world.block.BlockRegion;
+import org.terasology.world.chunks.Chunks;
 import org.terasology.world.chunks.CoreChunk;
 import org.terasology.world.generation.Region;
 import org.terasology.world.generation.WorldRasterizer;
@@ -70,11 +70,11 @@ public class ExoplanetTreeRasterizer implements WorldRasterizer {
             for (Vector3ic newBlockPosition : treeRegion) {
                 if (chunkRegion.getRegion().contains(newBlockPosition)) {
                     if (treeTrunk.contains(newBlockPosition)) {
-                        chunk.setBlock(ChunkMath.calcRelativeBlockPos(newBlockPosition, new Vector3i()), trunk);
+                        chunk.setBlock(Chunks.toRelative(newBlockPosition, new Vector3i()), trunk);
                     } else if (!treeTrunk.contains(newBlockPosition)) {
 
                         if (treeCrown.contains(newBlockPosition) || treeTop.contains(newBlockPosition)) {
-                            chunk.setBlock(ChunkMath.calcRelativeBlockPos(newBlockPosition, new Vector3i()), leaf);
+                            chunk.setBlock(Chunks.toRelative(newBlockPosition, new Vector3i()), leaf);
                         }
                     }
                 }
