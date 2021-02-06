@@ -19,7 +19,6 @@ import org.joml.Vector3i;
 import org.joml.Vector3ic;
 import org.terasology.exoplanet.generator.ExoplanetTree;
 import org.terasology.exoplanet.generator.facets.ExoplanetTreeFacet;
-import org.terasology.math.ChunkMath;
 import org.terasology.registry.CoreRegistry;
 import org.terasology.world.block.Block;
 import org.terasology.world.block.BlockManager;
