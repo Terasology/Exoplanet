@@ -21,7 +21,6 @@ import org.terasology.biomesAPI.Biome;
 import org.terasology.exoplanet.ExoplanetBiome;
 import org.terasology.exoplanet.generator.facets.ExoplanetBiomeFacet;
 import org.terasology.exoplanet.generator.facets.ExoplanetFloraFacet;
-import org.terasology.math.ChunkMath;
 import org.terasology.registry.CoreRegistry;
 import org.terasology.utilities.random.FastRandom;
 import org.terasology.utilities.random.Random;
