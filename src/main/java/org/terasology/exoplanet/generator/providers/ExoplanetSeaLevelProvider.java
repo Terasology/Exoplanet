@@ -15,11 +15,11 @@
  */
 package org.terasology.exoplanet.generator.providers;
 
+import org.terasology.engine.world.generation.Border3D;
+import org.terasology.engine.world.generation.FacetProvider;
+import org.terasology.engine.world.generation.GeneratingRegion;
+import org.terasology.engine.world.generation.Produces;
 import org.terasology.exoplanet.generator.facets.ExoplanetSeaLevelFacet;
-import org.terasology.world.generation.Border3D;
-import org.terasology.world.generation.FacetProvider;
-import org.terasology.world.generation.GeneratingRegion;
-import org.terasology.world.generation.Produces;
 
 @Produces(ExoplanetSeaLevelFacet.class)
 public class ExoplanetSeaLevelProvider implements FacetProvider {

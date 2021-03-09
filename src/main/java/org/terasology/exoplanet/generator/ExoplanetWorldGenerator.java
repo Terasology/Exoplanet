@@ -19,7 +19,12 @@ import org.terasology.core.world.generator.facetProviders.SurfaceToDensityProvid
 import org.terasology.core.world.generator.rasterizers.FloraRasterizer;
 import org.terasology.core.world.generator.rasterizers.SolidRasterizer;
 import org.terasology.core.world.generator.rasterizers.TreeRasterizer;
-import org.terasology.engine.SimpleUri;
+import org.terasology.engine.core.SimpleUri;
+import org.terasology.engine.registry.In;
+import org.terasology.engine.world.generation.BaseFacetedWorldGenerator;
+import org.terasology.engine.world.generation.WorldBuilder;
+import org.terasology.engine.world.generator.RegisterWorldGenerator;
+import org.terasology.engine.world.generator.plugin.WorldGeneratorPluginLibrary;
 import org.terasology.exoplanet.generator.providers.ExoplanetBiomeProvider;
 import org.terasology.exoplanet.generator.providers.ExoplanetFloraProvider;
 import org.terasology.exoplanet.generator.providers.ExoplanetHumidityProvider;
@@ -31,11 +36,6 @@ import org.terasology.exoplanet.generator.providers.ExoplanetTreeProvider;
 import org.terasology.exoplanet.generator.rasterizers.ExoplanetFloraRasterizer;
 import org.terasology.exoplanet.generator.rasterizers.ExoplanetTreeRasterizer;
 import org.terasology.exoplanet.generator.rasterizers.ExoplanetWorldRasterizer;
-import org.terasology.registry.In;
-import org.terasology.world.generation.BaseFacetedWorldGenerator;
-import org.terasology.world.generation.WorldBuilder;
-import org.terasology.world.generator.RegisterWorldGenerator;
-import org.terasology.world.generator.plugin.WorldGeneratorPluginLibrary;
 
 @RegisterWorldGenerator(id = "exoplanetWorld", displayName = "Exoplanet")
 public class ExoplanetWorldGenerator extends BaseFacetedWorldGenerator {

@@ -4,19 +4,19 @@ package org.terasology.exoplanet.generator.providers;
 
 import org.joml.Vector2ic;
 import org.terasology.biomesAPI.Biome;
+import org.terasology.engine.utilities.procedural.Noise;
+import org.terasology.engine.utilities.procedural.WhiteNoise;
+import org.terasology.engine.world.generation.Border3D;
+import org.terasology.engine.world.generation.Facet;
+import org.terasology.engine.world.generation.FacetProvider;
+import org.terasology.engine.world.generation.GeneratingRegion;
+import org.terasology.engine.world.generation.Produces;
+import org.terasology.engine.world.generation.Requires;
 import org.terasology.exoplanet.ExoplanetBiome;
 import org.terasology.exoplanet.generator.facets.ExoplanetBiomeFacet;
 import org.terasology.exoplanet.generator.facets.ExoplanetFloraFacet;
 import org.terasology.exoplanet.generator.facets.ExoplanetSurfaceHeightFacet;
 import org.terasology.math.TeraMath;
-import org.terasology.utilities.procedural.Noise;
-import org.terasology.utilities.procedural.WhiteNoise;
-import org.terasology.world.generation.Border3D;
-import org.terasology.world.generation.Facet;
-import org.terasology.world.generation.FacetProvider;
-import org.terasology.world.generation.GeneratingRegion;
-import org.terasology.world.generation.Produces;
-import org.terasology.world.generation.Requires;
 
 import static org.terasology.exoplanet.generator.ExoplanetWorldGenerator.EXOPLANET_BORDER;
 

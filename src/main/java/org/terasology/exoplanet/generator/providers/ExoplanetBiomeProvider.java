@@ -3,18 +3,18 @@
 package org.terasology.exoplanet.generator.providers;
 
 import org.joml.Vector2ic;
+import org.terasology.engine.world.generation.Border3D;
+import org.terasology.engine.world.generation.Facet;
+import org.terasology.engine.world.generation.FacetProvider;
+import org.terasology.engine.world.generation.GeneratingRegion;
+import org.terasology.engine.world.generation.Produces;
+import org.terasology.engine.world.generation.Requires;
 import org.terasology.exoplanet.ExoplanetBiome;
 import org.terasology.exoplanet.generator.facets.ExoplanetBiomeFacet;
 import org.terasology.exoplanet.generator.facets.ExoplanetHumidityFacet;
 import org.terasology.exoplanet.generator.facets.ExoplanetSeaLevelFacet;
 import org.terasology.exoplanet.generator.facets.ExoplanetSurfaceHeightFacet;
 import org.terasology.exoplanet.generator.facets.ExoplanetSurfaceTempFacet;
-import org.terasology.world.generation.Border3D;
-import org.terasology.world.generation.Facet;
-import org.terasology.world.generation.FacetProvider;
-import org.terasology.world.generation.GeneratingRegion;
-import org.terasology.world.generation.Produces;
-import org.terasology.world.generation.Requires;
 
 @Produces(ExoplanetBiomeFacet.class)
 @Requires({

@@ -15,7 +15,7 @@
  */
 package org.terasology.exoplanet.teleport;
 
-import org.terasology.entitySystem.Component;
+import org.terasology.engine.entitySystem.Component;
 
 public class ExoplanetPortalOnActivateComponent implements Component {
 }
