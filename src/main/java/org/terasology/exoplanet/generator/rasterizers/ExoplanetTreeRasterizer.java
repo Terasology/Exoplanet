@@ -21,8 +21,8 @@ import org.terasology.engine.registry.CoreRegistry;
 import org.terasology.engine.world.block.Block;
 import org.terasology.engine.world.block.BlockManager;
 import org.terasology.engine.world.block.BlockRegion;
+import org.terasology.engine.world.chunks.Chunk;
 import org.terasology.engine.world.chunks.Chunks;
-import org.terasology.engine.world.chunks.CoreChunk;
 import org.terasology.engine.world.generation.Region;
 import org.terasology.engine.world.generation.WorldRasterizer;
 import org.terasology.exoplanet.generator.ExoplanetTree;
@@ -40,7 +40,7 @@ public class ExoplanetTreeRasterizer implements WorldRasterizer {
     }
 
     @Override
-    public void generateChunk(CoreChunk chunk, Region chunkRegion) {
+    public void generateChunk(Chunk chunk, Region chunkRegion) {
         ExoplanetTreeFacet facet = chunkRegion.getFacet(ExoplanetTreeFacet.class);
 
         for (Map.Entry<Vector3ic, ExoplanetTree> entry : facet.getWorldEntries().entrySet()) {
