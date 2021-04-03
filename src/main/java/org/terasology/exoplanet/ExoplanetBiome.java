@@ -16,7 +16,7 @@
 package org.terasology.exoplanet;
 
 import org.terasology.biomesAPI.Biome;
-import org.terasology.naming.Name;
+import org.terasology.gestalt.naming.Name;
 
 public enum ExoplanetBiome implements Biome {
     MOUNTAINS("Mountains", 0.4f, 0.4f, 0.4f, 0.4f),
