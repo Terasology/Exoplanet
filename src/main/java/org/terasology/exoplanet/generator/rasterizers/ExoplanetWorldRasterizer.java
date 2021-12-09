@@ -42,10 +42,10 @@ public class ExoplanetWorldRasterizer implements WorldRasterizer {
     private Block borderBlock;
     private Block air;
     private BiomeRegistry biomeRegistry;
-    private Map<Block, Float> ore = new HashMap<>();
+    private final Map<Block, Float> ore = new HashMap<>();
 
 
-    private Random random = new FastRandom();
+    private final Random random = new FastRandom();
 
     @Override
     public void initialize() {
@@ -116,13 +116,6 @@ public class ExoplanetWorldRasterizer implements WorldRasterizer {
         if (biome instanceof ExoplanetBiome) {
             switch ((ExoplanetBiome) biome) {
                 case FOREST:
-                    if (surfaceHeight == currentHeight) {
-                        return grass;
-                    } else if (currentHeight < surfaceHeight - rockLayerDepth) {
-                        return stone;
-                    } else {
-                        return dirt;
-                    }
                 case PLAINS:
                     if (surfaceHeight == currentHeight) {
                         return grass;
@@ -145,6 +138,8 @@ public class ExoplanetWorldRasterizer implements WorldRasterizer {
                             return snow;
                         } else if (currentHeight >= seaLevel + 100) {
                             return snowyStone;
+                        } else {
+                            return stone;
                         }
                     } else if (currentHeight < surfaceHeight - rockLayerDepth) {
                         return stone;

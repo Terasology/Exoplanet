@@ -1,18 +1,5 @@
-/*
- * Copyright 2018 MovingBlocks
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+// Copyright 2021 The Terasology Foundation
+// SPDX-License-Identifier: Apache-2.0
 package org.terasology.exoplanet.generator.rasterizers;
 
 import org.joml.Vector3i;
@@ -35,10 +22,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ExoplanetFloraRasterizer implements WorldRasterizer {
-    private Random random = new FastRandom();
-    private Map<Block, Float> flora = new HashMap<>();
+    private final Random random = new FastRandom();
+    private final Map<Block, Float> flora = new HashMap<>();
 
-    private Block air, AlbidusGrass1, AlbidusGrass2, RubidusGrass1, RubidusGrass2;
+    private Block air;
+    private Block albidusGrass1;
+    private Block albidusGrass2;
+    private Block rubidusGrass1;
+    private Block rubidusGrass2;
 
     private ExoplanetBiome previousBiome;
 
@@ -47,10 +38,10 @@ public class ExoplanetFloraRasterizer implements WorldRasterizer {
         BlockManager blockManager = CoreRegistry.get(BlockManager.class);
 
         air = blockManager.getBlock(BlockManager.AIR_ID);
-        AlbidusGrass1 = blockManager.getBlock("Exoplanet:AlbidusGrass1");
-        AlbidusGrass2 = blockManager.getBlock("Exoplanet:AlbidusGrass2");
-        RubidusGrass1 = blockManager.getBlock("Exoplanet:RubidusGrass1");
-        RubidusGrass2 = blockManager.getBlock("Exoplanet:RubidusGrass2");
+        albidusGrass1 = blockManager.getBlock("Exoplanet:AlbidusGrass1");
+        albidusGrass2 = blockManager.getBlock("Exoplanet:AlbidusGrass2");
+        rubidusGrass1 = blockManager.getBlock("Exoplanet:RubidusGrass1");
+        rubidusGrass2 = blockManager.getBlock("Exoplanet:RubidusGrass2");
     }
 
     @Override
@@ -64,8 +55,8 @@ public class ExoplanetFloraRasterizer implements WorldRasterizer {
 
             if (facet.getWorld(pos)
                     && chunk.getBlock(Chunks.toRelative(pos.sub(0, 1, 0, tempPos), tempPos)).getURI() != BlockManager.AIR_ID
-                    && !chunk.getBlock(Chunks.toRelative(pos.sub(0,1,0, tempPos), tempPos)).isLiquid()) {
-                chunk.setBlock(Chunks.toRelative(pos.add(0,1,0, tempPos), tempPos), getRandomFlora(biome));
+                    && !chunk.getBlock(Chunks.toRelative(pos.sub(0, 1, 0, tempPos), tempPos)).isLiquid()) {
+                chunk.setBlock(Chunks.toRelative(pos.add(0, 1, 0, tempPos), tempPos), getRandomFlora(biome));
             }
         }
     }
@@ -103,19 +94,19 @@ public class ExoplanetFloraRasterizer implements WorldRasterizer {
             case DESERT:
                 break;
             case SNOW:
-                flora.put(AlbidusGrass1, 0.5f);
-                flora.put(AlbidusGrass2, 0.5f);
+                flora.put(albidusGrass1, 0.5f);
+                flora.put(albidusGrass2, 0.5f);
                 break;
             case SNOWMOUNTAINS:
-                flora.put(AlbidusGrass1, 0.4f);
-                flora.put(AlbidusGrass2, 0.4f);
-                flora.put(RubidusGrass1, 0.2f);
+                flora.put(albidusGrass1, 0.4f);
+                flora.put(albidusGrass2, 0.4f);
+                flora.put(rubidusGrass1, 0.2f);
                 break;
             default:
-                flora.put(AlbidusGrass1, 0.25f);
-                flora.put(AlbidusGrass2, 0.25f);
-                flora.put(RubidusGrass1, 0.25f);
-                flora.put(RubidusGrass2, 0.25f);
+                flora.put(albidusGrass1, 0.25f);
+                flora.put(albidusGrass2, 0.25f);
+                flora.put(rubidusGrass1, 0.25f);
+                flora.put(rubidusGrass2, 0.25f);
                 break;
         }
     }
