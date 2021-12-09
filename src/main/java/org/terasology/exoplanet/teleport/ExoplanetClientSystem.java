@@ -5,6 +5,7 @@ package org.terasology.exoplanet.teleport;
 import org.joml.Vector2ic;
 import org.joml.Vector3f;
 import org.joml.Vector3i;
+import org.joml.Vector3ic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.terasology.engine.entitySystem.entity.EntityRef;
@@ -35,15 +36,17 @@ import static org.terasology.exoplanet.generator.ExoplanetWorldGenerator.EXOPLAN
 
 @RegisterSystem(RegisterMode.CLIENT)
 public class ExoplanetClientSystem extends BaseComponentSystem implements UpdateSubscriberSystem {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ExoplanetClientSystem.class);
+
     @In
     private LocalPlayer localPlayer;
 
     @In
     private WorldGenerator worldGenerator;
 
-    private Map<EntityRef, Vector3f> teleportQueue = new HashMap<>();
+    private final Map<EntityRef, Vector3f> teleportQueue = new HashMap<>();
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ExoplanetClientSystem.class);
 
     @Override
     public void update(float delta) {
@@ -68,14 +71,14 @@ public class ExoplanetClientSystem extends BaseComponentSystem implements Update
 
         Vector3f spawnPos;
         if (blockComponent.getPosition().y() >= EXOPLANET_BORDER) {
-            spawnPos = findEarthSpawnPos(blockComponent.getPosition(new Vector3i()), character);
+            spawnPos = findEarthSpawnPos(blockComponent.getPosition(), character);
             if (spawnPos != null) {
                 character.send(new ExitExoplanetEvent(client));
                 teleportQueue.put(character, spawnPos);
                 LOGGER.info("Portal Activate Event Sent - Earth");
             }
         } else {
-            spawnPos = findExoplanetSpawnPos(blockComponent.getPosition(new Vector3i()));
+            spawnPos = findExoplanetSpawnPos(blockComponent.getPosition());
             if (spawnPos != null) {
                 character.send(new EnterExoplanetEvent(client));
                 teleportQueue.put(character, spawnPos);
@@ -86,10 +89,10 @@ public class ExoplanetClientSystem extends BaseComponentSystem implements Update
         event.consume();
     }
 
-    private Vector3f findExoplanetSpawnPos(Vector3i currentPos) {
+    private Vector3f findExoplanetSpawnPos(Vector3ic currentPos) {
         World world = worldGenerator.getWorld();
         Vector3i searchRadius = new Vector3i(32, 1, 32);
-        BlockRegion searchArea = new BlockRegion(currentPos.x, EXOPLANET_HEIGHT, currentPos.z).expand(searchRadius);
+        BlockRegion searchArea = new BlockRegion(currentPos.x(), EXOPLANET_HEIGHT, currentPos.z()).expand(searchRadius);
         Region worldRegion = world.getWorldData(searchArea);
 
         ExoplanetSeaLevelFacet seaLevelFacet = worldRegion.getFacet(ExoplanetSeaLevelFacet.class);
@@ -108,7 +111,7 @@ public class ExoplanetClientSystem extends BaseComponentSystem implements Update
         return null;
     }
 
-    private Vector3f findEarthSpawnPos(Vector3i currentPos, EntityRef character) {
-        return new FixedSpawner(currentPos.x, currentPos.z).getSpawnPosition(worldGenerator.getWorld(), character);
+    private Vector3f findEarthSpawnPos(Vector3ic currentPos, EntityRef character) {
+        return new FixedSpawner(currentPos.x(), currentPos.z()).getSpawnPosition(worldGenerator.getWorld(), character);
     }
 }

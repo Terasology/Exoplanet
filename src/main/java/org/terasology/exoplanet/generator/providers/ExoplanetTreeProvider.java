@@ -55,8 +55,10 @@ public class ExoplanetTreeProvider implements FacetProvider {
                 }
 
                 // check if height is within this region
-                if (surfaceHeight >= facet.getWorldRegion().minY() &&
-                        surfaceHeight <= facet.getWorldRegion().maxY() && surfaceHeight > seaLevelWorldHeight && surfaceHeight < maxGrowableAltitude) {
+                if (surfaceHeight >= facet.getWorldRegion().minY()
+                        && surfaceHeight <= facet.getWorldRegion().maxY()
+                        && surfaceHeight > seaLevelWorldHeight
+                        && surfaceHeight < maxGrowableAltitude) {
 
                     if (treeNoise.noise(wx, wz) > 1 - (treeDensity * 0.1f / 2f)) {
                         facet.setWorld(wx, surfaceHeight, wz, new ExoplanetTree());
