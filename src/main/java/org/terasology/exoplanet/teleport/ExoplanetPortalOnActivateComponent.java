@@ -2,11 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 package org.terasology.exoplanet.teleport;
 
-import org.terasology.gestalt.entitysystem.component.Component;
+import org.terasology.gestalt.entitysystem.component.EmptyComponent;
 
-public class ExoplanetPortalOnActivateComponent implements Component<ExoplanetPortalOnActivateComponent> {
-    @Override
-    public void copyFrom(ExoplanetPortalOnActivateComponent other) {
-
-    }
+public class ExoplanetPortalOnActivateComponent extends EmptyComponent<ExoplanetPortalOnActivateComponent> {
 }
